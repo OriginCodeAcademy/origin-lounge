@@ -1,0 +1,37 @@
+{
+  "name": "UserAdmin",
+  "main": "gulpfile.js",
+  "homepage": "https://github.com/Exponent500/UserAdmin",
+  "authors": [
+    "Exponent500 <reuvenkishon@gmail.com>"
+  ],
+  "description": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "angular": "^1.5.8",
+    "angular-toastr": "^2.1.1",
+    "angular-messages": "^1.5.8",
+    "angular-ui-router": "^0.3.1",
+    "angular-ui-bootstrap": "^2.2.0",
+    "angularjs-dropdown-multiselect": "^1.5.2",
+    "lodash": "^4.16.6",
+    "font-awesome": "fontawesome#^4.7.0",
+    "components-font-awesome": "^4.7.0",
+    "angular-local-storage": "^0.5.2"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/css/bootstrap.css"
+      ]
+    }
+  }
+}

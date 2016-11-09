@@ -1,0 +1,22 @@
+#topnav{
+	border-color: gray;
+	border-style: solid;
+	border-top-width: 1px;
+	font-size: 1.2em;
+
+}
+#topcenternav{
+	font-weight: 45px;
+	
+}
+#bottomcenternav{
+	margin-top: 2%;
+
+}
+#bottomleftpnav{
+
+}
+#navimg{
+	max-width: 30%;
+	max-height: 25%;
+}
