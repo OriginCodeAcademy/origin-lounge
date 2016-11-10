@@ -1,54 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Origin Lounge</title>
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
-    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
-    <!-- endbower -->
-    <!-- inject:css -->
+  <meta charset="UTF-8">
+  <title>Gulp Demo</title>
+<!-- bower:css -->
+<link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css" />
+<!-- endbower -->
 
-    <link rel="stylesheet" href="/app/styles/style.css">
-
-    <!-- endinject -->
+<!-- inject:css -->
+<!-- endinject -->
 </head>
 
 <body>
-<div class="row">
- <div ui-view></div>  
+<!-- bower:js -->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<!-- jquery, moment, and angular have to get included before fullcalendar -->
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+<script type="text/javascript" src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+<script type="text/javascript" src="bower_components/fullcalendar/dist/gcal.js"></script>
+<!-- endbower -->
+
+<div>
+	<p ui-view></p>
 </div>
-   
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/lodash/dist/lodash.compat.js"></script>
-    <script src="bower_components/angularjs-dropdown-multiselect/src/angularjs-dropdown-multiselect.js"></script>
-    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
-    <!-- endbower -->
-<!--     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script> -->
 
-    <!-- inject:js -->
-
-    <script src="/app/app.js"></script>
-
-    <script src="/app/Authentication/auth.controller.js"></script>
-
-    <script src="/app/Authentication/auth.factory.js"></script>
-
-    <script src="/app/Authentication/storage.factory.js"></script>
-
-    <script src="/app/Dashboard/dashboard.controller.js"></script>
-
-    <script src="/app/Dashboard/dashboard.factory.js"></script>
-
-    <!-- endinject -->
+<!-- inject:js -->
+<script src="/app/app.js"></script>
+<script src="/app/test/calendar.controller.js"></script>
+<script src="/app/test/login.controller.js"></script>
+<script src="/app/test/test.controller.js"></script>
+<script src="/app/test/test.service.js"></script>
+<!-- endinject -->
 </body>
-
 </html>
