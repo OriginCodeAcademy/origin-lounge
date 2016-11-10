@@ -5,10 +5,10 @@
         .module('app')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['DashboardFactory'];
+    DashboardController.$inject = ['DashboardFactory', 'storageFactory'];
 
     /* @ngInject */
-    function DashboardController(DashboardFactory) {
+    function DashboardController(DashboardFactory, storageFactory) {
         var vm = this;
         vm.title = 'DashboardController';
 
@@ -17,6 +17,7 @@
         ////////////////
 
         function activate() {
+            vm.username = storageFactory.getLocalStorage('username');
         }
     }
 })();
