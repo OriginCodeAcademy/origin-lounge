@@ -33,10 +33,13 @@
 
         			console.log(response + "username and password successfully passed from controller");
 
-        			setStorage('token', response.access_token);
+                    var roles = JSON.parse(response.roles);
+        			
+                    setStorage('token', response.access_token);
         			setStorage('username', response.username);
         			setStorage('userId', response.userId);
-        			setStorage('roles',response.roles);
+                    setStorage('role', roles[0].Name);
+                    setStorage('roleId', roles[0].RoleId);
 
         			$state.go('main');
 
