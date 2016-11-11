@@ -1,15 +1,23 @@
+<!-- Login page view -->
+
+<!-- Origin Hat logo -->
 <div class="text-center resize"><img id="hat" src="app/img/OCA-Origin.jpg"></div>
+
+<!-- Login Form -->
 <div class="container-fluid">
    <div class="row">
        <div class="col-sm-4">
        </div>
        <div class="col-sm-4">
+           <!-- Username input -->
            <div class="form-group">
                <input type="text" class="form-control text-center" ng-model="vm.username" placeholder="Username">
            </div>
+           <!-- Password input -->
            <div class="form-group">
                <input type="password" class="form-control text-center" ng-model="vm.password" placeholder="Password">
            </div>
+           <!-- Login button -->
            <div class="form-group text-center">
                <button id="loginBtn" type="submit" ng-click="vm.login()" class="btn btn-block">Log In</button>
            </div>

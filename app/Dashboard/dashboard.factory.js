@@ -7,7 +7,6 @@
 
     DashboardFactory.$inject = ['$http', '$q'];
 
-    /* @ngInject */
     function DashboardFactory($http, $q) {
         var service = {
             func: func
