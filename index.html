@@ -53,6 +53,28 @@
     <script src="/app/Dashboard/dashboard.factory.js"></script>
     
     <!-- endinject -->
+     <script src="ui-bootstrap-tpls-2.2.0.min.js"></script>
+
+     <!-- Modal for idle warning -->
+    <script type="text/ng-template" id="warning-dialog.html">
+      <div class="modal-header">
+         <h3>You're Idle. Do Something!</h3>
+      </div>
+      <div idle-countdown="countdown" ng-init="" class="modal-body">
+         <uib-progressbar max="10" value="countdown" animate="false" class="progress-striped active">
+         </uib-progressbar>
+         You'll be logged out in {{countdown}} second(s).
+        </div>
+    </script>
+
+    <!-- Modal for idle timeout -->
+    <script type="text/ng-template" id="timedout-dialog.html">
+      <div class="modal-header">
+         <h3>You've Timed Out!</h3>
+      </div>
+    </script>
+
+
 </body>
 
 </html>

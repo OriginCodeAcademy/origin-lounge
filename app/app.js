@@ -2,7 +2,7 @@
     'use strict';
 
 angular
-        .module('app', ['ui.router','LocalStorageModule', 'toastr', 'ngIdle'])
+        .module('app', ['ui.router','LocalStorageModule', 'toastr', 'ngIdle', 'ui.bootstrap'])
         .value ('originAPIBaseURL', 'http://localhost:53737/')
         .config(function($stateProvider, $urlRouterProvider, localStorageServiceProvider, $httpProvider, IdleProvider, KeepaliveProvider) {
               localStorageServiceProvider
@@ -13,8 +13,8 @@ angular
             $httpProvider.interceptors.push('authInterceptorService');
 
             // set up the IdleProvider's idle and timeout values, as well as the KeepaliveProvider's interval
-            IdleProvider.idle(5); // 5 seconds idle
-            IdleProvider.timeout(5); // 5 seconds after idle, time the user out
+            IdleProvider.idle(10*60); // 10 minute idle
+            IdleProvider.timeout(10); // 10 seconds after idle, time the user out
             //KeepaliveProvider.interval(5*60); // 5 minute keep-alive ping
 
             // For any unmatched url, redirect to /state1
@@ -35,10 +35,8 @@ angular
             });
         })
 
-        .run(function($rootScope, $location, $state, storageFactory, Idle, toastr) {
+        .run(function($rootScope, $location, $state, storageFactory, Idle, toastr, $uibModal) {
 
-            // this starts watching for idle, when the app first runs. This also starts the Keepalive service by default.
-            Idle.watch();
 
             // rootScope handler for when user changes states
             $rootScope.$on('$stateChangeStart', function() {
@@ -51,25 +49,56 @@ angular
                 }
             });
 
+            // close any idle related modal that is currently open
+             function closeModals() {
+                    if ($rootScope.warning) {
+                      $rootScope.warning.close();
+                      $rootScope.warning = null;
+                    }
+
+                    if ($rootScope.timedout) {
+                      $rootScope.timedout.close();
+                      $rootScope.timedout = null;
+                    }
+              }
+
             // rootscope event handler for when the user appears to have first gone Idle 
             $rootScope.$on('IdleStart', function () {
 
+                // close any idle related modal that is currently open
+                closeModals();
+
+                // open up a idle warning modal 
+                $rootScope.warning = $uibModal.open({
+                  templateUrl: 'warning-dialog.html',
+                  windowClass: 'modal-danger'
+                });
+
             });
 
-            // rootscope event handler that follows after the IdleStart event. Includes a countdown until it considers the user to be timed out
+            // rootscope event handler that follows after the IdleStart event. The countdown value represents the IdleProvider.timeout value set above
             $rootScope.$on('IdleWarn', function (countdown) {
-
-                // toastr.error("You have been inactive for a while now...In " + countdown + " seconds you will be automatically logged out")
 
             });
 
             // rootScope event handler for when the user has been idle for long enough (idleDuration + timeout has passed)
             $rootScope.$on('IdleTimeout', function () {
 
+                // close any idle related modal that is currently open
+                closeModals();
+
+                // open up a timeout modal
+                $rootScope.timedout = $uibModal.open({
+                  templateUrl: 'timedout-dialog.html',
+                  windowClass: 'modal-danger'
+                });
+
                 // clear out local storage
                 storageFactory.clearAllLocalStorage();
-                // start up the idle watch
-                Idle.watch();
+                
+                // stop the idle watch
+                Idle.unwatch();
+                
                 // jump to the login page
                 $state.go('login');
 
@@ -79,7 +108,8 @@ angular
             // rootscope event handler for when Idle ends (user does something)
             $rootScope.$on('IdleEnd', function () {
 
-                console.log("Idle Ended");
+                // close all modals that are currently open
+                closeModals();
 
             });
 

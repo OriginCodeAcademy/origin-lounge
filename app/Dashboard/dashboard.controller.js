@@ -5,10 +5,10 @@
         .module('app')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['DashboardFactory', 'storageFactory'];
+    DashboardController.$inject = ['DashboardFactory', 'storageFactory', 'Idle'];
 
     
-    function DashboardController(DashboardFactory, storageFactory) {
+    function DashboardController(DashboardFactory, storageFactory, Idle) {
         var vm = this;
         vm.title = 'DashboardController';
 
@@ -17,6 +17,10 @@
         ////////////////
 
         function activate() {
+            
+            // this starts watching for idle. This also starts the Keepalive service by default.
+            Idle.watch();
+
             //grabs username from local storage and binds to view
             vm.username = storageFactory.getLocalStorage('username');
         }
