@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>Gulp Demo</title>
+<!-- bower:css -->
+<link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css" />
+<!-- endbower -->
+
+<!-- inject:css -->
+<!-- endinject -->
+</head>
+
+<body>
+<!-- bower:js -->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/fullcalendar/dist/fullcalendar.js"></script>
+<script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+<!-- endbower -->
+
+<div>
+	<p ui-view></p>
+</div>
+
+<!-- inject:js -->
+<script src="/app/app.js"></script>
+<script src="/app/test/calendar.controller.js"></script>
+<script src="/app/test/login.controller.js"></script>
+<script src="/app/test/test.controller.js"></script>
+<script src="/app/test/test.service.js"></script>
+<!-- endinject -->
+</body>
+</html>
