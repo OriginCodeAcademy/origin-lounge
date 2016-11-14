@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>Gulp Demo</title>
+<!-- bower:css -->
+<!-- endbower -->
+
+<!-- inject:css -->
+<!-- endinject -->
+</head>
+
+<body ng-controller="MainController as vm">
+<!-- bower:js -->
+<script src="bower_components/angular/angular.js"></script>
+<!-- endbower -->
+
+<h1>Git Hub!</h1>
+<button ng-click="vm.click()">Go</button>
+<!-- <button ng-click="vm.touch(vm.theCode)">KEEP TOUCHING</button>
+<button ng-click="vm.touchAgain(vm.accessToken)">DON'T STOP TOUCHING</button> -->
+
+<ul ng-repeat="data in vm.repo">
+	<li>{{data.name}}</li>
+	<li ng-href="{{data.html_url}}">{{data.html_url}}</li>
+</ul>
+
+<!-- inject:js -->
+<script src="/app/app.js"></script>
+<script src="/app/controller.js"></script>
+<!-- endinject -->
+</body>
+</html>

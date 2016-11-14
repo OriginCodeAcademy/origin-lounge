@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>Gulp Demo</title>
+<!-- bower:css -->
+<!-- endbower -->
+
+<!-- inject:css -->
+<!-- endinject -->
+</head>
+
+<body ng-controller="MainController as vm">
+<!-- bower:js -->
+<script src="bower_components/angular/angular.js"></script>
+<!-- endbower -->
+
+<h1>LinkedIn!</h1>
+
+<button ng-click="vm.buttonPress()">Go!</button>
+
+<ul>
+	<li>First Name {{vm.response.data.firstName}}</li>
+	<li>Last Name {{vm.response.data.lastName}}</li>
+	<li>Headline {{vm.response.data.headline}}</li>
+	<li>Id {{vm.response.data.id}}</li>
+	<li>URL {{vm.response.data.siteStandardProfileRequest.url}}</li>
+</ul>
+
+<!-- inject:js -->
+<script src="/app/app.js"></script>
+<script src="/app/controller.js"></script>
+<!-- endinject -->
+</body>
+</html>

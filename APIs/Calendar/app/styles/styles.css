@@ -1,0 +1,29 @@
+#calendar{
+	margin-left: 15%;
+	width: 70%;
+	height: 20%;
+}
+
+#eventBox {
+	margin-top: 2em;
+	margin-bottom: 3em;
+	border: 1px solid #ccc;
+	border-radius: 1em;
+}
+
+#addButton {
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+ .vresize {
+ 	resize: vertical;
+ }
+
+ #eventDate {
+ 	font-size: 1.5em;
+ }
+
+ #required {
+ 	color: red;
+ }
