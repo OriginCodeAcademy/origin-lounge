@@ -35,12 +35,24 @@
 
                     var roles = JSON.parse(response.roles);
         			
-                    // write the following to local storage
-                    setStorage('token', response.access_token);
-        			setStorage('username', response.username);
-        			setStorage('userId', response.userId);
-                    setStorage('role', roles[0].Name);
-                    setStorage('roleId', roles[0].RoleId);
+                    // create user Session object to be stored in local storage
+                    var userSession = {
+
+                        'token' : response.access_token,
+                        'dateTime' : Date.now(),
+                        'user' : {
+                            'userName' : response.username,
+                            'userId' : response.userId
+                        },
+                        'roles' : {
+                            'role' : roles[0].Name,
+                            'roleId' : roles[0].RoleId
+                        }
+
+                    };
+
+                    // store userSession object into local storage
+                    setStorage('userSession', userSession);
 
                     // jump to main/dashboard page
         			$state.go('main');
