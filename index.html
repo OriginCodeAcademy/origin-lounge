@@ -1,54 +1,99 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html ng-strict-di>
 
 <head>
     <meta charset="UTF-8">
-    <title>Origin Lounge</title>
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
-    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
-    <!-- endbower -->
-    <!-- inject:css -->
-
-    <link rel="stylesheet" href="/app/styles/style.css">
-
-    <!-- endinject -->
+    <title>OriginTest</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//rawgit.com/toopay/bootstrap-markdown/master/css/bootstrap-markdown.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">
+    <link rel="stylesheet" href="styles.css"></link>
+    <!-- external librairies CDN -->
 </head>
 
-<body>
-<div class="row">
- <div ui-view></div>  
-</div>
-   
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/lodash/dist/lodash.compat.js"></script>
-    <script src="bower_components/angularjs-dropdown-multiselect/src/angularjs-dropdown-multiselect.js"></script>
-    <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
-    <!-- endbower -->
-<!--     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script> -->
-
-    <!-- inject:js -->
-
-    <script src="/app/app.js"></script>
-
-    <script src="/app/Authentication/auth.controller.js"></script>
-
-    <script src="/app/Authentication/auth.factory.js"></script>
-
-    <script src="/app/Authentication/storage.factory.js"></script>
-
-    <script src="/app/Dashboard/dashboard.controller.js"></script>
-
-    <script src="/app/Dashboard/dashboard.factory.js"></script>
-
-    <!-- endinject -->
+<body ng-app="myApp" class="ng-cloak" ng-controller="CategoryController as vm">
+    <div class="col-xs-12" id="topnav">
+        <div>
+            <div class="col-md-3">
+                <a href=""><img src="https://avatars0.githubusercontent.com/u/13686326?v=3&s=200" id="navimg"></a>
+            </div>
+            <div class="col-md-6 text-center " id="topcenternav">
+                <h1><strong> ORIGIN LOUNGE</strong></h1></div>
+            <div class="col-md-3"><pre>login</pre></div>
+        </div>
+    </div>
+    <div class="col-md-3 col-lg-3 col-sm-3">
+        <div id="panel" class="panel panel-default">
+            <div class="panel-heading custom_class text-center">
+                <h3>Chat</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    <h4><b>CHANNELS</b></h4>
+                </p>
+                <ul>
+                    <li><a href="#"><h5># Cohort6</h5></a></li>
+                    <li><a href="#"><h5># Cohort7</h5></a></li>
+                    <li><a href="#"><h5># General</h5></a></li>
+                </ul>
+                <p>
+                    <h4><b>MESSAGES</b></h4>
+                </p>
+                <ul>
+                    <li><a href="#"><h5>seancahall</h5></a></li>
+                    <li><a href="#"><h5>cameronwilby</h5></a></li>
+                    <li><a href="#"><h5>jennyclayton</h5></a></li>
+                    <li><a href="#"><h5>kellylovett</h5></a></li>
+                    <li><a href="#"><h5>jeffwinkler</h5></a></li>
+                </ul>
+                <p>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-6 text-center">
+        <div ui-view></div>
+    </div>
+    <div class="col-md-3 col-lg-3">
+        <div id="panel" class="panel panel-default">
+            <div class="panel-heading custom_class text-center">
+                <h3><b>User Feed</b></h3>
+            </div>
+            <div class="panel-body">
+                <div class="text-center">
+                    <a ui-sref="countdown" class="btn btn-primary btn-lg active" id="links" role="button">Countdown<br><iframe src="http://free.timeanddate.com/countdown/i5gd5j01/n770/cf12/cm0/cu4/ct0/cs0/ca0/co0/cr0/ss0/cac525e6c/cpc525e6c/pc64abdd/tcfff/fs100/szw256/szh108/iso2016-12-16T00:00:00" allowTransparency="true" frameborder="0" width="90" height="26"></iframe></a>
+                    <a ng-repeat="cat in vm.data" ui-sref="announcement" type="submit" class="btn btn-primary btn-lg active" id="links" role="button">{{cat.name}}</a>
+                    <a ui-sref="managecontent" class="btn btn-primary btn-lg active" id="links" role="button">Manage<br/>Content</a>
+                    <a ui-sref="currentAssignment" class="btn btn-primary btn-lg active" id="links" role="button">Current<br/>Assignment</a>
+                </div>
+            </div>
+            <!-- editor -->
+            <script type="text/javascript" src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+            <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+            <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+            <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+            <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
+            <script type="text/javascript" src="//rawgit.com/Hypercubed/angular-marked/master/dist/angular-marked.min.js"></script>
+            <script type="text/javascript" src="//rawgit.com/toopay/bootstrap-markdown/master/js/bootstrap-markdown.js"></script>
+            <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+            <script type="text/javascript" src="//rawgit.com/pc035860/angular-highlightjs/master/build/angular-highlightjs.min.js"></script>
+            <!-- your ng-app file -->
+            <script src="/app/mdApp.js"></script>
+            <script type="text/javascript" src="bower_components/angular-markdown-editor-ghiscoding/src/angular-markdown-editor.js"></script>
+            <!-- bower:js -->
+            <script src="bower_components/angular/angular.js"></script>
+            <script src="bower_components/jquery/dist/jquery.js"></script>
+            <script src="bower_components/toastr/toastr.js"></script>
+            <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+            <script src="bower_components/animated/animated.js"></script>
+            <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+            <!-- endbower -->
+            <!-- inject:js -->
+            <script src="/app/categoryFactory.js"></script>
+     
+            <!-- endinject -->
 </body>
 
 </html>
