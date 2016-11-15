@@ -5,12 +5,13 @@
         .module('app')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['DashboardFactory', 'storageFactory', 'Idle'];
+    DashboardController.$inject = ['DashboardFactory', 'storageFactory', 'Idle', '$state'];
 
     
-    function DashboardController(DashboardFactory, storageFactory, Idle) {
+    function DashboardController(DashboardFactory, storageFactory, Idle, $state) {
         var vm = this;
         vm.title = 'DashboardController';
+        vm.logOut=logOut;
 
         activate();
 
@@ -22,7 +23,14 @@
             Idle.watch();
 
             //grabs username from local storage and binds to view
-            vm.username = storageFactory.getLocalStorage('username');
+            vm.username = storageFactory.getLocalStorage('userSession').user.userName;
         }
+        
+        // Logout on-click function that clears local storage and kicks user to login page
+        function logOut(){
+            storageFactory.clearAllLocalStorage();
+            $state.go('login');
+        }
+
     }
 })();

@@ -43,8 +43,8 @@ angular
 
 
                 // if a token doesn't exist in local storage, log the user out
-                var isLogin = storageFactory.getLocalStorage("token");
-                if(!isLogin){
+                var isLogin = storageFactory.getLocalStorage("userSession");
+                if(isLogin === null){
                    $location.path('/login');
                 }
             });
@@ -113,6 +113,10 @@ angular
 
             });
 
-        });
-
+            // On Before Unload event that clears local storage and redirects to the login page
+            window.onbeforeunload = function() {
+                storageFactory.clearAllLocalStorage();
+                return '';
+            };
+});
 })();
