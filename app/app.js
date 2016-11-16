@@ -2,8 +2,33 @@
     'use strict';
 
 angular
-        .module('app', ['ui.router','LocalStorageModule', 'toastr', 'ngIdle', 'ui.bootstrap'])
+        .module('app', ['ui.router','LocalStorageModule', 'toastr', 'ngIdle', 'ui.bootstrap', 'hc.marked', 'hljs', 'angular-markdown-editor'])
         .value ('originAPIBaseURL', 'http://localhost:53737/')
+
+
+        .config(['markedProvider', 'hljsServiceProvider', function(markedProvider, hljsServiceProvider) {
+            // markdown config
+            markedProvider.setOptions({
+                gfm: true,
+                tables: true,
+                sanitize: true,
+                highlight: function(code, lang) {
+                    if (lang) {
+                        return hljs.highlight(lang, code, true).value;
+                    } else {
+                        return hljs.highlightAuto(code).value;
+                    }
+                }
+            });
+
+
+            // highlight config
+            hljsServiceProvider.setOptions({
+                // replace tab with 4 spaces
+                tabReplace: '    '
+            });
+        }])
+
         .config(function($stateProvider, $urlRouterProvider, localStorageServiceProvider, $httpProvider, IdleProvider, KeepaliveProvider) {
               localStorageServiceProvider
              .setPrefix('')
@@ -32,6 +57,31 @@ angular
                     url: "/login",
                     templateUrl: "app/Authentication/login.html",
                     controller: 'AuthController as vm'
+
+            })
+
+                .state('main.countdown', {
+                    url: '/countdown',
+                    templateUrl: 'app/CustomContent/countdown.html'
+            })
+
+                .state('main.announcement', {
+                    url: '/announcement',
+                    templateUrl: 'app/CustomContent/announcement.html'
+            })
+
+                .state('main.currentAssignment', {
+                    url: '/currentAssignment',
+                    templateUrl: 'app/CustomContent/currAssignment.html'
+            })
+
+                .state('main.managecontent', {
+                    url: '/managecontent',
+                    templateUrl: 'app/CustomContent/managecontent.html',
+                    // controllerAs: 'vm',
+                    // controller: 'PostController'
+
+
             });
         })
 
@@ -47,6 +97,7 @@ angular
                 if(isLogin === null){
                    $location.path('/login');
                 }
+
             });
 
             // close any idle related modal that is currently open
@@ -113,10 +164,30 @@ angular
 
             });
 
+
             // On Before Unload event that clears local storage and redirects to the login page
             window.onbeforeunload = function() {
                 storageFactory.clearAllLocalStorage();
                 return '';
             };
-});
+        })
+
+        // controller for markdown editor
+        .controller("MainController", ["$scope", "marked", function MarkdownController($scope, marked) {
+            $scope.markdown = "Origin Code Academy:";
+            $scope.markdownService = marked('#TEST');
+
+
+            // --
+            // normal flow, function call
+            $scope.convertMarkdown = function() {
+                vm.convertedMarkdown = marked(vm.markdown);
+            };
+
+
+        }]);
+
+
+
+
 })();

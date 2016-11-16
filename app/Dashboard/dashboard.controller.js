@@ -24,6 +24,11 @@
 
             //grabs username from local storage and binds to view
             vm.username = storageFactory.getLocalStorage('userSession').user.userName;
+            
+            // get all categories from mongoDB
+            DashboardFactory.getCategory().then(function(response) {
+                vm.data = response.data;
+            })
         }
         
         // Logout on-click function that clears local storage and kicks user to login page
