@@ -57,6 +57,7 @@ angular
                     url: "/login",
                     templateUrl: "app/Authentication/login.html",
                     controller: 'AuthController as vm'
+
             })
 
                 .state('main.countdown', {
@@ -80,6 +81,7 @@ angular
                     // controllerAs: 'vm',
                     // controller: 'PostController'
 
+
             });
         })
 
@@ -95,6 +97,7 @@ angular
                 if(isLogin === null){
                    $location.path('/login');
                 }
+
             });
 
             // close any idle related modal that is currently open
@@ -161,6 +164,7 @@ angular
 
             });
 
+
             // On Before Unload event that clears local storage and redirects to the login page
             window.onbeforeunload = function() {
                 storageFactory.clearAllLocalStorage();
@@ -182,5 +186,8 @@ angular
 
 
         }]);
+
+
+
 
 })();
