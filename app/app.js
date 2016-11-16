@@ -78,8 +78,8 @@ angular
                 .state('main.managecontent', {
                     url: '/managecontent',
                     templateUrl: 'app/CustomContent/managecontent.html',
-                    // controllerAs: 'vm',
-                    // controller: 'PostController'
+                    controllerAs: 'vm',
+                    controller: 'CategoryController'
 
 
             });

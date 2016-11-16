@@ -8,9 +8,10 @@
                 <div class="form-group">
                     <form id="form1" class="form-inline">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="input1" placeholder="Add Category">
+                            <input type="text" class="form-control" id="input1" ng-model="vm.category" placeholder="Add Category">
                         </div>
-                        <button id="addbtn" type="submit" class="btn btn-primary">Add</button>
+                        <button id="addbtn" type="submit" class="btn btn-primary" ng-click="vm.addCategory()">Add</button>
+                          <button id="addbtn" type="submit" class="btn btn-primary" ng-click="vm.editCategory()">edit</button>
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox"> Active
@@ -38,7 +39,10 @@
                         </div>
                     </form>
                     <hr/>
-                    <textarea name="content" markdown-editor="{'iconlibrary': 'fa', addExtraButtons: true, resize: 'vertical'}" rows="10" ng-model="markdown"></textarea>
+                    
+                    <pre>{{vm.contentTest}}</pre>
+                    <input type="text" placeholder="Title" ng-model="vm.contentTitle" class="form-control">
+                    <textarea name="content" markdown-editor="{'iconlibrary': 'fa', addExtraButtons: true, resize: 'vertical'}" rows="10" ng-model="vm.markdown"></textarea>
                 </div>
             </div>
             <div class="col-md-12">
@@ -49,7 +53,7 @@
                 </div>
             </div>
             <div>
-                <button id="submit" type="submit" class="btn btn-md">Submit</button>
+                <button id="submit" type="submit" class="btn btn-md" ng-click="vm.addContent(vm.contentTitle, vm.markdown)">Submit</button>
             </div>
         </div>
     </div>
