@@ -13,7 +13,7 @@ angular
             $httpProvider.interceptors.push('authInterceptorService');
 
             // set up the IdleProvider's idle and timeout values, as well as the KeepaliveProvider's interval
-            IdleProvider.idle(10*60); // 10 minute idle
+            IdleProvider.idle(10000*60); // 10 minute idle
             IdleProvider.timeout(10); // 10 seconds after idle, time the user out
             //KeepaliveProvider.interval(5*60); // 5 minute keep-alive ping
 
@@ -31,7 +31,7 @@ angular
 
                 .state('main.chat', {
                     url: "/chat", 
-                    templateUrl: "app/Chat/chat.html",
+                    templateUrl: "app/Chat/testpage.html",
                     controller: "chatController as vm", 
                     parent: "main"
             })

@@ -69,12 +69,11 @@ gulp.task('develop', function () {
 
 gulp.task('app', function(){
     var options = {
-        uri: 'http://localhost:8081',
+        uri: 'http://localhost:8080',
         app: 'chrome'
     };
     gulp.src('./index.html')
         .pipe(open(options));
 });
 
-
-gulp.task('serve', ['connect', 'watch', 'injectables', 'develop']);
+gulp.task('serve', ['connect', 'watch', 'injectables', 'develop', 'app']);

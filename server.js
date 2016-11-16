@@ -7,9 +7,6 @@ var io = require('socket.io').listen(http, {
 /*
 // original working chat pieces
 
-
-
-
 var express = require('express');
 var http = require('http');
 var router = express.Router();
@@ -56,10 +53,10 @@ var chatSchema = mongoose.Schema({ // message setup
 var Chat = mongoose.model('Message', chatSchema);
 
 // create unique chatroom (will use if statement to parse through current chatrooms)
-chatId = 496344; //Math.round((Math.random() * 10000000));
-//console.log("Current Chatroom: " + chatId);
+Math.round((Math.random() * 10000000));
+console.log("Current Chatroom: " + chatId);
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/app/Chat/chat.html');
 });
 
 io.on('connection', function(socket){
@@ -84,7 +81,7 @@ io.on('connection', function(socket){
   	});
 });
 
-http.listen(8081, function(){
-  //console.log('currently running at: localhost:' + 3001 + '/chat/' + chatId);
+http.listen(3000, function(){
+  console.log('currently running at: localhost:' + 3000 + '/chat/' + chatId);
 });
 
