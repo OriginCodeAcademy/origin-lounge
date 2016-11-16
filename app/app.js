@@ -28,6 +28,13 @@ angular
                     controller: 'DashboardController as vm'
 
             })
+
+                .state('main.chat', {
+                    url: "/chat", 
+                    templateUrl: "app/Chat/chat.html",
+                    controller: "chatController as vm", 
+                    parent: "main"
+            })
                 .state('login', {
                     url: "/login",
                     templateUrl: "app/Authentication/login.html",
