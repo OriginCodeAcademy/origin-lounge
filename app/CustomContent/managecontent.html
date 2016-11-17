@@ -1,35 +1,46 @@
+<!-- middle panel of dashboard/main page -->
+
 <div class="panel panel-default">
     <div class="panel-heading custom_class">
         <h3><b>Manage Content</b></h3></div>
+    <!-- insert all the child "Categories" content at this point, when a Category is selected -->
     <div ui-view></div>
-    <div class="panel-body" ng-controller="MainController">
+    <div class="panel-body">
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
                     <form id="form1" class="form-inline">
                         <div class="form-group">
+                            <!-- Add Category Input field -->
                             <input type="text" class="form-control" id="input1" ng-model="vm.category" placeholder="Add Category">
                         </div>
+
+                        <!-- Add Category Button -->
                         <button id="addbtn" type="submit" class="btn btn-primary" ng-click="vm.addCategory()">Add</button>
-                          <button id="addbtn" type="submit" class="btn btn-primary" ng-click="vm.editCategory()">edit</button>
+                        
+                        <!-- Edit Category Button -->
+                        <button id="addbtn" type="submit" class="btn btn-primary" ng-click="vm.editCategory()">edit</button>
+                        
+                        <!-- Active checkbox -->
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox"> Active
                             </label>
                         </div>
                         <br>
+
                         <div class="btn-group">
-                            <button id="rolebtn" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Role <span class="caret"></span>
-                            </button>
+
+                            <!-- Role drop down list -->
+                            <button id="rolebtn" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Role<span class="caret"></span></button>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Student</a></li>
                                 <li><a href="#">Alumni</a></li>
                             </ul>
                             <div class="btn-group">
-                                <button id="catbtn" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Category <span class="caret"></span>
-                                </button>
+
+                                <!-- Category drop down menu -->
+                                <button id="catbtn" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Category <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
                                     <li><a href="#">Action</a></li>
                                     <li><a href="#">Assignments</a></li>
@@ -38,20 +49,31 @@
                             </div>
                         </div>
                     </form>
-                    <hr/>
+                    <br>
+
+                    <!-- Content Title Input --> 
+                    <input type="text" placeholder="{{vm.markdownTitle}}" ng-model="vm.contentTitle" class="form-control">
                     
-                    <pre>{{vm.contentTest}}</pre>
-                    <input type="text" placeholder="Title" ng-model="vm.contentTitle" class="form-control">
+                    <!-- Markdown text editor window -->
                     <textarea name="content" markdown-editor="{'iconlibrary': 'fa', addExtraButtons: true, resize: 'vertical'}" rows="10" ng-model="vm.markdown"></textarea>
                 </div>
             </div>
+
+            <!-- Markdown preview window -->
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="comment">Preview Result:</label>
-                    <div marked="markdown" class="outline" style="padding: 20px">
+                    <label for="comment">Markdown Preview:</label>
+                    
+                    <!-- Title of Content -->
+                    <h1 class="text-left">{{vm.markdownTitle}}</h1>
+
+                    <!-- Markdown preview -->
+                    <div marked="vm.markdown" class="outline" style="padding: 20px">
                     </div>
                 </div>
             </div>
+
+            <!-- Submit button -->
             <div>
                 <button id="submit" type="submit" class="btn btn-md" ng-click="vm.addContent(vm.contentTitle, vm.markdown)">Submit</button>
             </div>
