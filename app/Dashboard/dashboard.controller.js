@@ -11,11 +11,9 @@
     function DashboardController(DashboardFactory, storageFactory, Idle, $state) {
         var vm = this;
         vm.title = 'DashboardController';
-        vm.logOut=logOut;
+        vm.logOut = logOut;
 
         activate();
-
-        ////////////////
 
         function activate() {
             
@@ -25,10 +23,37 @@
             //grabs username from local storage and binds to view
             vm.username = storageFactory.getLocalStorage('userSession').user.userName;
             
-            // get all categories from mongoDB
-            DashboardFactory.getCategory().then(function(response) {
-                vm.data = response.data;
-            })
+            // get all categories
+            DashboardFactory.getCategory().then(
+
+                function(response) {
+                
+                    // bind categories to the view
+                    vm.categories = response;
+                    console.log(response);
+                
+                },
+
+                function(error){
+
+                    console.log(error);
+
+                });
+
+            DashboardFactory.getRoles().then(
+
+                function(response) {
+
+                    vm.roles = response;
+                    console.log(response);
+
+                },
+
+                function(error) {
+
+                    console.log(error);
+                
+                });
         }
         
         // Logout on-click function that clears local storage and kicks user to login page

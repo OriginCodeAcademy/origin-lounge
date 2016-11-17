@@ -1,4 +1,5 @@
 <!-- Main/Dashboard view  -->
+
 <!-- Top Nav -->
 <div class="col-md-12" id="topnav">
     <div>
@@ -40,6 +41,8 @@
 <!-- Everything else below the Top Nav -->
 
 <div class="col-md-3 col-lg-3 col-sm-3">
+
+        <!-- Left panel for chat -->
         <div id="panel" class="panel panel-default">
             <div class="panel-heading custom_class text-center">
                 <h3>Chat</h3>
@@ -68,9 +71,13 @@
             </div>
         </div>
     </div>
+
+    <!-- Middle panel that displays custom content -->
     <div class="col-md-6 col-lg-6 text-center">
         <div ui-view></div>
     </div>
+
+    <!-- right panel (aka User Feed) that displays all categories -->
     <div class="col-md-3 col-lg-3">
         <div id="panel" class="panel panel-default">
             <div class="panel-heading custom_class text-center">
@@ -79,8 +86,10 @@
             <div class="panel-body">
                 <div class="text-center">
                     <a ui-sref="main.countdown" class="btn btn-primary btn-lg active" id="links" role="button">Countdown<br><iframe src="http://free.timeanddate.com/countdown/i5gd5j01/n770/cf12/cm0/cu4/ct0/cs0/ca0/co0/cr0/ss0/cac525e6c/cpc525e6c/pc64abdd/tcfff/fs100/szw256/szh108/iso2016-12-16T00:00:00" allowTransparency="true" frameborder="0" width="90" height="26"></iframe></a>
-                    <a ng-repeat="cat in vm.data" ui-sref="main.announcement" type="submit" class="btn btn-primary btn-lg active" id="links" role="button">{{cat.name}}</a>
+                    <a ng-repeat="category in vm.categories" ui-sref="main.announcement" type="submit" class="btn btn-primary btn-lg active" id="links" role="button">{{category.name}}</a>
                     <a ui-sref="main.managecontent" class="btn btn-primary btn-lg active" id="links" role="button">Manage<br/>Content</a>
                     <a ui-sref="main.currentAssignment" class="btn btn-primary btn-lg active" id="links" role="button">Current<br/>Assignment</a>
                 </div>
             </div>
+        </div>
+    </div>
