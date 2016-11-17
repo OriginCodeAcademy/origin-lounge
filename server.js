@@ -1,36 +1,20 @@
+
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io').listen(http, {
     'log level': 2
 });
-
-/*
-// original working chat pieces
-
-var express = require('express');
-var http = require('http');
-var router = express.Router();
-var app = express();
-
-var io = require('socket.io');
-
-
-http.createServer(app).listen(app.get('port'),
-	function() {
-		console.log("Express server listening on port " + app.get('port'));
-	});
-app.get('/', function(req, res) {
-	res.send('hello world');
-});
-
-app.set('port', process.env.PORT || 3000);
-*/
+//var chat = require('/app/Chat');
+//module.exports = express.createServer();
 
 var mongoose = require('mongoose');
 connections = [];
 var username = "Phoenix";
 var chatId; // will be unique for each chatroom
 var userId = 1; // specific users will be given here 
+
+// Keep the above code in server.js
+
 
 
 mongoose.Promise = global.Promise;
@@ -53,11 +37,11 @@ var chatSchema = mongoose.Schema({ // message setup
 var Chat = mongoose.model('Message', chatSchema);
 
 // create unique chatroom (will use if statement to parse through current chatrooms)
-Math.round((Math.random() * 10000000));
+chatId = Math.round((Math.random() * 10000000));
 console.log("Current Chatroom: " + chatId);
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/app/Chat/chat.html');
-});
+
+
+
 
 io.on('connection', function(socket){
 	// show connection
@@ -81,7 +65,19 @@ io.on('connection', function(socket){
   	});
 });
 
+
+
+
+
+/*app.use('/', function(req, res){
+  res.location( __dirname + '/app/Chat');
+});*/
+// keep the listening code within the server.js
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/app/Chat/chat.html');
+});
+
 http.listen(3000, function(){
-  console.log('currently running at: localhost:' + 3000 + '/chat/' + chatId);
+  console.log('currently running at: localhost:' + 3000 + chatId);
 });
 

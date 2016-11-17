@@ -1,13 +1,14 @@
-<div>
-	<div id="chatWrap">
-        <ul id="messages">Test Chat</ul>
-        <form action="" id="form">
-        <div>
-          <input id="m" autocomplete="off" /><button>Send</button>
-          </div>
-        </form>
+
+	<div ng-controller="chatController">
+		<div id="chatWrap">
+        	<ul id="messages"></ul>
+        	<form action="" id="form">
+        		<div>
+          		<input id="m" autocomplete="off" /><button>Send</button>
+          		</div>
+        	</form>
       </div>
-</div>
+	</div>
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script >
@@ -22,3 +23,7 @@
         $('#messages').append($('<li>').text(msg));
       });
     </script>
+	
+
+
+
