@@ -65,21 +65,16 @@ angular
                     templateUrl: 'app/CustomContent/countdown.html'
             })
 
-                .state('main.announcement', {
-                    url: '/announcement',
-                    templateUrl: 'app/CustomContent/announcement.html'
-            })
-
-                .state('main.currentAssignment', {
-                    url: '/currentAssignment',
-                    templateUrl: 'app/CustomContent/currAssignment.html'
-            })
-
                 .state('main.managecontent', {
                     url: '/managecontent',
-                    templateUrl: 'app/CustomContent/managecontent.html',
-                    controllerAs: 'vm',
-                    controller: 'CategoryController'
+                    templateUrl: 'app/CustomContent/manage_content_and_categories.html',
+                    controller: 'ManageContentAndCategoriesController as vm'
+            })
+
+                .state('main.customcontent', {
+                    url: '/customcontent/:categoryId',
+                    templateUrl: 'app/CustomContent/customcontent.html',
+                    controller: 'CustomContentController as vm'
 
 
             });

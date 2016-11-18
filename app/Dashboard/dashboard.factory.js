@@ -9,9 +9,10 @@
 
     function DashboardFactory($http, $q, storageFactory, originAPIBaseURL) {
         var service = {
-            getCategory: getCategory,
+            getCategoryNamesByRoleId: getCategoryNamesByRoleId,
             postCategory: postCategory,
             editCategory: editCategory,
+            getContentByCategoryId: getContentByCategoryId,
             getContent: getContent,
             postContent: postContent,
             getRoles: getRoles
@@ -19,14 +20,45 @@
         };
         return service;
 
-        // get all Categories from mongoDB
-        function getCategory() {
+       
+        function getCategoryNamesByRoleId(roleId) {
             
             var defer = $q.defer();
 
             $http({
                 method:'GET',
-                url:'http://localhost:3000/api/category'
+                url:'http://localhost:3000/api/categorynamesbyroleid/' + roleId
+            })
+
+            .then(function(response){
+
+                if (typeof response.data === "object") {
+
+                    defer.resolve(response.data);
+                
+                } else {
+
+                    defer.reject(response);
+                }
+    
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;
+        }
+
+        function getContentByCategoryId(categoryId) {
+            
+            var defer = $q.defer();
+
+            $http({
+                method:'GET',
+                url:'http://localhost:3000/api/contentbycategoryid/' + categoryId
             })
 
             .then(function(response){

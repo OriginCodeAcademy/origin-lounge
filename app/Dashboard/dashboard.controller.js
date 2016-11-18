@@ -12,6 +12,7 @@
         var vm = this;
         vm.title = 'DashboardController';
         vm.logOut = logOut;
+        vm.getContentByCategoryId = getContentByCategoryId;
 
         activate();
 
@@ -22,9 +23,12 @@
 
             //grabs username from local storage and binds to view
             vm.username = storageFactory.getLocalStorage('userSession').user.userName;
-            
-            // get all categories
-            DashboardFactory.getCategory().then(
+
+            //grabs roleId from local storage
+            var roleId = storageFactory.getLocalStorage('userSession').roles.roleId;
+
+            // get all categories for the specific role of the user that is logged in
+            DashboardFactory.getCategoryNamesByRoleId(roleId).then(
 
                 function(response) {
                 
@@ -60,6 +64,11 @@
         function logOut(){
             storageFactory.clearAllLocalStorage();
             $state.go('login');
+        }
+
+        function getContentByCategoryId(categoryId) {
+
+            $state.go('main.customcontent', {categoryId: categoryId});
         }
 
     }
