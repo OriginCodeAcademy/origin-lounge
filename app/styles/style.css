@@ -7,6 +7,22 @@
     border-radius: 3px;
 }
 
+
+.chat_list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #525E6C;
+}
+
+.chat_messages_and_channels {
+    display: block;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
 .panel > .panel-heading {
     background-image: none;
     background-color: #64ABDD;
@@ -92,26 +108,9 @@
     border-color: #64ABDD;
 }
 
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 200px;
-    background-color: #525E6C;
-}
-
-li a {
-    display: block;
-    color: white;
-    padding: 8px 16px;
-    text-decoration: none;
-}
-
-
 /* Change the link color on hover */
 
-li a:hover {
+.chat_messages_and_channels:hover {
     background-color: lightgrey;
     color: #525E6C;
 }
