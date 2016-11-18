@@ -1,26 +1,80 @@
- <!-- Main/Dashboard view  -->
-
- <!-- Top Nav -->
- <div class="col-md-12" id="topnav">
+<!-- Main/Dashboard view  -->
+<!-- Top Nav -->
+<div class="col-md-12" id="topnav">
     <div>
         <!-- Origin hat logo -->
-        <div class="col-md-3" ><a href=""><img src="app/img/OCAhat.jpg" id="navimg"></a> </div>
-        <div class="col-md-6 text-center " id="topcenternav"><h1><strong> ORIGIN LOUNGE</strong></h1></div>
-        <!-- Displays username that is logged in --> 
-        <div class="col-md-3 text-right"><strong>{{vm.username}}</strong></div>
+        <div class="col-md-3">
+            <a href=""><img src="app/img/OCAhat.jpg" id="navimg"></a>
+        </div>
+        <div class="col-md-6 text-center " id="topcenternav">
+            <h1><strong> ORIGIN LOUNGE</strong></h1>
+        </div>
+        <!-- Displays username that is logged in -->
+        <div class="col-md-3 text-right form-group">
+            <div class="row">
+                <div class="col-md-8">
+                    <!-- Search Input -->
+                    <div class="input-group row">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                             <button class="btn btn-default glyphicon glyphicon-search" type="button"></button>
+                        </span>
+                    </div>
+                </div>
+                <!-- Drop down menu -->
+                <div class="dropdown col-md-4">
+                    <!-- Username -->
+                    <button class="btn btn-default dropdown-toggle form-control" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{vm.username}}
+                    </button>
+                    <!-- Log Out drop down menu selection -->
+                    <div class="dropdown-menu dropdown-menu-right form-control" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item align-center" ng-click="vm.logOut()">Log Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
- </div>
-
+</div>
+</div>
 <!-- Everything else below the Top Nav -->
- <div class="col-md-12">
-    <div>
-        <!-- Chat info -->
-        <div class="col-md-3" id="bottomleftpnav" ui-sref="main.chat"><pre>left side</pre></div>
-        <!-- Main view -->
-        <div class="col-md-6 text-center" id="bottomcenternav"><pre><p ui-view></p></pre></div>
-        <!-- Custom content -->
-        <div class="col-md-3" id="bottomrightnav"><pre>right side</pre></div>
-    </div>
 
- </div>
+<div class="col-md-3 col-lg-3 col-sm-3">
+        <div id="panel" class="panel panel-default">
+            <div class="panel-heading custom_class text-center">
+                <h3>Chat</h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    <h4><b>CHANNELS</b><span class="pull-right"><button class="btn btn-primary btn-xs active" ui-sref="main.chatAdd">+</button></span></h4>
+                </p>
+                <ul ng-repeat="groups in vm.chatGroups">
+                    <li ng-hide="groups.groupname === 'direct'"><a href="#"><h5 ng-val="groups.chatid">{{groups.groupname}}</h5></a></li>
+                </ul>
+                <p>
+                    <h4><b>MESSAGES</b><span class="pull-right"><button class="btn btn-primary btn-xs active">+</button></span></h4>
+                </p>
+                <ul ng-repeat="groups in vm.chatGroups ">
+                    <li ng-show="groups.groupname === 'direct'"><a href="#"><h5 ng-val="groups.chatid"><span ng-repeat="name in groups.usernames">    {{name}},   </span></h5></a></li>
+                </ul>
+                <p>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-6 text-center">
+        <div ui-view></div>
+    </div>
+    <div class="col-md-3 col-lg-3">
+        <div id="panel" class="panel panel-default">
+            <div class="panel-heading custom_class text-center">
+                <h3><b>User Feed</b></h3>
+            </div>
+            <div class="panel-body">
+                <div class="text-center">
+                    <a ui-sref="main.countdown" class="btn btn-primary btn-lg active" id="links" role="button">Countdown<br><iframe src="http://free.timeanddate.com/countdown/i5gd5j01/n770/cf12/cm0/cu4/ct0/cs0/ca0/co0/cr0/ss0/cac525e6c/cpc525e6c/pc64abdd/tcfff/fs100/szw256/szh108/iso2016-12-16T00:00:00" allowTransparency="true" frameborder="0" width="90" height="26"></iframe></a>
+                    <a ng-repeat="cat in vm.data" ui-sref="main.announcement" type="submit" class="btn btn-primary btn-lg active" id="links" role="button">{{cat.name}}</a>
+                    <a ui-sref="main.managecontent" class="btn btn-primary btn-lg active" id="links" role="button">Manage<br/>Content</a>
+                    <a ui-sref="main.currentAssignment" class="btn btn-primary btn-lg active" id="links" role="button">Current<br/>Assignment</a>
+                </div>
+            </div>

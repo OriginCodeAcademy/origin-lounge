@@ -2,8 +2,33 @@
     'use strict';
 
 angular
-        .module('app', ['ui.router','LocalStorageModule', 'toastr', 'ngIdle', 'ui.bootstrap'])
+        .module('app', ['ui.router','LocalStorageModule', 'toastr', 'ngIdle', 'ui.bootstrap', 'hc.marked', 'hljs', 'angular-markdown-editor'])
         .value ('originAPIBaseURL', 'http://localhost:53737/')
+
+
+        .config(['markedProvider', 'hljsServiceProvider', function(markedProvider, hljsServiceProvider) {
+            // markdown config
+            markedProvider.setOptions({
+                gfm: true,
+                tables: true,
+                sanitize: true,
+                highlight: function(code, lang) {
+                    if (lang) {
+                        return hljs.highlight(lang, code, true).value;
+                    } else {
+                        return hljs.highlightAuto(code).value;
+                    }
+                }
+            });
+
+
+            // highlight config
+            hljsServiceProvider.setOptions({
+                // replace tab with 4 spaces
+                tabReplace: '    '
+            });
+        }])
+
         .config(function($stateProvider, $urlRouterProvider, localStorageServiceProvider, $httpProvider, IdleProvider, KeepaliveProvider) {
               localStorageServiceProvider
              .setPrefix('')
@@ -13,7 +38,7 @@ angular
             $httpProvider.interceptors.push('authInterceptorService');
 
             // set up the IdleProvider's idle and timeout values, as well as the KeepaliveProvider's interval
-            IdleProvider.idle(10000*60); // 10 minute idle
+            IdleProvider.idle(10*60); // 10 minute idle
             IdleProvider.timeout(10); // 10 seconds after idle, time the user out
             //KeepaliveProvider.interval(5*60); // 5 minute keep-alive ping
 
@@ -28,18 +53,43 @@ angular
                     controller: 'DashboardController as vm'
 
             })
-
-                .state('main.chat', {
-                    url: "/chat", 
-                    templateUrl: "app/Chat/testpage.html",
-                    controller: "chatController as vm", 
-                    parent: "main"
-            })
                 .state('login', {
                     url: "/login",
                     templateUrl: "app/Authentication/login.html",
                     controller: 'AuthController as vm'
-            });
+
+            })
+
+                .state('main.countdown', {
+                    url: '/countdown',
+                    templateUrl: 'app/CustomContent/countdown.html'
+            })
+
+                .state('main.announcement', {
+                    url: '/announcement',
+                    templateUrl: 'app/CustomContent/announcement.html'
+            })
+
+                .state('main.currentAssignment', {
+                    url: '/currentAssignment',
+                    templateUrl: 'app/CustomContent/currAssignment.html'
+            })
+
+                .state('main.managecontent', {
+                    url: '/managecontent',
+                    templateUrl: 'app/CustomContent/managecontent.html',
+                    controllerAs: 'vm',
+                    controller: 'CategoryController'
+
+
+            })
+
+                .state('main.chatAdd', {
+                    url: '/newChat',
+                    templateUrl: 'app/Chat/newChat.html',
+                    controllerAs: 'vm',
+                    controller: 'addChatController'
+                });
         })
 
         .run(function($rootScope, $location, $state, storageFactory, Idle, toastr, $uibModal) {
@@ -50,10 +100,11 @@ angular
 
 
                 // if a token doesn't exist in local storage, log the user out
-                var isLogin = storageFactory.getLocalStorage("token");
-                if(!isLogin){
+                var isLogin = storageFactory.getLocalStorage("userSession");
+                if(isLogin === null){
                    $location.path('/login');
                 }
+
             });
 
             // close any idle related modal that is currently open
@@ -120,6 +171,30 @@ angular
 
             });
 
-        });
+
+            // On Before Unload event that clears local storage and redirects to the login page
+            window.onbeforeunload = function() {
+                storageFactory.clearAllLocalStorage();
+                return '';
+            };
+        })
+
+        // controller for markdown editor
+        .controller("MainController", ["$scope", "marked", function MarkdownController($scope, marked) {
+            $scope.markdown = "Origin Code Academy:";
+            $scope.markdownService = marked('#TEST');
+
+
+            // --
+            // normal flow, function call
+            $scope.convertMarkdown = function() {
+                vm.convertedMarkdown = marked(vm.markdown);
+            };
+
+
+        }]);
+
+
+
 
 })();

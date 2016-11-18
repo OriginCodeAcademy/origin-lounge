@@ -9,7 +9,17 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
     <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-markdown/css/bootstrap-markdown.min.css" />
+    <link rel="stylesheet" href="bower_components/angular-markdown-editor-ghiscoding/styles/angular-markdown-editor.css" />
     <!-- endbower -->
+
+    <!-- Mark down related: not auto bower injected. Need to make it auto bower injected later -->
+<!--     <link rel="stylesheet" href="//rawgit.com/toopay/bootstrap-markdown/master/css/bootstrap-markdown.min.css"> -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">
+
+    <!-- linking to CDN because we need the latest version of bootstrap. Can we find a way to update bootstrap without having to do this? -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+
     <!-- inject:css -->
 
     <link rel="stylesheet" href="/app/styles/style.css">
@@ -21,8 +31,6 @@
 <div class="row">
  <div ui-view></div>  
 </div>
-
-<div id="testLoad"></div>
    
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -34,13 +42,32 @@
     <script src="bower_components/angularjs-dropdown-multiselect/src/angularjs-dropdown-multiselect.js"></script>
     <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
     <script src="bower_components/ng-idle/angular-idle.js"></script>
-    <script src="bower_components/socket.io-client/socket.io.js"></script>
+    <script src="bower_components/angular-highlightjs/build/angular-highlightjs.js"></script>
+    <script src="bower_components/marked/lib/marked.js"></script>
+    <script src="bower_components/angular-marked/dist/angular-marked.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/bootstrap-markdown/js/bootstrap-markdown.js"></script>
+    <script src="bower_components/angular-markdown-editor-ghiscoding/src/angular-markdown-editor.js"></script>
     <!-- endbower -->
+
 <!--     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script> -->
- <!--  <script>$("#testLoad").load("http://localhost:3000/");</script> -->
+
+
+    <!-- not auto bower injected. Need to make it auto bower injected later -->
+    <!-- <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
+
+      <!-- mark down related -->
+<!--       <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
+      <script type="text/javascript" src="//rawgit.com/Hypercubed/angular-marked/master/dist/angular-marked.min.js"></script>
+      <script type="text/javascript" src="//rawgit.com/toopay/bootstrap-markdown/master/js/bootstrap-markdown.js"></script> -->
+      <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+      <!-- <script type="text/javascript" src="//rawgit.com/pc035860/angular-highlightjs/master/build/angular-highlightjs.min.js"></script> -->
+
+
+
     <!-- inject:js -->
-    
     
     <script src="/app/app.js"></script>
     
@@ -52,17 +79,11 @@
     
     <script src="/app/Authentication/storage.factory.js"></script>
     
-    <script src="/app/Chat/app.js"></script>
+    <script src="/app/Chat/addChat.controller.js"></script>
     
-    <script src="/app/Chat/chat.controller.js"></script>
+    <script src="/app/Chat/addChat.factory.js"></script>
     
-    <script src="/app/Chat/chat.factory.js"></script>
-    
-    <script src="/app/Chat/chat.website.controller.js"></script>
-    
-    <script src="/app/Chat/chat.website.factory.js"></script>
-    
-    <script src="/app/Chat/test.js"></script>
+    <script src="/app/CustomContent/customContent.controller.js"></script>
     
     <script src="/app/Dashboard/dashboard.controller.js"></script>
     
@@ -71,7 +92,10 @@
     <!-- endinject -->
      <script src="ui-bootstrap-tpls-2.2.0.min.js"></script>
 
+     <!-- linking to CDN because we need the latest version of bootstrap. Can we find a way to update bootstrap without having to do this? -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
      <!-- Modal for idle warning -->
+    
     <script type="text/ng-template" id="warning-dialog.html">
       <div class="modal-header">
          <h3>You're Idle. Do Something!</h3>
@@ -90,6 +114,7 @@
       </div>
     </script>
 
-  
+
 </body>
+
 </html>
