@@ -5,11 +5,14 @@
         .module('app')
         .controller('ManageContentAndCategoriesController', ManageContentAndCategoriesController);
 
-    ManageContentAndCategoriesController.$inject = ['DashboardFactory'];
+    ManageContentAndCategoriesController.$inject = ['DashboardFactory', '$stateParams'];
 
     /* @ngInject */
-    function ManageContentAndCategoriesController(DashboardFactory) {
+    function ManageContentAndCategoriesController(DashboardFactory, $stateParams) {
         var vm = this;
+
+        vm.contentTitle = $stateParams.contentTitle;
+        vm.contentBody = $stateParams.contentBody;
 
         vm.addCategory = addCategory;
         vm.editCategory = editCategory;
@@ -22,7 +25,7 @@
 
         function activate() {
             
-            getContentById();
+            //getContentById();
         
         }
 
