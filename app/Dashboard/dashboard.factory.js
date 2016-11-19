@@ -9,14 +9,19 @@
 
     function DashboardFactory($http, $q, storageFactory, originAPIBaseURL) {
         var service = {
-            getCategoryNamesByRoleId: getCategoryNamesByRoleId,
-            postCategory: postCategory,
+
+            deleteContentCategoryEntry: deleteContentCategoryEntry,
+
             editCategory: editCategory,
+
+            getCategoryNamesByRoleId: getCategoryNamesByRoleId,
+            getRoles: getRoles,
             getContentByCategoryId: getContentByCategoryId,
             getContent: getContent,
-            postContent: postContent,
-            getRoles: getRoles
-            // editContent: editContent
+            
+            postCategory: postCategory,
+            postContent: postContent
+
         };
         return service;
 
@@ -254,6 +259,7 @@
 
                 if (typeof response.data === "object") {
 
+                    // store all roles into local storage
                     storageFactory.setLocalStorage('roles', response.data);
                     defer.resolve(response.data);
                 
@@ -271,6 +277,40 @@
             });
 
             return defer.promise;
+          }
+
+          // delete a ContentCategory entry in the mongoDB
+          function deleteContentCategoryEntry (categoryId, contentId) {
+
+            $http({
+                method: 'DELETE',
+                url: '//localhost:3000/api/content + ' ,
+                headers: {
+
+                }
+            })
+
+            .then(function(response){
+
+                if (typeof response.data === "object") {
+
+                    defer.resolve(response.data);
+                
+                } else {
+
+                    defer.reject(response);
+                }
+
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;
+
           }
 
     }

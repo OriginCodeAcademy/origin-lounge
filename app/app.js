@@ -3,8 +3,8 @@
 
 angular
         .module('app', ['ui.router','LocalStorageModule', 'toastr', 'ngIdle', 'ui.bootstrap', 'hc.marked', 'hljs', 'angular-markdown-editor'])
-        .value ('originAPIBaseURL', 'http://localhost:53737/')
-
+        //.value ('originAPIBaseURL', 'http://localhost:53737/')
+        .value ('originAPIBaseURL', 'http://origincodeacademyapi.azurewebsites.net/')
 
         .config(['markedProvider', 'hljsServiceProvider', function(markedProvider, hljsServiceProvider) {
             // markdown config
@@ -66,14 +66,20 @@ angular
             })
 
                 .state('main.managecontent', {
-                    url: '/managecontent',
+                    url: '/managecontent/:contentTitle/:contentBody',
                     templateUrl: 'app/CustomContent/manage_content_and_categories.html',
                     controller: 'ManageContentAndCategoriesController as vm'
             })
 
                 .state('main.customcontent', {
-                    url: '/customcontent/:categoryId',
+                    url: '/customcontent/:categoryId/:categoryName',
                     templateUrl: 'app/CustomContent/customcontent.html',
+                    controller: 'CustomContentController as vm'
+
+            })
+                  .state('main.customcontent.customcontentbody', {
+                    url: '/customcontentbody/:contentTitle/:contentBody',
+                    templateUrl: 'app/CustomContent/customcontentbody.html',
                     controller: 'CustomContentController as vm'
 
 

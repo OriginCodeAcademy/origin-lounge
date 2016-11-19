@@ -1,7 +1,23 @@
 <!-- Content to be displayed -->
-<div ng-repeat="content in vm.content">
-	<div class="text-left h2" ng-model="hidebody" ng-click="showbody()">{{content.title}}</div>
-	<br>
-    <div class="text-left">{{content.bodyDescr}}</div>
-    <br>
+<div class="panel panel-default">
+    <div class="panel-heading custom_class">
+    	<h3><b>{{vm.categoryName}}</b></h3>
+    </div>
+    <div class="panel-body">
+	    <div ui-view>
+			<table class="table">
+			    <tr ng-repeat="content in vm.content">
+			        <td>
+			            <a ui-sref="main.customcontent.customcontentbody({contentTitle:content.title, contentBody:content.bodyDescr})">{{content.title}}</a>
+			        </td>
+			        <td>
+			        	<a ui-sref="main.managecontent({contentTitle:content.title, contentBody:content.bodyDescr})"><i class="fa fa-pencil"></i></a>
+			        </td>
+			        <td>
+			        	<a ng-click="vm.deleteContentFromACategory(content.contentId, vm.categoryId)"><i class="fa fa-trash"></i></a>	
+			        </td>
+			    </tr>
+			</table>
+		</div>
+	</div>
 </div>

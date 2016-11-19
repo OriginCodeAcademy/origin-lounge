@@ -29,6 +29,10 @@
     color: white;
 }
 
+.fa {
+    cursor: pointer;
+}
+
 #panel {
     background: #525E6C;
     color: white;

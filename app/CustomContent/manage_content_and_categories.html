@@ -50,10 +50,10 @@
                     <br>
 
                     <!-- Content Title Input --> 
-                    <input type="text" placeholder="{{vm.markdownTitle}}" ng-model="vm.contentTitle" class="form-control">
+                    <input type="text" placeholder="vm.contentTitle" ng-model="vm.contentTitle" class="form-control">
                     
                     <!-- Markdown text editor window -->
-                    <textarea name="content" markdown-editor="{'iconlibrary': 'fa', addExtraButtons: true, resize: 'vertical'}" rows="10" ng-model="vm.markdown"></textarea>
+                    <textarea name="content" markdown-editor="{'iconlibrary': 'fa', addExtraButtons: true, resize: 'vertical'}" rows="10" ng-model="vm.contentBody"></textarea>
                 </div>
             </div>
 
@@ -63,10 +63,10 @@
                     <label for="comment">Markdown Preview:</label>
                     
                     <!-- Title of Content -->
-                    <h1 class="text-left">{{vm.markdownTitle}}</h1>
+                    <h1 class="text-left">{{vm.contentTitle}}</h1>
 
                     <!-- Markdown preview -->
-                    <div marked="vm.markdown" class="outline" style="padding: 20px">
+                    <div marked="vm.contentBody" class="outline" style="padding: 20px">
                     </div>
                 </div>
             </div>

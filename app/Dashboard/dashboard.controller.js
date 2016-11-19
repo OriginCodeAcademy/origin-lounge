@@ -10,7 +10,7 @@
     
     function DashboardController(DashboardFactory, storageFactory, Idle, $state) {
         var vm = this;
-        vm.title = 'DashboardController';
+
         vm.logOut = logOut;
         vm.getContentByCategoryId = getContentByCategoryId;
 
@@ -35,6 +35,9 @@
                     // bind categories to the view
                     vm.categories = response;
                     console.log(response);
+
+                    // get all the Roles that exist in the origin.API DB
+                    getRoles();
                 
                 },
 
@@ -43,6 +46,20 @@
                     console.log(error);
 
                 });
+        }
+        
+        // Logout on-click function that clears local storage and kicks user to login page
+        function logOut(){
+            storageFactory.clearAllLocalStorage();
+            $state.go('login');
+        }
+
+        function getContentByCategoryId(categoryId, categoryName) {
+
+            $state.go('main.customcontent', {categoryId: categoryId, categoryName: categoryName});
+        }
+
+        function getRoles(){
 
             DashboardFactory.getRoles().then(
 
@@ -58,17 +75,7 @@
                     console.log(error);
                 
                 });
-        }
-        
-        // Logout on-click function that clears local storage and kicks user to login page
-        function logOut(){
-            storageFactory.clearAllLocalStorage();
-            $state.go('login');
-        }
 
-        function getContentByCategoryId(categoryId) {
-
-            $state.go('main.customcontent', {categoryId: categoryId});
         }
 
     }
