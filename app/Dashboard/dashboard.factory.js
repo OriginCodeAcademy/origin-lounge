@@ -17,7 +17,7 @@
             getCategoryNamesByRoleId: getCategoryNamesByRoleId,
             getRoles: getRoles,
             getContentByCategoryId: getContentByCategoryId,
-            getContent: getContent,
+            getContentByContentId: getContentByContentId,
             
             postCategory: postCategory,
             postContent: postContent
@@ -86,6 +86,38 @@
             });
 
             return defer.promise;
+        }
+
+        // get Content by Content ID within the mongo DB
+        function getContentByContentId (contentId) {
+
+            var defer = $q.defer();
+
+            $http({
+                method:'GET',
+                url:'http://localhost:3000/api/content/' + contentId
+            })
+
+            .then(function(response){
+
+                if (typeof response.data === "object") {
+
+                    defer.resolve(response.data);
+                
+                } else {
+
+                    defer.reject(response);
+                }
+    
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;           
         }
 
         // post a Category to the mongoDB
@@ -165,38 +197,6 @@
             return defer.promise;
         }
 
-
-         // get a Content entry in the mongoDB, by content ID
-         function getContent(incoming) {
-
-            var defer = $q.defer();
-
-            $http({
-                method:'GET',
-                url:'http://localhost:3000/api/content/'+incoming
-            })
-
-            .then(function(response){
-
-                if (typeof response.data === "object") {
-
-                    defer.resolve(response.data);
-                
-                } else {
-
-                    defer.reject(response);
-                }
-    
-            },
-
-            function(error){
-
-                defer.reject(error);
-
-            });
-
-            return defer.promise;
-        }
 
         // post a new Content entry into the mongoDB
         function postContent(title, body){
@@ -280,14 +280,13 @@
           }
 
           // delete a ContentCategory entry in the mongoDB
-          function deleteContentCategoryEntry (categoryId, contentId) {
+          function deleteContentCategoryEntry (contentCategoryId) {
+
+            var defer = $q.defer();
 
             $http({
                 method: 'DELETE',
-                url: '//localhost:3000/api/content + ' ,
-                headers: {
-
-                }
+                url: 'http://localhost:3000/api/contentcategory/' + contentCategoryId
             })
 
             .then(function(response){

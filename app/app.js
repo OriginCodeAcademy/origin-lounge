@@ -72,15 +72,13 @@ angular
             })
 
                 .state('main.customcontent', {
-                    url: '/customcontent/:categoryId/:categoryName',
-                    templateUrl: 'app/CustomContent/customcontent.html',
-                    controller: 'CustomContentController as vm'
+                    url: '/customcontent',
+                    templateUrl: 'app/CustomContent/customcontent.html'
 
             })
                   .state('main.customcontent.customcontentbody', {
-                    url: '/customcontentbody/:contentTitle/:contentBody',
-                    templateUrl: 'app/CustomContent/customcontentbody.html',
-                    controller: 'CustomContentController as vm'
+                    url: '/customcontentbody',
+                    templateUrl: 'app/CustomContent/customcontentbody.html'
 
 
             });
@@ -167,10 +165,10 @@ angular
 
 
             // On Before Unload event that clears local storage and redirects to the login page
-            window.onbeforeunload = function() {
-                storageFactory.clearAllLocalStorage();
-                return '';
-            };
+            // window.onbeforeunload = function() {
+            //     storageFactory.clearAllLocalStorage();
+            //     return '';
+            // };
         })
 
         // controller for markdown editor
