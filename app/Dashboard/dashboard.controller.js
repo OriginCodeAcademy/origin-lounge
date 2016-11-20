@@ -13,6 +13,9 @@
 
         vm.logOut = logOut;
         vm.getContentByCategoryId = getContentByCategoryId;
+        vm.deleteContentFromACategory = deleteContentFromACategory;
+        vm.getContentByContentId = getContentByContentId;
+
 
         activate();
 
@@ -54,11 +57,58 @@
             $state.go('login');
         }
 
+        // on-click function that goes to the custom content state and brings along the category ID and name of the category selected
         function getContentByCategoryId(categoryId, categoryName) {
 
-            $state.go('main.customcontent', {categoryId: categoryId, categoryName: categoryName});
+
+            // display category name to content view
+            vm.categoryName = categoryName;
+
+            vm.categoryId = categoryId;
+
+            // get all content associated with the specific category Id
+            DashboardFactory.getContentByCategoryId(categoryId).then(
+
+                function(response){
+
+                    vm.content = response;
+                    $state.go('main.customcontent');
+
+                },
+
+                function(error){
+
+                    // clear content from custom content view if no content is found for a specific category
+                    vm.content = '';
+                    $state.go('main.customcontent');
+
+                });
+           
         }
 
+        // get the content body and title for a specific content Id
+        function getContentByContentId(contentId) {
+
+            DashboardFactory.getContentByContentId(contentId).then(
+
+                function(response){
+
+                    vm.contentTitle = response.title;
+                    vm.contentBody = response.bodyDescr;
+
+                    $state.go('main.customcontent.customcontentbody');
+
+                },
+
+                function(error){
+
+
+                });
+
+
+        }
+
+        // grabs all the roles from the origin.api database
         function getRoles(){
 
             DashboardFactory.getRoles().then(
@@ -76,6 +126,25 @@
                 
                 });
 
+        }
+
+        function deleteContentFromACategory(contentCategoryId) {
+
+            // remove content from contentcategory table
+
+            DashboardFactory.deleteContentCategoryEntry(contentCategoryId).then(
+
+                function(response){
+
+                // remove content from local content array
+
+                },
+
+                function(error){
+
+                    console.log(error);
+
+                });
         }
 
     }
