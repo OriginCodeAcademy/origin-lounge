@@ -14,17 +14,53 @@
 
             editCategory: editCategory,
 
+            getCategories: getCategories,
             getCategoryNamesByRoleId: getCategoryNamesByRoleId,
-            getRoles: getRoles,
             getContentByCategoryId: getContentByCategoryId,
             getContentByContentId: getContentByContentId,
+            getRoles: getRoles,
             
             postCategory: postCategory,
-            postContent: postContent
+            postContent: postContent,
+            postContentCategory: postContentCategory
 
         };
         return service;
 
+
+
+         function getCategories() {
+            
+            var defer = $q.defer();
+
+            $http({
+                method:'GET',
+                url:'http://localhost:3000/api/category/'
+
+            })
+
+            .then(function(response){
+
+                if (typeof response.data === "object") {
+
+                    defer.resolve(response.data);
+                
+                } else {
+
+                    defer.reject(response);
+                }
+    
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;
+        }
+               
        
         function getCategoryNamesByRoleId(roleIds) {
             
@@ -240,6 +276,46 @@
 
             return defer.promise;
         }
+
+        // post a new Content Category entry into the mongoDB
+        function postContentCategory(categories, contentId){
+
+          var defer = $q.defer();
+          
+          // create the body portion of the POST URL
+          var info = 'contentId=' + contentId + '&categoryId=' + categories;
+          
+          $http({
+            method:'POST',
+            url:'http://localhost:3000/api/contentcategory',
+            data: info,
+            headers: {
+                'Content-Type' : 'application/x-www-form-urlencoded'
+            }
+
+        })
+            .then(function(response){
+
+                if (typeof response.data === "object") {
+
+                    defer.resolve(response.data);
+                
+                } else {
+
+                    defer.reject(response);
+                }
+    
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;
+        }
+
 
           // get all roles from origin.api 
           function getRoles() {
