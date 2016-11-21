@@ -7,6 +7,9 @@
     border-radius: 3px;
 }
 
+.content-title:hover {
+    cursor: pointer;
+}
 
 .chat_list {
     list-style-type: none;

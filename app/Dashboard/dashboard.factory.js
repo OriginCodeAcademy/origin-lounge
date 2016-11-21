@@ -26,13 +26,14 @@
         return service;
 
        
-        function getCategoryNamesByRoleId(roleId) {
+        function getCategoryNamesByRoleId(roleIds) {
             
             var defer = $q.defer();
 
             $http({
                 method:'GET',
-                url:'http://localhost:3000/api/categorynamesbyroleid/' + roleId
+                url:'http://localhost:3000/api/categorynamesbyroleid/' + roleIds
+
             })
 
             .then(function(response){

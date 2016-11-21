@@ -27,11 +27,22 @@
             //grabs username from local storage and binds to view
             vm.username = storageFactory.getLocalStorage('userSession').user.userName;
 
-            //grabs roleId from local storage
-            var roleId = storageFactory.getLocalStorage('userSession').roles.roleId;
+            //grabs roles from local storage
+            var roles = storageFactory.getLocalStorage('userSession').roles;
+
+            // array to store the roleIds
+            var roleIds = [];
+
+            for (var i = 0; i < roles.length; i++) {
+
+                roleIds.push(roles[i].RoleId);
+            }
+
+            // see if the user logged in is an admin or not
+            vm.isAdmin = storageFactory.getLocalStorage('isAdmin');
 
             // get all categories for the specific role of the user that is logged in
-            DashboardFactory.getCategoryNamesByRoleId(roleId).then(
+            DashboardFactory.getCategoryNamesByRoleId(roleIds).then(
 
                 function(response) {
                 
