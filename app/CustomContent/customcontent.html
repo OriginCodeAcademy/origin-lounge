@@ -13,7 +13,7 @@
 			        </td>
 			        <td ng-show="vm.isAdmin">
 			        	<!-- Edit Content button -->
-			        	<a ui-sref="main.managecontent({contentTitle:content.title, contentBody:content.bodyDescr})"><i class="fa fa-pencil"></i></a>
+			        	<a ui-sref="main.managecontent({contentTitle:content.title, contentBody:content.bodyDescr, contentId:content.contentId, categoryId: vm.categoryId})"><i class="fa fa-pencil"></i></a>
 			        </td>
 			        <td ng-show="vm.isAdmin">
 			        	<!-- Delete Content button -->

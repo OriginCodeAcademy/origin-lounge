@@ -2,7 +2,7 @@
     'use strict';
 
 angular
-        .module('app', ['ui.router','LocalStorageModule', 'toastr', 'ngIdle', 'ui.bootstrap', 'hc.marked', 'hljs', 'angular-markdown-editor'])
+        .module('app', ['ui.router','LocalStorageModule', 'toastr', 'ngIdle', 'ui.bootstrap', 'hc.marked', 'hljs', 'angular-markdown-editor', 'ngMessages'])
         //.value ('originAPIBaseURL', 'http://localhost:53737/')
         .value ('originAPIBaseURL', 'http://origincodeacademyapi.azurewebsites.net/')
 
@@ -66,9 +66,15 @@ angular
             })
 
                 .state('main.managecontent', {
-                    url: '/managecontent/:contentTitle/:contentBody',
-                    templateUrl: 'app/CustomContent/manage_content_and_categories.html',
-                    controller: 'ManageContentAndCategoriesController as vm'
+                    url: '/managecontent',
+                    templateUrl: 'app/CustomContent/manage_content.html',
+                    controller: 'CustomContentController as vm',
+                    params: {
+                        contentTitle: null,
+                        contentBody: null,
+                        contentId: null,
+                        categoryId: null
+                    }
             })
 
                 .state('main.customcontent', {
