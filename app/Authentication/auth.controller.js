@@ -44,12 +44,21 @@
                             'userName' : response.username,
                             'userId' : response.userId
                         },
-                        'roles' : {
-                            'role' : roles[0].Name,
-                            'roleId' : roles[0].RoleId
-                        }
+                        'roles' :roles
 
                     };
+
+                    // determine if a user has admin privelages
+                    // where 8 = student, 9 = current, 10 = alumni 
+                    if ( (roles[0].RoleId === 8) || (roles[0].RoleId === 9) || (roles[0].RoleId === 10) ) {
+                        
+                        setStorage('isAdmin', false);
+                    
+                    } else {
+
+                        setStorage('isAdmin', true);
+
+                    }
 
                     // store userSession object into local storage
                     setStorage('userSession', userSession);
