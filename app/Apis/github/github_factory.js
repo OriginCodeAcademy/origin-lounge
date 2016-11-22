@@ -5,7 +5,7 @@
         .module('app')
         .factory('GithubFactory', GithubFactory);
 
-    factory.$inject = ['$http'];
+    GithubFactory.$inject = ['$http'];
 
     /* @ngInject */
     function GithubFactory($http) {

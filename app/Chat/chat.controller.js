@@ -5,10 +5,10 @@
         .module('app')
         .controller('chatController', chatController);
 
-    chatController.$inject = ['socket', 'chatFactory'];
+    chatController.$inject = ['chatFactory'];
     
     /* @ngInject */
-    function chatController(socket, chatFactory) {
+    function chatController(chatFactory) {
         var vm = this;
         vm.title = 'chatController';
 
@@ -18,9 +18,9 @@
 
         function activate() {
 
-        	chatFactory.socket.on('send:message', function (message) {
-    			vm.messages.push(message);
-  			});
+     //    	chatFactory.socket.on('send:message', function (message) {
+    	// 		vm.messages.push(message);
+  			// });
         }
     }
 })();

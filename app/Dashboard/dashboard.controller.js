@@ -53,6 +53,13 @@
 
                     // get all the Roles that exist in the origin.API DB
                     getRoles();
+
+                     DashboardFactory.getChat(vm.userId).then(function(response) {
+                        
+                         vm.chatGroups = response.data;
+                         $state.go('main.calendar_index');
+                     });
+
                 
                 },
 
@@ -64,9 +71,7 @@
 
                 });
 
-            DashboardFactory.getChat(vm.userId).then(function(response) {
-                vm.chatGroups = response.data;
-            });
+            
         }
         
         // Logout on-click function that clears local storage and kicks user to login page
