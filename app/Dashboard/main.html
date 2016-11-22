@@ -86,8 +86,11 @@
             <div class="panel-body">
                 <div class="text-center">
                     <a ui-sref="main.countdown" class="btn btn-primary btn-lg active" id="links" role="button">Countdown<br><iframe src="http://free.timeanddate.com/countdown/i5gd5j01/n770/cf12/cm0/cu4/ct0/cs0/ca0/co0/cr0/ss0/cac525e6c/cpc525e6c/pc64abdd/tcfff/fs100/szw256/szh108/iso2016-12-16T00:00:00" allowTransparency="true" frameborder="0" width="90" height="26"></iframe></a>
+
                     <a ng-repeat="category in vm.categories" ng-click="vm.getContentByCategoryId(category.categoryId, category.categoryName)" type="submit" class="btn btn-primary btn-lg active" id="links" role="button">{{category.categoryName}}</a>
+
                     <a ui-sref="main.managecontent" class="btn btn-primary btn-lg active" id="links" role="button" ng-show="vm.isAdmin">Manage<br/>Content</a>
+                    <a ui-sref="main.github_index" class="btn btn-primary btn-lg active" id="links" role="button">GitHub<br/>Content</a>
                 </div>
             </div>
         </div>

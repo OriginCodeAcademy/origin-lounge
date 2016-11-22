@@ -2,9 +2,8 @@
     'use strict';
 
 angular
-        .module('app', ['ui.router','LocalStorageModule', 'toastr', 'ngIdle', 'ui.bootstrap', 'hc.marked', 'hljs', 'angular-markdown-editor', 'ngMessages'])
-        //.value ('originAPIBaseURL', 'http://localhost:53737/')
-        .value ('originAPIBaseURL', 'http://origincodeacademyapi.azurewebsites.net/')
+        .module('app', ['ui.router','LocalStorageModule', 'toastr', 'ngIdle', 'ui.bootstrap', 'hc.marked', 'hljs', 'angular-markdown-editor'])
+       .value ('originAPIBaseURL', 'http://origincodeacademyapi.azurewebsites.net/', 'ui.calendar')
 
         .config(['markedProvider', 'hljsServiceProvider', function(markedProvider, hljsServiceProvider) {
             // markdown config
@@ -77,15 +76,22 @@ angular
                     }
             })
 
+                .state('main.github_index', {
+                    url: '/github_index',
+                    templateUrl: 'app/Apis/github/github_index.html',
+                    controller: 'GithubController as vm'
+                })
+
+
                 .state('main.customcontent', {
                     url: '/customcontent',
                     templateUrl: 'app/CustomContent/customcontent.html'
 
             })
-                  .state('main.customcontent.customcontentbody', {
+
+                .state('main.customcontent.customcontentbody', {
                     url: '/customcontentbody',
                     templateUrl: 'app/CustomContent/customcontentbody.html'
-
 
             });
         })
