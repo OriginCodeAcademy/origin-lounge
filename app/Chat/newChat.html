@@ -1,0 +1,10 @@
+<p ui-view></p>
+<div class="form-control">
+	<h4>Group Name</h4>
+	<input type="text">
+	<h4>Select People</h4>
+	<select ng-model="vm.selectedUsers" multiple><option ng-repeat="people in vm.users" value="people.Id">{{people.UserName}}</option></select>
+	<button>Cancel</button>
+	<button>Create Group</button>
+
+</div>

@@ -16,6 +16,7 @@
 
             getCategories: getCategories,
             getCategoryNamesByRoleId: getCategoryNamesByRoleId,
+            getChat: getChat,
             getContentByCategoryId: getContentByCategoryId,
             getContentByContentId: getContentByContentId,
             getRoles: getRoles,
@@ -27,7 +28,14 @@
         };
         return service;
 
-
+        function getChat(userId) {
+            return $http({
+                method: 'GET',
+                url: 'http://localhost:3000/api/messagerecipients/' + userId
+            }).then(function(response){
+                return response;
+            })
+        }
 
          function getCategories() {
             

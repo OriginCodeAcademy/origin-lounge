@@ -41,30 +41,22 @@
 <!-- Everything else below the Top Nav -->
 
 <div class="col-md-3 col-lg-3 col-sm-3">
-
-        <!-- Left panel for chat -->
         <div id="panel" class="panel panel-default">
             <div class="panel-heading custom_class text-center">
                 <h3>Chat</h3>
             </div>
             <div class="panel-body">
                 <p>
-                    <h4><b>CHANNELS</b></h4>
+                    <h4><b>CHANNELS</b><span class="pull-right"><button class="btn btn-primary btn-xs active" ui-sref="main.chatAdd">+</button></span></h4>
                 </p>
-                <ul class="chat_list">
-                    <li><a class="chat_messages_and_channels" href="#"><h5># Cohort6</h5></a></li>
-                    <li><a class="chat_messages_and_channels" href="#"><h5># Cohort7</h5></a></li>
-                    <li><a class="chat_messages_and_channels" href="#"><h5># General</h5></a></li>
+                <ul ng-repeat="groups in vm.chatGroups">
+                    <li ng-hide="groups.groupname === 'direct'"><a ui-sref="main.chat"><h5 ng-val="groups.chatid" >{{groups.groupname}}</h5></a></li>
                 </ul>
                 <p>
-                    <h4><b>MESSAGES</b></h4>
+                    <h4><b>MESSAGES</b><span class="pull-right"><button class="btn btn-primary btn-xs active" ui-sref="main.chatAdd">+</button></span></h4>
                 </p>
-                <ul class="chat_list">
-                    <li><a class="chat_messages_and_channels" href="#"><h5>seancahall</h5></a></li>
-                    <li><a class="chat_messages_and_channels" href="#"><h5>cameronwilby</h5></a></li>
-                    <li><a class="chat_messages_and_channels" href="#"><h5>jennyclayton</h5></a></li>
-                    <li><a class="chat_messages_and_channels" href="#"><h5>kellylovett</h5></a></li>
-                    <li><a class="chat_messages_and_channels" href="#"><h5>jeffwinkler</h5></a></li>
+                <ul ng-repeat="groups in vm.chatGroups ">
+                    <li ng-show="groups.groupname === 'direct'"><a ui-sref="main.chat"><h5 ng-val="groups.chatid"><span ng-repeat="name in groups.usernames">    {{name}},   </span></h5></a></li>
                 </ul>
                 <p>
                 </p>

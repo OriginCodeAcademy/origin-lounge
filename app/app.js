@@ -104,6 +104,21 @@ angular
                    url: '/github_index',
                    templateUrl: 'app/Apis/github/github_index.html',
                    controller: 'GithubController as vm'
+            })
+
+                .state('main.chatAdd', {
+                    url: '/newChat',
+                    templateUrl: 'app/Chat/newChat.html',
+                    controllerAs: 'vm',
+                    controller: 'addChatController'
+            })
+
+                .state('main.chat', {
+                    url: '/chat', 
+                    templateUrl: 'app/Chat/Chat.html',
+                    controllerAs: 'vm',
+                    controller: 'chatController'
+
             });
         })
 

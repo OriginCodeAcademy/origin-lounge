@@ -23,6 +23,7 @@
     "gulp-livereload": "^3.8.1",
     "gulp-open": "^2.0.0",
     "gulp-util": "^3.0.7",
+    "socket.io": "^1.6.0",
     "wiredep": "^4.0.0"
   }
 }

@@ -26,7 +26,7 @@
 
             //grabs username from local storage and binds to view
             vm.username = storageFactory.getLocalStorage('userSession').user.userName;
-
+            vm.userId = storageFactory.getLocalStorage('userSession').user.userId;
             //grabs roles from local storage
             var roles = storageFactory.getLocalStorage('userSession').roles;
 
@@ -62,6 +62,10 @@
                     getRoles();
 
                 });
+
+            DashboardFactory.getChat(vm.userId).then(function(response) {
+                vm.chatGroups = response.data;
+            });
         }
         
         // Logout on-click function that clears local storage and kicks user to login page
