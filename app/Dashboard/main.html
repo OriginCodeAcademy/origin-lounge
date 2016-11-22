@@ -49,13 +49,13 @@
                     <h4><b>CHANNELS</b><span class="pull-right"><button class="btn btn-primary btn-xs active" ui-sref="main.chatAdd">+</button></span></h4>
                 </p>
                 <ul ng-repeat="groups in vm.chatGroups">
-                    <li ng-hide="groups.groupname === 'direct'"><a href="#"><h5 ng-val="groups.chatid">{{groups.groupname}}</h5></a></li>
+                    <li ng-hide="groups.groupname === 'direct'"><a ui-sref="main.chat"><h5 ng-val="groups.chatid" >{{groups.groupname}}</h5></a></li>
                 </ul>
                 <p>
-                    <h4><b>MESSAGES</b><span class="pull-right"><button class="btn btn-primary btn-xs active">+</button></span></h4>
+                    <h4><b>MESSAGES</b><span class="pull-right"><button class="btn btn-primary btn-xs active" ui-sref="main.chatAdd">+</button></span></h4>
                 </p>
                 <ul ng-repeat="groups in vm.chatGroups ">
-                    <li ng-show="groups.groupname === 'direct'"><a href="#"><h5 ng-val="groups.chatid"><span ng-repeat="name in groups.usernames">    {{name}},   </span></h5></a></li>
+                    <li ng-show="groups.groupname === 'direct'"><a ui-sref="main.chat"><h5 ng-val="groups.chatid"><span ng-repeat="name in groups.usernames">    {{name}},   </span></h5></a></li>
                 </ul>
                 <p>
                 </p>

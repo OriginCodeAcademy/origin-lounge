@@ -21,7 +21,7 @@ var Content = require('./app/models/custom-content/content');
 var RoleCategory = require('./app/models/custom-content/rolecategory');
 var ContentCategory = require('./app/models/custom-content/contentcategory');
 var Messages = require('./app/models/chat/message');
-var MessagesRecipients = require('./app/models/chat/messagerecipients')
+var MessagesRecipients = require('./app/models/chat/messagerecipients');
 
 // ROUTES FOR OUR API
 // =============================================================================

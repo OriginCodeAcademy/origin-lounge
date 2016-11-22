@@ -26,12 +26,12 @@
 
     <!-- endinject -->
 </head>
-
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <body>
 <div class="row">
  <div ui-view></div>  
 </div>
-   
+
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
@@ -83,11 +83,29 @@
     
     <script src="/app/Chat/addChat.factory.js"></script>
     
+    <script src="/app/Chat/chat.controller.js"></script>
+    
+    <script src="/app/Chat/chat.factory.js"></script>
+    
     <script src="/app/CustomContent/customContent.controller.js"></script>
     
     <script src="/app/Dashboard/dashboard.controller.js"></script>
     
     <script src="/app/Dashboard/dashboard.factory.js"></script>
+    
+    <script src="/app/server/routes/socket.js"></script>
+    
+    <script src="/app/models/chat/message.js"></script>
+    
+    <script src="/app/models/chat/messagerecipients.js"></script>
+    
+    <script src="/app/models/custom-content/category.js"></script>
+    
+    <script src="/app/models/custom-content/content.js"></script>
+    
+    <script src="/app/models/custom-content/contentcategory.js"></script>
+    
+    <script src="/app/models/custom-content/rolecategory.js"></script>
     
     <!-- endinject -->
      <script src="ui-bootstrap-tpls-2.2.0.min.js"></script>

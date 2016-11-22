@@ -89,7 +89,14 @@ angular
                     templateUrl: 'app/Chat/newChat.html',
                     controllerAs: 'vm',
                     controller: 'addChatController'
-                });
+            })
+
+                .state('main.chat', {
+                    url: '/chat', 
+                    templateUrl: 'app/Chat/Chat.html',
+                    controllerAs: 'vm',
+                    controller: 'chatController'
+            })
         })
 
         .run(function($rootScope, $location, $state, storageFactory, Idle, toastr, $uibModal) {
