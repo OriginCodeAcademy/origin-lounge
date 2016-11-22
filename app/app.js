@@ -68,8 +68,14 @@ angular
 
                 .state('main.managecontent', {
                     url: '/managecontent',
-                    templateUrl: 'app/CustomContent/manage_content_and_categories.html',
-                    controller: 'ManageContentAndCategoriesController as vm'
+                    templateUrl: 'app/CustomContent/manage_content.html',
+                    controller: 'CustomContentController as vm',
+                    params: {
+                        contentTitle: null,
+                        contentBody: null,
+                        contentId: null,
+                        categoryId: null
+                    }
             })
 
                 .state('main.calendar_index', {
@@ -84,11 +90,20 @@ angular
             })
 
                 .state('main.customcontent', {
-                    url: '/customcontent/:categoryId',
-                    templateUrl: 'app/CustomContent/customcontent.html',
-                    controller: 'CustomContentController as vm'
+                    url: '/customcontent',
+                    templateUrl: 'app/CustomContent/customcontent.html'
 
+            })
+                  .state('main.customcontent.customcontentbody', {
+                    url: '/customcontentbody',
+                    templateUrl: 'app/CustomContent/customcontentbody.html'
 
+            })
+
+                  .state('main.github_index', {
+                   url: '/github_index',
+                   templateUrl: 'app/Apis/github/github_index.html',
+                   controller: 'GithubController as vm'
             });
         })
 
