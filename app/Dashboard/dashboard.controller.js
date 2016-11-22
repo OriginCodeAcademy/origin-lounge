@@ -24,9 +24,10 @@
             // this starts watching for idle. This also starts the Keepalive service by default.
             Idle.watch();
 
-            //grabs username from local storage and binds to view
+            //grabs username and userId from local storage and binds to view
             vm.username = storageFactory.getLocalStorage('userSession').user.userName;
             vm.userId = storageFactory.getLocalStorage('userSession').user.userId;
+            
             //grabs roles from local storage
             var roles = storageFactory.getLocalStorage('userSession').roles;
 
