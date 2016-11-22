@@ -18,6 +18,8 @@
   "homepage": "https://github.com/Exponent500/UserAdmin#readme",
   "dependencies": {
     "angular-messages": "^1.5.8",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
     "gulp": "^3.9.1",
     "gulp-connect": "^5.0.0",
     "gulp-inject": "^4.1.0",
@@ -25,6 +27,7 @@
     "gulp-open": "^2.0.0",
     "gulp-util": "^3.0.7",
     "mongoose": "^4.6.8",
+    "morgan": "^1.7.0",
     "wiredep": "^4.0.0"
   }
 }

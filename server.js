@@ -13,13 +13,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Enable CORS
-    app.use(function(req, res, next) {
+app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
     next();
 });
 
 var port = process.env.PORT || 3000; // set our port
+
 // ============================================================================
 // ======== DATABASE TABLES 
 
@@ -37,9 +39,6 @@ var CalendarGroup = require('./server/models/calendar-content/group');
 var CalendarUserGroupEvent = require('./server/models/calendar-content/usergroupevent');
 var CalendarEvent = require('./server/models/calendar-content/event');
 var CalendarEventType = require('./server/models/calendar-content/eventtype');
-
-
-
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -59,7 +58,6 @@ router.get('/', function(req, res) {
 
     res.json({ message: 'hooray! welcome to our api!' });
 });
-
 
 //=============================================================================
 // on routes that end in /category
@@ -248,13 +246,12 @@ router.route('/content')
     console.log("body:" + req.body);
 
     // set the content name (comes from the request)
-    content.save(function(err) {
+    content.save(function(err, data) {
         if (err)
             res.send(err);
 
-        res.json({ message: 'Content created!' });
+        res.json({ message: 'Content created!', contentId: data._id});
     });
-
 
 })
 
@@ -268,11 +265,11 @@ router.route('/content')
     });
 });
 
-// on routes that end in /category/:content_id
+// on routes that end in /content/:content_id
 // ----------------------------------------------------
 router.route('/content/:content_id')
 
-// get the category with that id
+// get the content with that id
 .get(function(req, res) {
     Content.findById(req.params.content_id, function(err, content) {
         if (err)
@@ -281,7 +278,7 @@ router.route('/content/:content_id')
     });
 })
 
-// update the category with this id
+// update the content with this id
 .put(function(req, res) {
     Content.findById(req.params.content_id, function(err, content) {
 
@@ -346,6 +343,8 @@ router.route('/rolecategory')
         if (err)
             res.send(err);
 
+        console.log("got into get All roleCategories route");
+
         res.json(roleCategory);
     });
 });
@@ -395,18 +394,34 @@ router.route('/rolecategory/:rolecategory_id')
     });
 });
 
-router.route('/categorynamesbyroleid/:role_id')
+//=============================================================================
+// on routes that end in /categorynamesbyroleid
+// ----------------------------------------------------
+
+router.route('/categorynamesbyroleid/:role_Ids')
 
 .get (function(req,res,next){
+    
+    // convert the comma separated query string to an array of comma separate strings
+    var array = req.params.role_Ids.split(',');
+    console.log("successfully split array");
+    console.log(array);
+    // convert the array of comma separated strings to an array of comma separated integers
+    for(var i = 0; i < array.length; i++) { 
+        array[i] = +array[i]; 
+    }
 
-    // find all rows within the RoleCategory table that have the roleId specified within the GET categorynamesbyroleid command
-    RoleCategory.find({roleId: req.params.role_id}, function(err, categoryIdsForARole){
+    console.log(array);
+    
+    // find all rows within the RoleCategory table that have the roleIds specified within the GET categorynamesbyroleid command
+    RoleCategory.find({roleId: {"$in":array}}, function(err, categoryIdsForARole){
 
         if (err) {
             // res.send(err);
             res.send("test");
             console.log("error");
         }
+
         console.log("In first find");
 
         // stores the categoryIdsForARole into a req variable. This req variable can be passed into the next .get function
@@ -452,6 +467,10 @@ router.route('/categorynamesbyroleid/:role_id')
         }
 });
 
+//=============================================================================
+// on routes that end in /contentbycategoryid
+// ----------------------------------------------------
+
 router.route('/contentbycategoryid/:category_id')
 
 .get (function(req,res,next){
@@ -478,7 +497,8 @@ router.route('/contentbycategoryid/:category_id')
 
         // capture the req variable provided by the .get function above and store it into a variable here
         var contentIdsForACategory = req.variable;
-
+        console.log (contentIdsForACategory);
+        console.log(contentIdsForACategory[0]._id);
         // array to store the category names
         var contentInfo = [];
 
@@ -486,9 +506,13 @@ router.route('/contentbycategoryid/:category_id')
          
         for (var i = 0; i < contentIdsForACategory.length; i++) {
             console.log(i);
+
             //counter that will determine when we have iterated through the contentIdsForACategory array
             var j = contentIdsForACategory.length;
             
+            //grab the contentCategoryId so we can provide it within the response
+            var contentCategoryId = contentIdsForACategory[i]._id;
+
             // find the row within the Content table that has a specific categoryId
             Content.findOne({_id: contentIdsForACategory[i].contentId}, function (error, content){
                 
@@ -497,7 +521,8 @@ router.route('/contentbycategoryid/:category_id')
 
                    "bodyDescr" : content.bodyDescr,
                    "title" : content.title,
-                   "contentId" : content._id
+                   "contentId" : content._id,
+                   "contentCategoryId" : contentCategoryId
 
                 });
 
@@ -512,30 +537,32 @@ router.route('/contentbycategoryid/:category_id')
         }
 });
 
-//=============================================================================
-// on routes that end in /rolecategory
-// ----------------------------------------------------
-
 router.route('/contentcategory')
 
-// create a contentcategory (accessed at POST http://localhost:8080/contentcategory)
+// create contentcategory entries (accessed at POST http://localhost:8080/contentcategory)
 .post(function(req, res) {
 
-    var contentCategory = new ContentCategory();
-    contentCategory.categoryId = req.body.categoryId;
-    contentCategory.contentId = req.body.contentId;
+    // convert the comma separated body string to an array of comma separate strings
+    var array = req.body.categoryId.split(',');
+    
+    // add a contentcategory entry for each categoryId received
+    for (var i = 0; i < array.length; i++){
+        
+        // create a new ContentCategory entry
+        var contentCategory = new ContentCategory();
 
-   
+        //store the contentId received into the new ContentCategory entry we created
+        contentCategory.contentId = req.body.contentId;
+        
+        // store the categoryId received into the new ContentCategory entry we created
+        contentCategory.categoryId = array[i];
 
-    // set the content category name (comes from the request)
-    contentCategory.save(function(err) {
-        if (err)
-            res.send(err);
-
-        res.json({ message: 'Content Category created!' });
-    });
-
-
+        contentCategory.save(function(err) {
+            if (err)
+                res.send(err);
+        });
+    }   
+        res.json({ message: 'Content Category created!'});
 })
 
 // get all the content category (accessed at GET http://localhost:8080/api/contentcategory)
@@ -581,7 +608,7 @@ router.route('/contentcategory/:contentcategory_id')
     });
 })
 
-// delete the role category with this id
+// delete the content category with this id
 .delete(function(req, res) {
     ContentCategory.remove({
         _id: req.params.contentCategory_id
