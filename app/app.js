@@ -3,7 +3,9 @@
 
 angular
         .module('app', ['ui.router','LocalStorageModule', 'toastr', 'ngIdle', 'ui.bootstrap', 'hc.marked', 'hljs', 'angular-markdown-editor'])
-       .value ('originAPIBaseURL', 'http://origincodeacademyapi.azurewebsites.net/', 'ui.calendar')
+        .value ('originAPIBaseURL', 'http://origincodeacademyapi.azurewebsites.net/', 'ui.calendar')
+        // .value ('originAPIBaseURL', 'http://localhost:53737/', 'ui.calendar')
+
 
         .config(['markedProvider', 'hljsServiceProvider', function(markedProvider, hljsServiceProvider) {
             // markdown config
@@ -66,32 +68,26 @@ angular
 
                 .state('main.managecontent', {
                     url: '/managecontent',
-                    templateUrl: 'app/CustomContent/manage_content.html',
-                    controller: 'CustomContentController as vm',
-                    params: {
-                        contentTitle: null,
-                        contentBody: null,
-                        contentId: null,
-                        categoryId: null
-                    }
+                    templateUrl: 'app/CustomContent/manage_content_and_categories.html',
+                    controller: 'ManageContentAndCategoriesController as vm'
             })
 
-                .state('main.github_index', {
-                    url: '/github_index',
-                    templateUrl: 'app/Apis/github/github_index.html',
-                    controller: 'GithubController as vm'
-                })
-
+                .state('main.calendar_index', {
+                    url: '/calendar_index',
+                    templateUrl: 'app/Apis/calendar/calendar_index.html',
+                    controller: 'CalendarController as vm'
+            })
+                .state('main.linkedin_index', {
+                    url: '/calendar_index',
+                    templateUrl: 'app/Apis/linkedin/linkedin_index.html',
+                    controller: 'LinkedinController as vm'
+            })
 
                 .state('main.customcontent', {
-                    url: '/customcontent',
-                    templateUrl: 'app/CustomContent/customcontent.html'
+                    url: '/customcontent/:categoryId',
+                    templateUrl: 'app/CustomContent/customcontent.html',
+                    controller: 'CustomContentController as vm'
 
-            })
-
-                .state('main.customcontent.customcontentbody', {
-                    url: '/customcontentbody',
-                    templateUrl: 'app/CustomContent/customcontentbody.html'
 
             });
         })
@@ -176,11 +172,11 @@ angular
             });
 
 
-            //On Before Unload event that clears local storage and redirects to the login page
-            window.onbeforeunload = function() {
-                storageFactory.clearAllLocalStorage();
-                return '';
-            };
+            // On Before Unload event that clears local storage and redirects to the login page
+            // window.onbeforeunload = function() {
+            //     storageFactory.clearAllLocalStorage();
+            //     return '';
+            // };
         })
 
         // controller for markdown editor
