@@ -170,11 +170,11 @@ angular
             });
 
 
-            // On Before Unload event that clears local storage and redirects to the login page
-            // window.onbeforeunload = function() {
-            //     storageFactory.clearAllLocalStorage();
-            //     return '';
-            // };
+            //On Before Unload event that clears local storage and redirects to the login page
+            window.onbeforeunload = function() {
+                storageFactory.clearAllLocalStorage();
+                return '';
+            };
         })
 
         // controller for markdown editor

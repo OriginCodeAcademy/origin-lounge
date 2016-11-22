@@ -58,6 +58,8 @@
                 function(error){
 
                     console.log(error);
+                    // get all the Roles that exist in the origin.API DB
+                    getRoles();
 
                 });
         }
