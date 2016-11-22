@@ -1,11 +1,17 @@
 <!-- Content to be displayed -->
+<style>
+body
+{
+	background-color: lightgray;
+}
+</style>
 <div class="panel panel-default">
     <div class="panel-heading custom_class">
-    	<h3><b>{{vm.categoryName}}</b></h3>
+    	<h3><b><center>{{vm.categoryName}}</center></b></h3>
     </div>
     <div class="panel-body">
 	    <div ui-view>
-			<table class="table">
+			<table class="col-lg-12 table-striped">
 			    <tr ng-repeat="content in vm.content">
 			        <td>
 			        	<!-- Content Title -->
@@ -17,7 +23,7 @@
 			        </td>
 			        <td ng-show="vm.isAdmin">
 			        	<!-- Delete Content button -->
-			        	<a ng-click="vm.deleteContentFromACategory(content.contentCategoryId)"><i class="fa fa-trash"></i></a>	
+			        	<a ng-click="vm.deleteContentFromACategory(content.contentCategoryId)"><i class="content-title fa fa-trash"></i></a>	
 			        </td>
 			    </tr>
 			</table>

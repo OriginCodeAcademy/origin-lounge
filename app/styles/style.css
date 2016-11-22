@@ -1,19 +1,119 @@
 
+/* ---------------------------------- LEFT SIDE NAV FIX CSS STYLYING --------------------------------- */
 
-.ng-cloak {
+.navbar-fixed-left 
+{
+  width: 150px;
+  position: fixed;
+  border-radius: 0;
+  height: 100%;
+  margin-left: 35px;
+  border-color: #64ABDD;
+  background-color: white
+}
+
+.navbar-fixed-left .navbar-nav > li 
+{
+  float: none;  /* Cancel default li float: left */
+  width: 139px;
+}
+
+
+
+/* On using dropdown menu (To right shift popuped) */
+.navbar-fixed-left .navbar-nav > li > .dropdown-menu 
+{
+  margin-top: -50px;
+  margin-left: 140px;
+}
+
+/* ---------------------------------- RIGHT SIDE NAV FIX CSS STYLYING --------------------------------- */
+
+.navbar-fixed-right 
+{
+  width: 150px;
+  position: fixed;
+  border-radius: 0;
+  height: 100%;
+  margin-right: 20px;
+  border-color: #64ABDD;
+  background-color: white;
+  right: 0;
+}
+
+.navbar-fixed-right .navbar-nav > li 
+{
+  float: none;  /* Cancel default li float: left */
+  width: 139px;
+}
+
+.navbar-fixed-right + .container 
+{
+  padding-left: 14%;
+  padding-right: -14%;
+}
+
+/* On using dropdown menu (To right shift popuped) */
+.navbar-fixed-right .navbar-nav > li > .dropdown-menu 
+{
+  margin-top: -50px;
+  margin-left: 140px;
+}
+
+/* ---------------------------------- OTHER CSS STYLYING --------------------------------- */
+
+
+#loginbutton
+{
+    margin-top: 20px;
+}
+
+#main
+{
+    margin-top: 110px;
+}
+
+.navbar
+{
+    background-color: white;
+    border-color: #64abdd;
+
+}
+
+#loginBtn 
+{
+   background-color: #64ABDD ;
+}
+
+#loginBtnMain {
+   background-color: #006dfd ;
+}
+
+#OCAlogo
+{
+    width: 100px;
+    height: 80px;
+}
+
+.ng-cloak 
+{
     display: none;
 }
 
-.outline {
+.outline 
+{
     border: 1px solid #ddd;
     border-radius: 3px;
 }
 
-.content-title:hover {
+.content-title:hover 
+{
     cursor: pointer;
+    color: #64abdd;
 }
 
-.chat_list {
+.chat_list 
+{
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -21,25 +121,20 @@
     background-color: #525E6C;
 }
 
-.chat_messages_and_channels {
-    display: block;
-    color: white;
-    padding: 8px 16px;
-    text-decoration: none;
-}
-
-.panel > .panel-heading {
+.panel > .panel-heading 
+{
     background-image: none;
-    background-color: #64ABDD;
-    color: white;
+    color: black;
 }
 
-#panel {
+#panel 
+{
     background: #525E6C;
     color: white;
 }
 
-#submit {
+#submit 
+{
     color: white;
     width: 100px;
     float: right;
@@ -47,73 +142,64 @@
     background-color: #64ABDD;
 }
 
-
-#topnav{
+#topnav
+{
 	border-color: gray;
 	border-style: solid;
 	border-top-width: 1px;
 	font-size: 1.2em;
+}
 
+#topcenternav
+{
+	font-weight: 45px;	
 }
-#topcenternav{
-	font-weight: 45px;
-	
-}
-#bottomcenternav{
+
+#bottomcenternav
+{
 	margin-top: 2%;
-
-}
-#bottomleftpnav{
-
-}
-#navimg{
-	max-width: 30%;
-	max-height: 25%;
 }
 
-#hat {
-   max-width: 50%;
-   max-height: 50%;
-}
-
-#loginBtn {
-   background-color: #64ABDD ;
-}
-
-#dropdownMenuButton{
+#dropdownMenuButton
+{
    background-color: #64ABDD;
    border: none;
-
+   color: white;
 }
 
 
-#links {
+#links 
+{
     background-color: #64ABDD;
-    width: 180px;
-    height: 75;
+    width: 86%;
+    height: 75px;
     margin: 10px;
     color: white;
 }
 
-#catbtn {
+#catbtn 
+{
     width: 250px;
     margin-left: 5%;
     margin-top: 2%
 }
 
-#rolebtn {
+#rolebtn 
+{
     width: 250px;
     margin-top: 1%;
 }
 
 #catbtn,
 #rolebtn,
-#addbtn {
+#addbtn 
+{
     background-color: #64ABDD;
     border-color: #64ABDD;
 }
 
-#eventBox {
+#eventBox 
+{
     margin-top: 2em;
     margin-bottom: 3em;
     border: 1px solid #ccc;
@@ -121,26 +207,33 @@
     padding: 1em;
 }
 
-#addButton {
+#addButton 
+{
     margin-top: 1em;
     margin-bottom: 1em;
 }
 
- .vresize {
+ .vresize 
+ {
     resize: vertical;
  }
 
- #eventDate {
+ #eventDate 
+ {
     font-size: 1.5em;
  }
 
- #required {
+ #required 
+ {
     color: red;
  }
 
- #allButton {
+ #allButton 
+ {
     padding: 1em;
  }
+
+
 
 /* Change the link color on hover */
 
@@ -173,7 +266,7 @@ table a:hover {
     text-decoration: underline;
 }
 
-table {
+table1 {
     font-family: Arial, Helvetica, sans-serif;
     color: #606060;
     font-size: 15px;

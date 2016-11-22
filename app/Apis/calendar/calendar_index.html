@@ -1,3 +1,9 @@
+<style>
+body
+{
+	background-color: white;
+}
+</style>
 <div id='calendar'></div>
 
 <form name="inputForm">
@@ -29,8 +35,8 @@
 			<textarea class="form-control vresize" rows="3" id='eventDetails' placeholder="Add Details" ng-model="vm.eventDetails"></textarea>
 		</div>
 		<div id="addButton" class="col-sm-offset-1 col-sm-12">
-			<button class="btn col-sm-4" id='eventAddButton' ng-click="vm.addEvent(vm.eventDate, vm.eventTitle, vm.eventUrl, vm.eventDetails, vm.eventType)" ng-disabled="inputForm.$invalid">Add Event</button>
-			<button class="btn col-sm-offset-1 col-sm-4" ng-click="vm.cancelEvenAdd()">Cancel</button>
+			<button class="btn btn-primary col-sm-4" id='eventAddButton' ng-click="vm.addEvent(vm.eventDate, vm.eventTitle, vm.eventUrl, vm.eventDetails, vm.eventType)" ng-disabled="inputForm.$invalid">Add Event</button>
+			<button class="btn btn-primary col-sm-offset-1 col-sm-4" ng-click="vm.cancelEvenAdd()">Cancel</button>
 		</div>
 	</div>
 </form>
