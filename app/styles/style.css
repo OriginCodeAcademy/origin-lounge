@@ -1,3 +1,5 @@
+
+
 .ng-cloak {
     display: none;
 }
@@ -7,9 +9,6 @@
     border-radius: 3px;
 }
 
-.content-title:hover {
-    cursor: pointer;
-}
 
 .chat_list {
     list-style-type: none;
@@ -30,10 +29,6 @@
     background-image: none;
     background-color: #64ABDD;
     color: white;
-}
-
-.fa {
-    cursor: pointer;
 }
 
 #panel {
@@ -115,31 +110,49 @@
     border-color: #64ABDD;
 }
 
+#eventBox {
+    margin-top: 2em;
+    margin-bottom: 3em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+    padding: 1em;
+}
+
+#addButton {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+ .vresize {
+    resize: vertical;
+ }
+
+ #eventDate {
+    font-size: 1.5em;
+ }
+
+ #required {
+    color: red;
+ }
+
+ #allButton {
+    padding: 1em;
+ }
+
 /* Change the link color on hover */
 
-.chat_messages_and_channels:hover {
+/*.chat_messages_and_channels:hover {
     background-color: lightgrey;
     color: #525E6C;
 }
 
-textarea.processed.md-input {
+/*textarea.processed.md-input {
     padding: 10px;
-}
+}*/
 
-/*GitHub styling starts here*/
-#githubpic {
-    float: left;
-    width: 80px;
-    height: 100%;
-}
-
-#repos {
-    column-width: 200px;
-    float: right;
-}
 
 /* Markdown related CSS -- Beginning */
-table a:link {
+/*table a:link {
     color: #666;
     font-weight: bold;
     text-decoration: none;
@@ -236,6 +249,5 @@ table tr:hover td {
     background: #f4f4f4;
     background: -webkit-gradient(linear, left top, left bottom, from(#f4f4f4), to(#f2f2f2));
     background: -moz-linear-gradient(top, #f4f4f4, #f2f2f2);
-}
-
+}*/
 

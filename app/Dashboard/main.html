@@ -15,12 +15,12 @@
             <div class="row">
                 <div class="col-md-8">
                     <!-- Search Input -->
-<!--                     <div class="input-group row">
+                    <div class="input-group row">
                         <input type="text" class="form-control" placeholder="Search for...">
                         <span class="input-group-btn">
                              <button class="btn btn-default glyphicon glyphicon-search" type="button"></button>
                         </span>
-                    </div> -->
+                    </div>
                 </div>
                 <!-- Drop down menu -->
                 <div class="dropdown col-md-4">
@@ -74,7 +74,10 @@
 
     <!-- Middle panel that displays custom content -->
     <div class="col-md-6 col-lg-6 text-center">
-        <div ui-view></div>
+        <div ui-view>
+                
+        </div>
+            <div id='calendar'></div>
     </div>
 
     <!-- right panel (aka User Feed) that displays all categories -->
@@ -86,11 +89,10 @@
             <div class="panel-body">
                 <div class="text-center">
                     <a ui-sref="main.countdown" class="btn btn-primary btn-lg active" id="links" role="button">Countdown<br><iframe src="http://free.timeanddate.com/countdown/i5gd5j01/n770/cf12/cm0/cu4/ct0/cs0/ca0/co0/cr0/ss0/cac525e6c/cpc525e6c/pc64abdd/tcfff/fs100/szw256/szh108/iso2016-12-16T00:00:00" allowTransparency="true" frameborder="0" width="90" height="26"></iframe></a>
-
-                    <a ng-repeat="category in vm.categories" ng-click="vm.getContentByCategoryId(category.categoryId, category.categoryName)" type="submit" class="btn btn-primary btn-lg active" id="links" role="button">{{category.categoryName}}</a>
-
-                    <a ui-sref="main.managecontent" class="btn btn-primary btn-lg active" id="links" role="button" ng-show="vm.isAdmin">Manage<br/>Content</a>
-                    <a ui-sref="main.github_index" class="btn btn-primary btn-lg active" id="links" role="button">GitHub<br/>Content</a>
+                    <a ng-repeat="category in vm.categories" ng-click="vm.getContentByCategoryId(category.categoryId)" type="submit" class="btn btn-primary btn-lg active" id="links" role="button">{{category.categoryName}}</a>
+                    <a ui-sref="main.managecontent" class="btn btn-primary btn-lg active" id="links" role="button">Manage<br/>Content</a>
+                    <a ui-sref="main.calendar_index" class="btn btn-primary btn-lg active" id="links" role="button">Calendar</a>
+                    <a ui-sref="main.linkedin_index" class="btn btn-primary btn-lg active" id="links" role="button">Linkedin</a>
                 </div>
             </div>
         </div>

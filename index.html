@@ -16,14 +16,18 @@
 
     <!-- Mark down related: not auto bower injected. Need to make it auto bower injected later -->
 <!--     <link rel="stylesheet" href="//rawgit.com/toopay/bootstrap-markdown/master/css/bootstrap-markdown.min.css"> -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css">
+<!--     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css"> -->
 
     <!-- linking to CDN because we need the latest version of bootstrap. Can we find a way to update bootstrap without having to do this? -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+<!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous"> -->
 
     <!-- inject:css -->
 
     <link rel="stylesheet" href="/app/styles/style.css">
+
+    <link rel="stylesheet" href="/app/Apis/calendar/styles/styles.css">
+
+    <link rel="stylesheet" href="/app/Apis/github/styles/styles.css">
 
     <!-- endinject -->
 </head>
@@ -82,15 +86,21 @@
     
     <script src="/app/Authentication/storage.factory.js"></script>
     
-    <script src="/app/CustomContent/customcontent.controller.js"></script>
+    <script src="/app/CustomContent/customContent.controller.js"></script>
+    
+    <script src="/app/CustomContent/manage_content_and_categories.controller.js"></script>
     
     <script src="/app/Dashboard/dashboard.controller.js"></script>
     
     <script src="/app/Dashboard/dashboard.factory.js"></script>
     
-    <script src="/app/Apis/github/github_controller.js"></script>
+    <script src="/app/Apis/calendar/calendar.controller.js"></script>
     
-    <script src="/app/Apis/github/github_factory.js"></script>
+    <script src="/app/Apis/calendar/calendar.factory.js"></script>
+    
+    <script src="/app/Apis/github/controller.js"></script>
+    
+    <script src="/app/Apis/linkedin/controller.js"></script>
     
     <!-- endinject -->
      <script src="ui-bootstrap-tpls-2.2.0.min.js"></script>
