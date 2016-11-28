@@ -5,10 +5,10 @@
         .module('app')
         .controller('LinkedinController', LinkedinController);
 
-    LinkedinController.$inject = ['$http'];
+    LinkedinController.$inject = ['$http', 'originLoungeExpressAPIBaseURL'];
 
     /* @ngInject */
-    function LinkedinController($http) {
+    function LinkedinController($http, originLoungeExpressAPIBaseURL) {
         var vm = this;
         vm.title = 'LinkedinController';
         vm.url = '';
@@ -52,7 +52,7 @@
                         vm.response = response;
                             return $http({
                                 method: 'POST',
-                                url: 'http://localhost:3000/api/apicode',
+                                url: originLoungeExpressAPIBaseURL + 'apicode',
                                 header:{
                                     'Content-Type' : 'application/x-www-form-urlencoded'
                                 },

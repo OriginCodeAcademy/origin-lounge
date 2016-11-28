@@ -28,7 +28,7 @@ body
 <!-- LEFT SIDE FIXED NAV -->
 
 <div class="navbar navbar-fixed-left">
-    <a class="navbar-brand" style="font-family: oswald; color: #1f0845" >- Chat Channel -</a>
+    <a class="navbar-brand" style="font-family: oswald; color: #1f0845" >- Chat Channels -</a>
     <ul class="nav navbar-nav">
         <ul ng-repeat="groups in vm.chatGroups">
             <li ng-hide="groups.groupname === 'direct'"><a ui-sref="main.chat"><h5 ng-val="groups.chatid" >{{groups.groupname}}</h5></a></li>

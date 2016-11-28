@@ -4,6 +4,8 @@
 angular
         .module('app', ['ui.router','LocalStorageModule', 'toastr', 'ngIdle', 'ui.bootstrap', 'hc.marked', 'hljs', 'angular-markdown-editor'])
         .value ('originAPIBaseURL', 'http://origincodeacademyapi.azurewebsites.net/', 'ui.calendar')
+        .value ('chatServerURLAndPort', 'http://localhost:3002')
+        .value ('originLoungeExpressAPIBaseURL', 'http://localhost:3000/api/')
         // .value ('originAPIBaseURL', 'http://localhost:53737/', 'ui.calendar')
 
 
@@ -31,6 +33,7 @@ angular
         }])
 
         .config(function($stateProvider, $urlRouterProvider, localStorageServiceProvider, $httpProvider, IdleProvider, KeepaliveProvider) {
+            // local storage config
               localStorageServiceProvider
              .setPrefix('')
              .setNotify(true, true);
@@ -39,7 +42,7 @@ angular
             $httpProvider.interceptors.push('authInterceptorService');
 
             // set up the IdleProvider's idle and timeout values, as well as the KeepaliveProvider's interval
-            IdleProvider.idle(10*60); // 10 minute idle
+            IdleProvider.idle(60*10); // 10 minute idle
             IdleProvider.timeout(10); // 10 seconds after idle, time the user out
             //KeepaliveProvider.interval(5*60); // 5 minute keep-alive ping
 
@@ -128,7 +131,6 @@ angular
             // rootScope handler for when user changes states
             $rootScope.$on('$stateChangeStart', function() {
 
-
                 // if a token doesn't exist in local storage, log the user out
                 var isLogin = storageFactory.getLocalStorage("userSession");
                 if(isLogin === null){
@@ -186,6 +188,9 @@ angular
                 
                 // stop the idle watch
                 Idle.unwatch();
+                
+                // // close any chat socket that is currently open
+                // $rootScope.socket.disconnect();
                 
                 // jump to the login page
                 $state.go('login');

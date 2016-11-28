@@ -5,9 +5,9 @@
     .module('app')
     .factory('DashboardFactory', DashboardFactory);
 
-    DashboardFactory.$inject = ['$http', '$q', 'storageFactory', 'originAPIBaseURL'];
+    DashboardFactory.$inject = ['$http', '$q', 'storageFactory', 'originAPIBaseURL', 'originLoungeExpressAPIBaseURL'];
 
-    function DashboardFactory($http, $q, storageFactory, originAPIBaseURL) {
+    function DashboardFactory($http, $q, storageFactory, originAPIBaseURL, originLoungeExpressAPIBaseURL) {
         var service = {
 
             deleteContentCategoryEntry: deleteContentCategoryEntry,
@@ -31,7 +31,7 @@
         function getChat(userId) {
             return $http({
                 method: 'GET',
-                url: 'http://localhost:3000/api/messagerecipients/' + userId
+                url: originLoungeExpressAPIBaseURL + 'messagerecipients/' + userId
             }).then(function(response){
                 return response;
             })
@@ -43,7 +43,7 @@
 
             $http({
                 method:'GET',
-                url:'http://localhost:3000/api/category/'
+                url: originLoungeExpressAPIBaseURL + 'category/'
 
             })
 
@@ -76,7 +76,7 @@
 
             $http({
                 method:'GET',
-                url:'http://localhost:3000/api/categorynamesbyroleid/' + roleIds
+                url: originLoungeExpressAPIBaseURL + 'categorynamesbyroleid/' + roleIds
 
             })
 
@@ -108,7 +108,7 @@
 
             $http({
                 method:'GET',
-                url:'http://localhost:3000/api/contentbycategoryid/' + categoryId
+                url: originLoungeExpressAPIBaseURL + 'contentbycategoryid/' + categoryId
             })
 
             .then(function(response){
@@ -140,7 +140,7 @@
 
             $http({
                 method:'GET',
-                url:'http://localhost:3000/api/content/' + contentId
+                url: originLoungeExpressAPIBaseURL + 'content/' + contentId
             })
 
             .then(function(response){
@@ -175,7 +175,7 @@
 
               $http({
                 method:'POST',
-                url:'http://localhost:3000/api/category',
+                url: originLoungeExpressAPIBaseURL + 'category',
                 data: info,
                 headers: {
                     'Content-Type' : 'application/x-www-form-urlencoded'
@@ -212,7 +212,7 @@
 
             $http({
                 method:'PUT',
-                url:'http://localhost:3000/api/category' + info.id,
+                url: originLoungeExpressAPIBaseURL + 'category/' + info.id,
                 data: info,
                 headers: {
                     'Content-Type' : 'application/x-www-form-urlencoded'
@@ -256,7 +256,7 @@
           
           $http({
             method:'POST',
-            url:'http://localhost:3000/api/content',
+            url: originLoungeExpressAPIBaseURL + 'content',
             data: info,
             headers: {
                 'Content-Type' : 'application/x-www-form-urlencoded'
@@ -295,7 +295,7 @@
           
           $http({
             method:'POST',
-            url:'http://localhost:3000/api/contentcategory',
+            url:originLoungeExpressAPIBaseURL + 'contentcategory',
             data: info,
             headers: {
                 'Content-Type' : 'application/x-www-form-urlencoded'
@@ -371,7 +371,7 @@
 
             $http({
                 method: 'DELETE',
-                url: 'http://localhost:3000/api/contentcategory/' + contentCategoryId
+                url: originLoungeExpressAPIBaseURL + 'contentcategory/' + contentCategoryId
             })
 
             .then(function(response){

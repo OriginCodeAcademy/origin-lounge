@@ -5,10 +5,10 @@
         .module('app')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['DashboardFactory', 'storageFactory', 'Idle', '$state'];
+    DashboardController.$inject = ['DashboardFactory', 'storageFactory', 'Idle', '$state', '$rootScope'];
 
     
-    function DashboardController(DashboardFactory, storageFactory, Idle, $state) {
+    function DashboardController(DashboardFactory, storageFactory, Idle, $state, $rootScope) {
         var vm = this;
 
         vm.logOut = logOut;
@@ -74,9 +74,13 @@
             
         }
         
-        // Logout on-click function that clears local storage and kicks user to login page
+        // Logout on-click function
         function logOut(){
+            // clear local storage
             storageFactory.clearAllLocalStorage();
+            // // disconnect any chat socket that may be opened, before logging out
+            // $rootScope.socket.disconnect();
+            // go to login page
             $state.go('login');
         }
 

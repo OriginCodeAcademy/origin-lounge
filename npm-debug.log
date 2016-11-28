@@ -1,0 +1,111 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'btford.socket-io' ]
+2 info using npm@2.15.9
+3 info using node@v4.5.0
+4 verbose install initial load of C:\dev\github\reuvenkishon\origin-lounge\package.json
+5 verbose installManyTop reading scoped package data from C:\dev\github\reuvenkishon\origin-lounge\node_modules\body-parser\package.json
+6 verbose installManyTop reading scoped package data from C:\dev\github\reuvenkishon\origin-lounge\node_modules\express\package.json
+7 verbose installManyTop reading scoped package data from C:\dev\github\reuvenkishon\origin-lounge\node_modules\gulp\package.json
+8 verbose installManyTop reading scoped package data from C:\dev\github\reuvenkishon\origin-lounge\node_modules\gulp-connect\package.json
+9 verbose installManyTop reading scoped package data from C:\dev\github\reuvenkishon\origin-lounge\node_modules\gulp-inject\package.json
+10 verbose installManyTop reading scoped package data from C:\dev\github\reuvenkishon\origin-lounge\node_modules\gulp-livereload\package.json
+11 verbose installManyTop reading scoped package data from C:\dev\github\reuvenkishon\origin-lounge\node_modules\gulp-open\package.json
+12 verbose installManyTop reading scoped package data from C:\dev\github\reuvenkishon\origin-lounge\node_modules\gulp-util\package.json
+13 verbose installManyTop reading scoped package data from C:\dev\github\reuvenkishon\origin-lounge\node_modules\mongoose\package.json
+14 verbose installManyTop reading scoped package data from C:\dev\github\reuvenkishon\origin-lounge\node_modules\morgan\package.json
+15 verbose installManyTop reading scoped package data from C:\dev\github\reuvenkishon\origin-lounge\node_modules\node-static\package.json
+16 verbose installManyTop reading scoped package data from C:\dev\github\reuvenkishon\origin-lounge\node_modules\socket-io\package.json
+17 verbose installManyTop reading scoped package data from C:\dev\github\reuvenkishon\origin-lounge\node_modules\socket.io\package.json
+18 verbose installManyTop reading scoped package data from C:\dev\github\reuvenkishon\origin-lounge\node_modules\tether\package.json
+19 verbose installManyTop reading scoped package data from C:\dev\github\reuvenkishon\origin-lounge\node_modules\wiredep\package.json
+20 info package.json socket-io@0.0.0 No repository field.
+21 info package.json socket-io@0.0.0 No README data
+22 verbose readDependencies loading dependencies from C:\dev\github\reuvenkishon\origin-lounge\package.json
+23 silly cache add args [ 'btford.socket-io', null ]
+24 verbose cache add spec btford.socket-io
+25 silly cache add parsed spec Result {
+25 silly cache add   raw: 'btford.socket-io',
+25 silly cache add   scope: null,
+25 silly cache add   name: 'btford.socket-io',
+25 silly cache add   rawSpec: '',
+25 silly cache add   spec: 'latest',
+25 silly cache add   type: 'tag' }
+26 silly addNamed btford.socket-io@latest
+27 verbose addNamed "latest" is being treated as a dist-tag for btford.socket-io
+28 info addNameTag [ 'btford.socket-io', 'latest' ]
+29 silly mapToRegistry name btford.socket-io
+30 silly mapToRegistry using default registry
+31 silly mapToRegistry registry https://registry.npmjs.org/
+32 silly mapToRegistry data Result {
+32 silly mapToRegistry   raw: 'btford.socket-io',
+32 silly mapToRegistry   scope: null,
+32 silly mapToRegistry   name: 'btford.socket-io',
+32 silly mapToRegistry   rawSpec: '',
+32 silly mapToRegistry   spec: 'latest',
+32 silly mapToRegistry   type: 'tag' }
+33 silly mapToRegistry uri https://registry.npmjs.org/btford.socket-io
+34 verbose addNameTag registry:https://registry.npmjs.org/btford.socket-io not in flight; fetching
+35 verbose request uri https://registry.npmjs.org/btford.socket-io
+36 verbose request no auth needed
+37 info attempt registry request try #1 at 12:03:51 PM
+38 verbose request id 3d028a2d9df1acd9
+39 http request GET https://registry.npmjs.org/btford.socket-io
+40 http 404 https://registry.npmjs.org/btford.socket-io
+41 verbose headers { 'content-type': 'application/json',
+41 verbose headers   'cache-control': 'max-age=0',
+41 verbose headers   'content-length': '2',
+41 verbose headers   'accept-ranges': 'bytes',
+41 verbose headers   date: 'Sat, 26 Nov 2016 20:03:51 GMT',
+41 verbose headers   via: '1.1 varnish',
+41 verbose headers   age: '0',
+41 verbose headers   connection: 'keep-alive',
+41 verbose headers   'x-served-by': 'cache-lax8649-LAX',
+41 verbose headers   'x-cache': 'MISS',
+41 verbose headers   'x-cache-hits': '0',
+41 verbose headers   'x-timer': 'S1480190631.551162,VS0,VE334',
+41 verbose headers   vary: 'Accept-Encoding' }
+42 silly get cb [ 404,
+42 silly get   { 'content-type': 'application/json',
+42 silly get     'cache-control': 'max-age=0',
+42 silly get     'content-length': '2',
+42 silly get     'accept-ranges': 'bytes',
+42 silly get     date: 'Sat, 26 Nov 2016 20:03:51 GMT',
+42 silly get     via: '1.1 varnish',
+42 silly get     age: '0',
+42 silly get     connection: 'keep-alive',
+42 silly get     'x-served-by': 'cache-lax8649-LAX',
+42 silly get     'x-cache': 'MISS',
+42 silly get     'x-cache-hits': '0',
+42 silly get     'x-timer': 'S1480190631.551162,VS0,VE334',
+42 silly get     vary: 'Accept-Encoding' } ]
+43 verbose stack Error: Registry returned 404 for GET on https://registry.npmjs.org/btford.socket-io
+43 verbose stack     at makeError (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:264:12)
+43 verbose stack     at CachingRegistryClient.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:242:14)
+43 verbose stack     at Request._callback (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:172:14)
+43 verbose stack     at Request.self.callback (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:200:22)
+43 verbose stack     at emitTwo (events.js:87:13)
+43 verbose stack     at Request.emit (events.js:172:7)
+43 verbose stack     at Request.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:1067:10)
+43 verbose stack     at emitOne (events.js:82:20)
+43 verbose stack     at Request.emit (events.js:169:7)
+43 verbose stack     at IncomingMessage.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:988:12)
+44 verbose statusCode 404
+45 verbose pkgid btford.socket-io
+46 verbose cwd C:\dev\github\reuvenkishon\origin-lounge
+47 error Windows_NT 10.0.14393
+48 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "btford.socket-io"
+49 error node v4.5.0
+50 error npm  v2.15.9
+51 error code E404
+52 error 404 Registry returned 404 for GET on https://registry.npmjs.org/btford.socket-io
+52 error 404
+52 error 404 'btford.socket-io' is not in the npm registry.
+52 error 404 You should bug the author to publish it (or use the name yourself!)
+52 error 404 It was specified as a dependency of 'useradmin'
+52 error 404
+52 error 404 Note that you can also install from a
+52 error 404 tarball, folder, http url, or git url.
+53 verbose exit [ 1, true ]

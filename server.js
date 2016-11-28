@@ -1,3 +1,4 @@
+// =============================================================================
 // BASE SETUP
 // =============================================================================
 
@@ -20,13 +21,16 @@ app.use(function(req, res, next) {
     next();
 });
 
-var port = process.env.PORT || 3000; // set our port
+// set the port
+var port = process.env.PORT || 3000;
+
+// connect to our mongoDB database instance hosted on heroku
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://origin-dev:pass1@ds149297-a0.mlab.com:49297/heroku_nrxdgp9h/'); 
 
 // ============================================================================
-// ======== DATABASE TABLES 
-
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://origin-dev:pass1@ds149297-a0.mlab.com:49297/heroku_nrxdgp9h/'); // connect to our database
+// TABLES
+// ============================================================================ 
 var Category = require('./server/models/custom-content/category');
 var Content = require('./server/models/custom-content/content');
 var RoleCategory = require('./server/models/custom-content/rolecategory');
@@ -40,6 +44,7 @@ var CalendarUserGroupEvent = require('./server/models/calendar-content/usergroup
 var CalendarEvent = require('./server/models/calendar-content/event');
 var CalendarEventType = require('./server/models/calendar-content/eventtype');
 
+// =============================================================================
 // ROUTES FOR OUR API
 // =============================================================================
 
@@ -53,22 +58,23 @@ router.use(function(req, res, next) {
     next();
 });
 
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
+// test route to make sure everything is working (accessed at GET http://localhost:3000/api)
 router.get('/', function(req, res) {
 
     res.json({ message: 'hooray! welcome to our api!' });
 });
 
-//=============================================================================
-// on routes that end in /category
-// ----------------------------------------------------
+// =============================================================================
+// Routes that end in /category
+// =============================================================================
+
 router.route('/category')
 
-// create a category (accessed at POST http://localhost:8080/category)
+// create a category (accessed at POST http://localhost:3000/api/category)
 .post(function(req, res) {
 
     var category = new Category();
-    category.name = req.body.name
+    category.name = req.body.name;
 
     // set the category name (comes from the request)
     console.log("body:" + req.body);
@@ -85,7 +91,7 @@ router.route('/category')
 
 })
 
-// get all the category (accessed at GET http://localhost:8080/api/category)
+// get all categories (accessed at GET http://localhost:3000/api/category)
 .get(function(req, res) {
     Category.find(function(err, category) {
         if (err)
@@ -95,11 +101,13 @@ router.route('/category')
     });
 });
 
-// on routes that end in /category/:category_id
-// ----------------------------------------------------
+// ===================================================================
+// Routes that end in /category/:category_id
+// ===================================================================
+
 router.route('/category/:category_id')
 
-// get the category with that id
+// get a specific category (accessed at GET http://localhost:3000/api/category/{categoryId})
 .get(function(req, res) {
     Category.findById(req.params.category_id, function(err, category) {
         if (err)
@@ -108,7 +116,7 @@ router.route('/category/:category_id')
     });
 })
 
-// update the category with this id
+// update a specific category (accessed at PUT http://localhost:3000/api/category/{categoryId})
 .put(function(req, res) {
     Category.findById(req.params.category_id, function(err, category) {
 
@@ -126,7 +134,7 @@ router.route('/category/:category_id')
     });
 })
 
-// delete the category with this id
+// delete a specific category (accessed at DELETE http://localhost:3000/api/category/{categoryId})
 .delete(function(req, res) {
     Category.remove({
         _id: req.params.category_id
@@ -139,12 +147,12 @@ router.route('/category/:category_id')
 });
 
 
-//=============================================================================
-// on routes that end in /apicode
-// ----------------------------------------------------
+// =============================================================================
+// Routes that end in /apicode
+// ============================================================================
 router.route('/apicode')
 
-// create a apicode (accessed at POST http://localhost:8080/apicode)
+// create an apicode entry (accessed at POST http://localhost:3000/api/apicode)
 .post(function(req, res) {
 
     var apicode = new ApiCode();
@@ -168,7 +176,7 @@ router.route('/apicode')
 
 })
 
-// get all the category (accessed at GET http://localhost:8080/api/apicode)
+// get all the apicode entries (accessed at GET http://localhost:3000/api/apicode)
 .get(function(req, res) {
     ApiCode.find(function(err, apicode) {
         if (err)
@@ -179,11 +187,12 @@ router.route('/apicode')
     });
 });
 
-// on routes that end in /category/:category_id
-// ----------------------------------------------------
+// ============================================================================
+// Routes that end in /apicode/:apicode_id
+// ============================================================================
 router.route('/apicode/:apicode_id')
 
-// get the category with that id
+// get a specific apicode entry (accessed at GET http://localhost:3000/api/apicode/{apicode_Id})
 .get(function(req, res) {
     ApiCode.findById(req.params.apicode_id, function(err, apicode) {
         if (err)
@@ -192,7 +201,7 @@ router.route('/apicode/:apicode_id')
     });
 })
 
-// update the category with this id
+// update a specific apicode entry (accessed at PUT http://localhost:3000/api/apicode/{apicode_Id})
 .put(function(req, res) {
     ApiCode.findById(req.params.apicode_id, function(err, apicode) {
 
@@ -215,7 +224,7 @@ router.route('/apicode/:apicode_id')
     });
 })
 
-// delete the category with this id
+// delete a specific apicode entry (accessed at DELETE http://localhost:3000/api/apicode/{apicode_Id})
 .delete(function(req, res) {
     ApiCode.remove({
         _id: req.params.apicode_id
@@ -227,13 +236,13 @@ router.route('/apicode/:apicode_id')
     });
 });
 
-//=============================================================================
-// on routes that end in /content
-// ----------------------------------------------------
+// =============================================================================
+// Routes that end in /content
+// =============================================================================
 
 router.route('/content')
 
-// create a content (accessed at POST http://localhost:8080/content)
+// create a content item (accessed at POST http://localhost:3000/api/content)
 .post(function(req, res) {
 
     var content = new Content();
@@ -255,7 +264,7 @@ router.route('/content')
 
 })
 
-// get all the content (accessed at GET http://localhost:8080/api/content)
+// get all content items (accessed at GET http://localhost:3000/api/content)
 .get(function(req, res) {
     Content.find(function(err, content) {
         if (err)
@@ -265,11 +274,13 @@ router.route('/content')
     });
 });
 
-// on routes that end in /content/:content_id
-// ----------------------------------------------------
+// ==========================================================================
+// Routes that end in /content/:content_id
+// ==========================================================================
+
 router.route('/content/:content_id')
 
-// get the content with that id
+// get a specific content item (accessed at GET http://localhost:3000/api/content/{content_Id})
 .get(function(req, res) {
     Content.findById(req.params.content_id, function(err, content) {
         if (err)
@@ -278,7 +289,7 @@ router.route('/content/:content_id')
     });
 })
 
-// update the content with this id
+// update a specific content item (accessed at PUT http://localhost:3000/api/content/{content_Id})
 .put(function(req, res) {
     Content.findById(req.params.content_id, function(err, content) {
 
@@ -299,7 +310,7 @@ router.route('/content/:content_id')
     });
 })
 
-// delete the content with this id
+// delete a specific content item (accessed at DELETE http://localhost:3000/api/content/{content_Id})
 .delete(function(req, res) {
     Content.remove({
         _id: req.params.content_id
@@ -311,20 +322,18 @@ router.route('/content/:content_id')
     });
 });
 
-//=============================================================================
-// on routes that end in /rolecategory
-// ----------------------------------------------------
+// =============================================================================
+// Routes that end in /rolecategory
+// =============================================================================
 
 router.route('/rolecategory')
 
-// create a roleCategory (accessed at POST http://localhost:8080/roleCategory)
+// create a roleCategory entry (accessed at POST http://localhost:3000/api/roleCategory)
 .post(function(req, res) {
 
     var roleCategory = new RoleCategory();
     roleCategory.categoryId = req.body.categoryId;
     roleCategory.roleId = req.body.roleId;
-
-   
 
     // set the roleCategory name (comes from the request)
     roleCategory.save(function(err) {
@@ -337,7 +346,7 @@ router.route('/rolecategory')
 
 })
 
-// get all the roleCategory (accessed at GET http://localhost:8080/api/roleCategory)
+// get all the roleCategory entries (accessed at GET http://localhost:3000/api/roleCategory)
 .get(function(req, res) {
     RoleCategory.find(function(err, roleCategory) {
         if (err)
@@ -349,11 +358,12 @@ router.route('/rolecategory')
     });
 });
 
-// on routes that end in /rolecategory/:rolecategory_id
-// ----------------------------------------------------
+// ===========================================================================
+// Routes that end in /rolecategory/:rolecategory_id
+// ===========================================================================
 router.route('/rolecategory/:rolecategory_id')
 
-// get the category with that id
+// get a specific rolecategory entry (accessed at GET http://localhost:3000/api/roleCategory/{rolecategory_Id})
 .get(function(req, res) {
     RoleCategory.findById(req.params.roleCategory_id, function(err, roleCategory) {
         if (err)
@@ -362,7 +372,7 @@ router.route('/rolecategory/:rolecategory_id')
     });
 })
 
-// update the rolecategory with this id
+// update a specific rolecategory (accessed at PUT http://localhost:3000/api/roleCategory/{rolecategory_Id})
 .put(function(req, res) {
     RoleCategory.findById(req.params.roleCategory_id, function(err, roleCategory) {
 
@@ -382,7 +392,7 @@ router.route('/rolecategory/:rolecategory_id')
     });
 })
 
-// delete the role category with this id
+// delete a specific role category (accessed at DELETE http://localhost:3000/api/roleCategory/{rolecategory_Id})
 .delete(function(req, res) {
     RoleCategory.remove({
         _id: req.params.roleCategory_id
@@ -394,12 +404,13 @@ router.route('/rolecategory/:rolecategory_id')
     });
 });
 
-//=============================================================================
-// on routes that end in /categorynamesbyroleid
-// ----------------------------------------------------
+// =============================================================================
+// Routes that end in /categorynamesbyroleid/:role_Ids
+// =============================================================================
 
 router.route('/categorynamesbyroleid/:role_Ids')
 
+// get all category names for all the roleIds provided in the request (accessed at GET http://localhost:3000/api/categorynamesbyroleid/[role_Ids])
 .get (function(req,res,next){
     
     // convert the comma separated query string to an array of comma separate strings
@@ -467,10 +478,11 @@ router.route('/categorynamesbyroleid/:role_Ids')
         }
 });
 
-//=============================================================================
-// on routes that end in /contentbycategoryid
-// ----------------------------------------------------
+// =============================================================================
+// Routes that end in /contentbycategoryid/:category_id
+// =============================================================================
 
+// get all content items associated with a specific category Id (accessed at GET http://localhost:3000/api/contentbycategoryid/{category_id})
 router.route('/contentbycategoryid/:category_id')
 
 .get (function(req,res,next){
@@ -537,9 +549,13 @@ router.route('/contentbycategoryid/:category_id')
         }
 });
 
+// =============================================================================
+// Routes that end in /contentcategory
+// =============================================================================
+
 router.route('/contentcategory')
 
-// create contentcategory entries (accessed at POST http://localhost:8080/contentcategory)
+// create mulitple contentcategory entries based on the list of categoryIds received (accessed at POST http://localhost:3000/api/contentcategory)
 .post(function(req, res) {
 
     // convert the comma separated body string to an array of comma separate strings
@@ -565,7 +581,7 @@ router.route('/contentcategory')
         res.json({ message: 'Content Category created!'});
 })
 
-// get all the content category (accessed at GET http://localhost:8080/api/contentcategory)
+// get all the contentcategory entries (accessed at GET http://localhost:3000/api/contentcategory)
 .get(function(req, res) {
     ContentCategory.find(function(err, contentCategory) {
         if (err)
@@ -575,11 +591,13 @@ router.route('/contentcategory')
     });
 });
 
-// on routes that end in /contentcategory/:contentcategory_id
-// ----------------------------------------------------
+// =============================================================================
+// Routes that end in /contentcategory/:contentcategory_id
+// =============================================================================
+
 router.route('/contentcategory/:contentcategory_id')
 
-// get the content category with that id
+// get a specific contentcategory entry (accessed at GET http://localhost:3000/api/contentcategory/{contentcategory_Id})
 .get(function(req, res) {
     ContentCategory.findById(req.params.contentCategory_id, function(err, contentCategory) {
         if (err)
@@ -588,7 +606,7 @@ router.route('/contentcategory/:contentcategory_id')
     });
 })
 
-// update the contentcategory with this id
+// update a specific contentcategory entry (accessed at PUT http://localhost:3000/api/contentcategory/{contentcategory_Id})
 .put(function(req, res) {
     ContentCategory.findById(req.params.contentCategory_id, function(err, contentCategory) {
 
@@ -608,7 +626,7 @@ router.route('/contentcategory/:contentcategory_id')
     });
 })
 
-// delete the content category with this id
+// delete a specific contentcategory entry (accessed at DELETE http://localhost:3000/api/contentcategory/{contentcategory_Id})
 .delete(function(req, res) {
     ContentCategory.remove({
         _id: req.params.contentCategory_id
@@ -620,12 +638,12 @@ router.route('/contentcategory/:contentcategory_id')
     });
 });
 
-//=============================================================================
-// on routes that end in /messagerecipients
-// ----------------------------------------------------
+// =============================================================================
+// Routes that end in /messagerecipients
+// =============================================================================
 router.route('/messagerecipients')
 
-// get all of the users messagerecipients by ID
+// get all messagerecipient table entries (accessed at GET http://localhost:3000/api/messagerecipients)
 .get(function(req, res) {
     MessagesRecipients.find(function(err, category) {
         if (err)
@@ -635,9 +653,12 @@ router.route('/messagerecipients')
     });
 });
 
+// =============================================================================
+// Routes that end in /messagerecipients/:userid
+// =============================================================================
 router.route('/messagerecipients/:userid')
 
-// get all of the users messagerecipients by ID
+// get all messagerecipient entries for a specific userId (accessed at GET http://localhost:3000/api/messagerecipients/{userId})
 .get(function(req, res) {
     MessagesRecipients.find({"userid": req.params.userid }, {"usernames":1, _id:0, "chatid":1, "groupname":1},function(err, messagerecipients) {
         if (err)
@@ -656,12 +677,12 @@ router.route('/messagerecipients/:userid')
     messagesRecipients.channelname = req.body.channelname;
 });
 
-//=============================================================================
-// on routes that end in /messages
-// ----------------------------------------------------
+// =============================================================================
+// Routes that end in /messages/:chatid
+// =============================================================================
 router.route('/messages/:chatid')
 
-// get all messages from chatid
+// get all messages associated with a specific chatid (accessed at GET http://localhost:3000/api/messages/{chatId})
 .get(function(req, res) {
     Messages.find({"chatid": req.params.chatid}, function(err, messages) {
         if(err) res.send(err);
@@ -670,12 +691,12 @@ router.route('/messages/:chatid')
     });
 });
 
-//=============================================================================
-// on routes that end in /usergroup
-// ----------------------------------------------------
+// =============================================================================
+// Routes that end in /usergroup
+// =============================================================================
 router.route('/usergroup')
 
-// create a usergroup (accessed at POST http://localhost:8080/usergroup)
+// create a Calendar usergroup (accessed at POST http://localhost:3000/api/usergroup)
 .post(function(req, res) {
 
     var usergroup = new CalendarUserGroup();
@@ -696,7 +717,7 @@ router.route('/usergroup')
 
 })
 
-// get all the usergroup (accessed at GET http://localhost:8080/api/usergroup)
+// get all Calendar usergroups (accessed at GET http://localhost:3000/api/usergroup)
 .get(function(req, res) {
     CalendarUserGroup.find(function(err, usergroup) {
         if (err)
@@ -707,11 +728,12 @@ router.route('/usergroup')
     });
 });
 
-// on routes that end in /usergroup/:usergroup_id
-// ----------------------------------------------------
+// ==================================================================
+// Routes that end in /usergroup/:usergroup_id
+// ==================================================================
 router.route('/usergroup/:usergroup_id')
 
-// get the usergroup with that id
+// get a specific Calendar usergroup entry (accessed at GET http://localhost:3000/api/usergroup/{usergroup_Id})
 .get(function(req, res) {
     CalendarUserGroup.findById(req.params.usergroup_id, function(err, usergroup) {
         if (err)
@@ -720,7 +742,7 @@ router.route('/usergroup/:usergroup_id')
     });
 })
 
-// update the usergroup with this id
+// update a specific Calendar usergroup entry (accessed at PUT http://localhost:3000/api/usergroup/{usergroup_Id})
 .put(function(req, res) {
     CalendarUserGroup.findById(req.params.usergroup_id, function(err, usergroup) {
 
@@ -740,7 +762,7 @@ router.route('/usergroup/:usergroup_id')
     });
 })
 
-// delete the usergroup with this id
+// delete a specific Calendar usergroup entry (accessed at DELETE http://localhost:3000/api/usergroup/{usergroup_Id})
 .delete(function(req, res) {
    CalendarUserGroup.remove({
         _id: req.params.usergroup_id
@@ -752,12 +774,12 @@ router.route('/usergroup/:usergroup_id')
     });
 });
 
-//=============================================================================
-// on routes that end in /group
-// ----------------------------------------------------
+// =============================================================================
+// Routes that end in /group
+// =============================================================================
 router.route('/group')
 
-// create a group (accessed at POST http://localhost:8080/group)
+// create a Calendar group (accessed at POST http://localhost:3000/api/group)
 .post(function(req, res) {
 
     var group = new CalendarGroup();
@@ -778,7 +800,7 @@ router.route('/group')
 
 })
 
-// get all the group (accessed at GET http://localhost:8080/api/group)
+// get all Calendar groups (accessed at GET http://localhost:3000/api/group)
 .get(function(req, res) {
     CalendarGroup.find(function(err, group) {
         if (err)
@@ -789,11 +811,12 @@ router.route('/group')
     });
 });
 
-// on routes that end in /group/:group_id
-// ----------------------------------------------------
+// ======================================================================
+// Routes that end in /group/:group_id
+// ======================================================================
 router.route('/group/:group_id')
 
-// get the group with that id
+// get a specific Calendar group (accessed at GET http://localhost:3000/api/group/{groupId})
 .get(function(req, res) {
     CalendarGroup.findById(req.params.group_id, function(err, group) {
         if (err)
@@ -802,7 +825,7 @@ router.route('/group/:group_id')
     });
 })
 
-// update the group with this id
+// update a specific Calendar group (accessed at PUT http://localhost:3000/api/group/{groupId})
 .put(function(req, res) {
     CalendarGroup.findById(req.params.group_id, function(err, group) {
 
@@ -822,7 +845,7 @@ router.route('/group/:group_id')
     });
 })
 
-// delete the group with this id
+// delete a specific Calendar group (accessed at DELETE http://localhost:3000/api/group/{groupId})
 .delete(function(req, res) {
    CalendarGroup.remove({
         _id: req.params.group_id
@@ -835,12 +858,12 @@ router.route('/group/:group_id')
 });
 
 
-//=============================================================================
-// on routes that end in /usergroupevent
-// ----------------------------------------------------
+// =============================================================================
+// Routes that end in /usergroupevent
+// =============================================================================
 router.route('/usergroupevent')
 
-// create a usergroupevent (accessed at POST http://localhost:8080/usergroupevent)
+// create a Calendar usergroupevent (accessed at POST http://localhost:3000/api/usergroupevent)
 .post(function(req, res) {
 
     var usergroupevent = new CalendarUserGroupEvent();
@@ -862,7 +885,7 @@ router.route('/usergroupevent')
 
 })
 
-// get all the usergroupevent (accessed at GET http://localhost:8080/api/usergroupevent)
+// get all the Calendar usergroupevents (accessed at GET http://localhost:3000/api/usergroupevent)
 .get(function(req, res) {
     CalendarUserGroupEvent.find(function(err, usergroupevent) {
         if (err)
@@ -873,11 +896,13 @@ router.route('/usergroupevent')
     });
 });
 
-// on routes that end in /usergroupevent/:usergroupevent_id
-// ----------------------------------------------------
+// ======================================================================
+// Routes that end in /usergroupevent/:user_id
+// ======================================================================
 
 router.route('/usergroupevent/:userId')
 
+// get all Calendar usergroupevents for a specific userId (accessed at GET http://localhost:3000/api/usergroupevent/{userId})
 .get(function(req, res) {
     CalendarUserGroupEvent.find({"userId":req.params.userId}, {'eventId' : 1, '_id' : 0}, function(err, usergroupevent) {
         if (err)
@@ -891,9 +916,15 @@ router.route('/usergroupevent/:userId')
         res.json(usergroupevent);
        
     });
-})
+});
 
-// update the usergroupevent with this id
+// ======================================================================
+// Routes that end in /usergroupevent/:usergroupevent_id
+// ======================================================================
+
+router.route('/usergroupevent/:usergroupevent_id')
+
+// update a specific Calendar usergroupevent (accessed at PUT http://localhost:3000/api/usergroupevent/{usergroupeventId})
 .put(function(req, res) {
     CalendarUserGroupEvent.findById(req.params.usergroupevent_id, function(err, usergroupevent) {
 
@@ -914,7 +945,7 @@ router.route('/usergroupevent/:userId')
     });
 })
 
-// delete the usergroupevent with this id
+// delete a specific Calendar usergroupevent (accessed at DELETE http://localhost:3000/api/usergroupevent/{usergroupeventId})
 .delete(function(req, res) {
    CalendarUserGroupEvent.remove({
         _id: req.params.usergroupevent_id
@@ -927,12 +958,12 @@ router.route('/usergroupevent/:userId')
 });
 
 
-//=============================================================================
-// on routes that end in /event
-// ----------------------------------------------------
+// ==================================================================
+// Routes that end in /event
+// ==================================================================
 router.route('/event')
 
-// create a usergroupevent (accessed at POST http://localhost:8080/usergroupevent)
+// create a Calendar event (accessed at POST http://localhost:3000/api/event)
 .post(function(req, res) {
 
     var event = new CalendarEvent();
@@ -957,7 +988,7 @@ router.route('/event')
 
 })
 
-// get all the event (accessed at GET http://localhost:8080/api/event)
+// get all the Calendar events (accessed at GET http://localhost:3000/api/event)
 .get(function(req, res) {
     CalendarEvent.find(function(err, event) {
         if (err)
@@ -968,11 +999,13 @@ router.route('/event')
     });
 });
 
-// on routes that end in /event/:event_id
-// ----------------------------------------------------
+// ===============================================================
+// Routes that end in /event/:event_id
+// ===============================================================
 
 router.route('/event/:eventId')
 
+// get a specific Calendar event by event ID (accessed at GET http://localhost:3000/api/event/{eventId})
 .get(function(req, res) {
     CalendarEvent.find({"eventId":req.params.eventId}, function(err, usergroupevent) {
         if (err)
@@ -981,7 +1014,7 @@ router.route('/event/:eventId')
     });
 })
 
-// update the event with this id
+// update a specific Calendar event by event ID (accessed at PUT http://localhost:3000/api/event/{eventId})
 .put(function(req, res) {
     CalendarEvent.findById(req.params.event_id, function(err, event) {
 
@@ -1005,7 +1038,7 @@ router.route('/event/:eventId')
     });
 })
 
-// delete the event with this id
+// delete a specific Calendar event by event Id (accessed at DELETE http://localhost:3000/api/event/{eventId})
 .delete(function(req, res) {
    CalendarEvent.remove({
         _id: req.params.event_id
@@ -1017,12 +1050,12 @@ router.route('/event/:eventId')
     });
 });
 
-//=============================================================================
-// on routes that end in /eventtype
-// ----------------------------------------------------
+// =============================================================================
+// Routes that end in /eventtype
+// =============================================================================
 router.route('/eventtype')
 
-// create a eventtype (accessed at POST http://localhost:8080/eventype)
+// create a Calendar eventtype entry (accessed at POST http://localhost:3000/api/eventype)
 .post(function(req, res) {
 
     var eventtype = new CalendarEventType();
@@ -1044,7 +1077,7 @@ router.route('/eventtype')
 
 })
 
-// get all the eventtype (accessed at GET http://localhost:8080/api/eventtype)
+// get all Calendar eventtype entries (accessed at GET http://localhost:3000/api/eventype)
 .get(function(req, res) {
     CalendarEventType.find(function(err, eventtype) {
         if (err)
@@ -1055,11 +1088,12 @@ router.route('/eventtype')
     });
 });
 
-// on routes that end in /eventtype/:eventtype_id
-// ----------------------------------------------------
+// =======================================================================
+// Routes that end in /eventtype/:eventtype_id
+// =======================================================================
 router.route('/eventtype/:eventtype_id')
 
-// get the event with that id
+// get a specific Calendar Event Type by eventtype Id (accessed at GET http://localhost:3000/api/eventype/{eventypeId})
 .get(function(req, res) {
     CalendarEventType.findById(req.params.eventtype_id, function(err, eventtype) {
         if (err)
@@ -1068,7 +1102,7 @@ router.route('/eventtype/:eventtype_id')
     });
 })
 
-// update the eventtype with this id
+// update a specific Calendar eventtype by eventtype Id (accessed at PUT http://localhost:3000/api/eventype/{eventypeId})
 .put(function(req, res) {
     CalendarEventType.findById(req.params.eventtype_id, function(err, eventtype) {
 
@@ -1089,7 +1123,7 @@ router.route('/eventtype/:eventtype_id')
     });
 })
 
-// delete the eventtype with this id
+// delete a specific Calendar eventtype by eventtype Id (accessed at DELETE http://localhost:3000/api/eventype/{eventypeId})
 .delete(function(req, res) {
    CalendarEventType.remove({
         _id: req.params.eventtype_id
@@ -1101,9 +1135,12 @@ router.route('/eventtype/:eventtype_id')
     });
 });
 
-// REGISTER OUR ROUTES -------------------------------
+// =============================================================================
+// REGISTER OUR ROUTES
+// =============================================================================
 app.use('/api', router);
 
+// =============================================================================
 // START THE SERVER
 // =============================================================================
 app.listen(port);

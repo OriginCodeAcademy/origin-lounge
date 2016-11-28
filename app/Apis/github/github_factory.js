@@ -5,10 +5,10 @@
         .module('app')
         .factory('GithubFactory', GithubFactory);
 
-    GithubFactory.$inject = ['$http'];
+    GithubFactory.$inject = ['$http', 'originLoungeExpressAPIBaseURL'];
 
     /* @ngInject */
-    function GithubFactory($http) {
+    function GithubFactory($http, originLoungeExpressAPIBaseURL) {
         var service = {
             getGithub: getGithub
         };
@@ -19,7 +19,7 @@
         function getGithub() {
         	return $http({
         		method: 'GET',
-        		url: 'http://localhost:3000/api/apicode',
+        		url: originLoungeExpressAPIBaseURL + 'apicode',
         		header:{
         			'Content-Type' : 'application/x-www-form-urlencoded'
         		},
@@ -35,7 +35,7 @@
 	    function postGithub(githubKey){
 	    	return $http({
 	    		method: 'POST',
-	    		url: 'http://localhost:3000/api/apicode',
+	    		url: originLoungeExpressAPIBaseURL + 'apicode',
 	    		header:{
 	    			'Content-Type': 'application/x-www-form-urlencoded' 
 	    		},
@@ -45,7 +45,7 @@
 	    	}).then(function(results){
 	    		return $http({
 	    		method: 'POST',
-	    		url: 'http://localhost:3000/api/apicode',
+	    		url: originLoungeExpressAPIBaseURL + 'apicode',
 	    		header:{
     				'Content-Type': 'application/x-www-form-urlencoded' 
 	    		},

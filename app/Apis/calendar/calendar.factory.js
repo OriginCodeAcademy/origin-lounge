@@ -5,10 +5,10 @@
         .module('app')
         .factory('calendarFactory', calendarFactory);
 
-    calendarFactory.$inject = ['$http'];
+    calendarFactory.$inject = ['$http' , 'originLoungeExpressAPIBaseURL'];
 
     /* @ngInject */
-    function calendarFactory($http) {
+    function calendarFactory($http, originLoungeExpressAPIBaseURL) {
         var service = {
             getEvent: getEvent,
             postEvent: postEvent,
@@ -22,7 +22,7 @@
         function getEvent() {
         	return $http({
         		method: 'GET',
-        		url: 'http://localhost:3000/api/event',
+        		url: originLoungeExpressAPIBaseURL + 'event',
         		header:{
         			'Content-Type' : 'application/x-www-form-urlencoded'
         		}
@@ -36,7 +36,7 @@
         	console.log(id);
         	return $http({
         		method: 'POST',
-        		url: 'http://localhost:3000/api/event',
+        		url: originLoungeExpressAPIBaseURL+ 'event',
         		header:{
         			'Content-Type' : 'application/x-www-form-urlencoded'
         		},
@@ -51,7 +51,7 @@
         	}).then(function(results){
         		return $http({
         		method: 'POST',
-        		url: 'http://localhost:3000/api/usergroupevent',
+        		url: originLoungeExpressAPIBaseURL + 'usergroupevent',
         		header:{
         			'Content-Type' : 'application/x-www-form-urlencoded'
         		},
@@ -72,7 +72,7 @@
 
         	return $http({
         		method: 'GET',
-        		url:'http://localhost:3000/api/usergroupevent/' + userId,
+        		url: originLoungeExpressAPIBaseURL + 'usergroupevent/' + userId,
         		header:{
         			'Content-Type' : 'application/x-www-form-urlencoded'
         		}
@@ -87,7 +87,7 @@
 
         	return $http({
         		method: 'GET',
-        		url: 'http://localhost:3000/api/event/' + array,
+        		url: originLoungeExpressAPIBaseURL + 'event/' + array,
         		header:{
         			'Content-Type' : 'application/x-www-form-urlencoded'
         		}
