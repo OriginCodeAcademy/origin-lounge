@@ -16,10 +16,10 @@
 
             getCategories: getCategories,
             getCategoryNamesByRoleId: getCategoryNamesByRoleId,
-            getChat: getChat,
             getContentByCategoryId: getContentByCategoryId,
             getContentByContentId: getContentByContentId,
             getRoles: getRoles,
+            getUsers: getUsers,
             
             postCategory: postCategory,
             postContent: postContent,
@@ -28,13 +28,74 @@
         };
         return service;
 
-        function getChat(userId) {
-            return $http({
-                method: 'GET',
-                url: originLoungeExpressAPIBaseURL + 'messagerecipients/' + userId
-            }).then(function(response){
-                return response;
+          // delete a ContentCategory entry in the mongoDB
+          function deleteContentCategoryEntry (contentCategoryId) {
+
+            var defer = $q.defer();
+
+            $http({
+                method: 'DELETE',
+                url: originLoungeExpressAPIBaseURL + 'contentcategory/' + contentCategoryId
             })
+
+            .then(function(response){
+
+                if (typeof response.data === "object") {
+
+                    defer.resolve(response.data);
+                
+                } else {
+
+                    defer.reject(response);
+                }
+
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;
+
+          }
+
+          // edit a Category in the mongoDB
+          function editCategory(info){
+
+            var defer = $q.defer();
+
+            $http({
+                method:'PUT',
+                url: originLoungeExpressAPIBaseURL + 'category/' + info.id,
+                data: info,
+                headers: {
+                    'Content-Type' : 'application/x-www-form-urlencoded'
+                }
+
+            })
+
+            .then(function(response){
+
+                if (typeof response.data === "object") {
+
+                    defer.resolve(response.data);
+                
+                } else {
+
+                    defer.reject(response);
+                }
+    
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;
         }
 
          function getCategories() {
@@ -165,6 +226,84 @@
             return defer.promise;           
         }
 
+         // get all roles from origin.api 
+          function getRoles() {
+
+            var defer = $q.defer();
+
+            var token = storageFactory.getLocalStorage('userSession').token;
+
+            $http({
+                method: 'GET',
+                url: originAPIBaseURL + 'api/roles',
+                headers: {
+                    'Authorization' : 'Bearer ' + token
+                }
+            })
+
+            .then(function(response){
+
+                if (typeof response.data === "object") {
+
+                    // store all roles into local storage
+                    storageFactory.setLocalStorage('roles', response.data);
+                    defer.resolve(response.data);
+                
+                } else {
+
+                    defer.reject(response);
+                }
+
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;
+          }
+
+         // get all roles from origin.api 
+          function getUsers() {
+
+            var defer = $q.defer();
+
+            var token = storageFactory.getLocalStorage('userSession').token;
+
+            $http({
+                method: 'GET',
+                url: originAPIBaseURL + 'api/users',
+                headers: {
+                    'Authorization' : 'Bearer ' + token
+                }
+            })
+
+            .then(function(response){
+
+                if (typeof response.data === "object") {
+
+                    // store all roles into local storage
+                    storageFactory.setLocalStorage('users', response.data);
+                    defer.resolve(response.data);
+                
+                } else {
+
+                    defer.reject(response);
+                }
+
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;
+          }
+
         // post a Category to the mongoDB
         function postCategory(catName){
 
@@ -204,44 +343,6 @@
 
             return defer.promise;
         }
-
-          // edit a Category in the mongoDB
-          function editCategory(info){
-
-            var defer = $q.defer();
-
-            $http({
-                method:'PUT',
-                url: originLoungeExpressAPIBaseURL + 'category/' + info.id,
-                data: info,
-                headers: {
-                    'Content-Type' : 'application/x-www-form-urlencoded'
-                }
-
-            })
-
-            .then(function(response){
-
-                if (typeof response.data === "object") {
-
-                    defer.resolve(response.data);
-                
-                } else {
-
-                    defer.reject(response);
-                }
-    
-            },
-
-            function(error){
-
-                defer.reject(error);
-
-            });
-
-            return defer.promise;
-        }
-
 
         // post a new Content entry into the mongoDB
         function postContent(title, body){
@@ -323,79 +424,6 @@
 
             return defer.promise;
         }
-
-
-          // get all roles from origin.api 
-          function getRoles() {
-
-            var defer = $q.defer();
-
-            var token = storageFactory.getLocalStorage('userSession').token;
-
-            $http({
-                method: 'GET',
-                url: originAPIBaseURL + 'api/roles',
-                headers: {
-                    'Authorization' : 'Bearer ' + token
-                }
-            })
-
-            .then(function(response){
-
-                if (typeof response.data === "object") {
-
-                    // store all roles into local storage
-                    storageFactory.setLocalStorage('roles', response.data);
-                    defer.resolve(response.data);
-                
-                } else {
-
-                    defer.reject(response);
-                }
-
-            },
-
-            function(error){
-
-                defer.reject(error);
-
-            });
-
-            return defer.promise;
-          }
-
-          // delete a ContentCategory entry in the mongoDB
-          function deleteContentCategoryEntry (contentCategoryId) {
-
-            var defer = $q.defer();
-
-            $http({
-                method: 'DELETE',
-                url: originLoungeExpressAPIBaseURL + 'contentcategory/' + contentCategoryId
-            })
-
-            .then(function(response){
-
-                if (typeof response.data === "object") {
-
-                    defer.resolve(response.data);
-                
-                } else {
-
-                    defer.reject(response);
-                }
-
-            },
-
-            function(error){
-
-                defer.reject(error);
-
-            });
-
-            return defer.promise;
-
-          }
 
     }
 })();

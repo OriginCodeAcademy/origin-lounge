@@ -651,6 +651,24 @@ router.route('/messagerecipients')
 
         res.json(category);
     });
+})
+
+// post a new messagerecipient entry (accessed at POST http://localhost:3000/api/messagerecipients)
+.post(function(req, res) {
+    var messagesRecipients = new MessagesRecipients();
+    messagesRecipients.userid = req.body.userid;
+    messagesRecipients.usernames = req.body.usernames;
+    messagesRecipients.chatid = req.body.chatid;
+    messagesRecipients.groupid = req.body.groupid;
+    messagesRecipients.channelname = req.body.channelname;
+    messagesRecipients.groupType = req.body.groupType;
+
+    messagesRecipients.save(function(err) {
+        if (err)
+            res.send(err);
+
+        res.json({ message: 'MessageRecipient entry created!'});
+    });
 });
 
 // =============================================================================
@@ -660,21 +678,12 @@ router.route('/messagerecipients/:userid')
 
 // get all messagerecipient entries for a specific userId (accessed at GET http://localhost:3000/api/messagerecipients/{userId})
 .get(function(req, res) {
-    MessagesRecipients.find({"userid": req.params.userid }, {"usernames":1, _id:0, "chatid":1, "groupname":1},function(err, messagerecipients) {
+    MessagesRecipients.find({"userid": req.params.userid }, {"usernames":1, _id:0, "chatid":1, "channelname":1, "groupType":1},function(err, messagerecipients) {
         if (err)
             res.send(err);
 
         res.json(messagerecipients);
     });
-})
-
-.post(function(req, res) {
-    var messagesRecipients = new MessagesRecipients();
-    messagesRecipients.userId = req.body.userid;
-    messagesRecipients.username = req.body.username;
-    messagesRecipients.chatid = req.body.chatid;
-    messagesRecipients.groupid = req.body.groupid;
-    messagesRecipients.channelname = req.body.channelname;
 });
 
 // =============================================================================

@@ -5,17 +5,18 @@
         .module('app')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['DashboardFactory', 'storageFactory', 'Idle', '$state', '$rootScope'];
+    DashboardController.$inject = ['DashboardFactory', 'chatFactory', 'storageFactory', 'Idle', '$state', '$rootScope'];
 
     
-    function DashboardController(DashboardFactory, storageFactory, Idle, $state, $rootScope) {
+    function DashboardController(DashboardFactory, chatFactory, storageFactory, Idle, $state, $rootScope) {
         var vm = this;
 
         vm.logOut = logOut;
-        vm.getContentByCategoryId = getContentByCategoryId;
-        vm.deleteContentFromACategory = deleteContentFromACategory;
-        vm.getContentByContentId = getContentByContentId;
 
+        vm.deleteContentFromACategory = deleteContentFromACategory;
+
+        vm.getContentByCategoryId = getContentByCategoryId;
+        vm.getContentByContentId = getContentByContentId;
 
         activate();
 
@@ -54,9 +55,12 @@
                     // get all the Roles that exist in the origin.API DB
                     getRoles();
 
-                     DashboardFactory.getChat(vm.userId).then(function(response) {
+                    // get all the Users that exist in the origin.API DB
+                    getUsers();
+
+                     chatFactory.getChatsForAUser(vm.userId).then(function(response) {
                         
-                         vm.chatGroups = response.data;
+                         vm.chatGroups = response;
                          $state.go('main.calendar_index');
                      });
 
@@ -73,15 +77,24 @@
 
             
         }
-        
-        // Logout on-click function
-        function logOut(){
-            // clear local storage
-            storageFactory.clearAllLocalStorage();
-            // // disconnect any chat socket that may be opened, before logging out
-            // $rootScope.socket.disconnect();
-            // go to login page
-            $state.go('login');
+
+        function deleteContentFromACategory(contentCategoryId) {
+
+            // remove content from contentcategory table
+
+            DashboardFactory.deleteContentCategoryEntry(contentCategoryId).then(
+
+                function(response){
+
+                // remove content from local content array
+
+                },
+
+                function(error){
+
+                    console.log(error);
+
+                });
         }
 
         // on-click function that goes to the custom content state and brings along the category ID and name of the category selected
@@ -155,23 +168,31 @@
 
         }
 
-        function deleteContentFromACategory(contentCategoryId) {
+        function getUsers() {
 
-            // remove content from contentcategory table
+            DashboardFactory.getUsers().then(
 
-            DashboardFactory.deleteContentCategoryEntry(contentCategoryId).then(
+                function(response) {
 
-                function(response){
-
-                // remove content from local content array
-
+                    vm.users = response;
+                    console.log(response);
                 },
 
-                function(error){
+                function(error) {
 
                     console.log(error);
-
                 });
+        }
+
+       
+        // Logout on-click function
+        function logOut(){
+            // clear local storage
+            storageFactory.clearAllLocalStorage();
+            // // disconnect any chat socket that may be opened, before logging out
+            // $rootScope.socket.disconnect();
+            // go to login page
+            $state.go('login');
         }
 
     }

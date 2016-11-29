@@ -10,26 +10,28 @@
     /* @ngInject */
     function storageFactory(localStorageService) {
         var service = {
-            setLocalStorage: setLocalStorage,
+            clearAllLocalStorage: clearAllLocalStorage,
             getLocalStorage: getLocalStorage,
-            clearAllLocalStorage: clearAllLocalStorage
+            setLocalStorage: setLocalStorage
+
         };
         return service;
 
         ////////////////
 
-        function setLocalStorage(key, value) {
-        	 return  localStorageService.set(key, value);
-        }
-
-        function getLocalStorage(key){
-        	return localStorageService.get(key);
-
-        }
-
         function clearAllLocalStorage(){
             return localStorageService.clearAll();
 
         }
+
+        function getLocalStorage(key){
+            return localStorageService.get(key);
+
+        }
+        
+        function setLocalStorage(key, value) {
+        	 return  localStorageService.set(key, value);
+        }
+
     }
 })();

@@ -12,10 +12,10 @@
         var vm = this;
 
         // grab these state Params that are passed into this state through the ui router from another state
-        vm.contentTitle = $stateParams.contentTitle;
+        vm.categoryId = $stateParams.categoryId;        
         vm.contentBody = $stateParams.contentBody;
         vm.contentId = $stateParams.contentId;
-        vm.categoryId = $stateParams.categoryId;
+        vm.contentTitle = $stateParams.contentTitle;
 
         // array to hold the categories to be pre-selected when we come into the manage content state from the category content state
         vm.selectedCategories = [];
@@ -79,24 +79,6 @@
                 }); 
         }
 
-        // edit a Category in the mongoDB
-        function editCategory(){
-           
-            DashboardFactory.editCategory(vm.data).then(
-
-                function(response){    
-                   
-                    console.log(response);
-                
-                },
-           
-                function(error){
-                
-                    console.log(error);
-                
-                });
-        } 
-
         // add content to the mongoDB
         function addContent(){
 
@@ -138,6 +120,25 @@
 
                 });
 
-        }              
+        }
+
+        // edit a Category in the mongoDB
+        function editCategory(){
+           
+            DashboardFactory.editCategory(vm.data).then(
+
+                function(response){    
+                   
+                    console.log(response);
+                
+                },
+           
+                function(error){
+                
+                    console.log(error);
+                
+                });
+        } 
+                      
     }
 })();

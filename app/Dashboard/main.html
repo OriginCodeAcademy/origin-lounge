@@ -4,7 +4,7 @@ body
     background-color: lightgray;
 }
 </style>
-<!-- TOP FIX NAV -->
+<!-- Top fixed nav -->
 
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -25,34 +25,44 @@ body
     </div>
 </nav>
 
-<!-- LEFT SIDE FIXED NAV -->
+<!-- Left Side Fixed Nav -->
 
 <div class="navbar navbar-fixed-left">
-    <a class="navbar-brand" style="font-family: oswald; color: #1f0845" >- Chat Channels -</a>
+    <!-- List of Channels User Is Subscribed To -->
+    <a class="navbar-brand" style="font-family: oswald; color: #1f0845" >Chat Channels  <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
     <ul class="nav navbar-nav">
-        <ul ng-repeat="groups in vm.chatGroups">
-            <li ng-hide="groups.groupname === 'direct'"><a ui-sref="main.chat"><h5 ng-val="groups.chatid" >{{groups.groupname}}</h5></a></li>
-        </ul>
-
-        <ul ng-repeat="groups in vm.chatGroups ">
-            <li ng-show="groups.groupname === 'direct'"><a ui-sref="main.chat"><h5 ng-val="groups.chatid"><span ng-repeat="name in groups.usernames">  {{name}}</span></h5></a></li>
-        </ul>
-      
+        <table>
+            <tr ng-repeat="groups in vm.chatGroups">
+                <td class="col-xs-11" ng-hide="groups.groupType === 'direct'">
+                    <a ui-sref="main.chat"><h5 ng-val="groups.chatid">{{groups.channelname}}</h5></a>
+                </td>
+                <td class="col-xs-1" ng-hide="groups.groupType === 'direct'">
+                    <a><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        </table>              
     </ul>   
-        <a class="navbar-brand" style="font-family: oswald; color: #1f0845">- Messages -</a>
+    
+    <!-- List of Direct Messages User is involved in -->
+    <a class="navbar-brand" style="font-family: oswald; color: #1f0845">Messages <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
     <ul class="nav navbar-nav">    
-        <li><a href="#">-jeffwinkler</a></li>
-        <li><a href="#">-seancahall</a></li>
-        <li><a href="#">-cameronwilby</a></li>
-        <li><a href="#">-jennyclayton</a></li>
-        <li><a href="#">-kellylovett</a></li>
+        <table>
+            <tr ng-repeat="groups in vm.chatGroups">
+                <td class="col-xs-11" ng-show="groups.groupType === 'direct'">
+                    <a ui-sref="main.chat"><h5 ng-val="groups.chatid">{{groups.usernames}}</h5></a>
+                </td>
+                <td class="col-xs-1" ng-show="groups.groupType === 'direct'">
+                    <a><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        </table>
   </ul>
 </div>
 
-<!-- RIGHT SIDE FIXED NAV -->
+<!-- Right Side Fixed Nav -->
 
 <div class="navbar navbar-fixed-right">
-    <a class="navbar-brand" style="font-family: oswald; color: #1f0845">- User Feed -</a>
+    <a class="navbar-brand" style="font-family: oswald; color: #1f0845">User Feed</a>
     <ul class="nav navbar-nav">
         <li>
             <a ui-sref="main.countdown">
@@ -78,7 +88,7 @@ body
     </ul>
 </div>
 
-<!-- MIDDLE STATE -->
+<!-- Content Displayed in the "middle" pane of the dashboard -->
 
 <div id="main" class="container">
     <div class="col-xs-7 col-lg-10 col-sm-9 col-md-10">
@@ -86,48 +96,3 @@ body
         <div ui-view></div>       
     </div>
 </div>
-
-
-
-
-<!-- 
-<div class="col-md-3 col-lg-3 col-sm-3">
-        <div id="panel" class="panel panel-default">
-            
-               
-              
-                <p>
-                    <h4><b>MESSAGES</b><span class="pull-right"><button class="btn btn-primary btn-xs active" ui-sref="main.chatAdd">+</button></span></h4>
-                </p>
-                <ul ng-repeat="groups in vm.chatGroups ">
-                    <li ng-show="groups.groupname === 'direct'"><a ui-sref="main.chat"><h5 ng-val="groups.chatid"><span ng-repeat="name in groups.usernames">    {{name}},   </span></h5></a></li>
-                </ul>
-                <p>
-                </p>
-            </div>
-        </div>
-    </div> 
-<div class="navbar navbar-fixed-left">
-    <a class="navbar-brand" style="font-family: oswald; color: #1f0845">- Origin Chat -</a>
-    <ul class="nav navbar-nav">
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Channels <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="#"># Cohort6</a></li>
-                <li><a href="#"># Cohort7</a></li>
-                <li><a href="#"># General</a></li>
-            </ul>
-        </li>
-    </ul>   
-        <a class="navbar-brand" style="font-family: oswald; color: #1f0845">- Messages -</a>
-    <ul class="nav navbar-nav">    
-        <li><a href="#">-jeffwinkler</a></li>
-        <li><a href="#">-seancahall</a></li>
-        <li><a href="#">-cameronwilby</a></li>
-        <li><a href="#">-jennyclayton</a></li>
-        <li><a href="#">-kellylovett</a></li>
-  </ul>
-</div>
-    -->
-
-    

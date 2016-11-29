@@ -17,9 +17,7 @@
         ////////////////
 
         function activate() {
-
-
-   						
+				
         }
 
         // On-click handler for when user clicks Login Button
@@ -79,6 +77,13 @@
 
         }
 
+       // get a value out of local storage
+        function getStorage(key){
+            storageFactory.getLocalStorage(key)
+                console.log("successfully getstorage in the aut controller!");
+                return;
+        }
+
         // set a value into local storage
         function setStorage(key, value){
         	storageFactory.setLocalStorage(key, value)
@@ -86,17 +91,5 @@
         		console.log("successfully setstorage in the aut controller!");
         		return ;
         }
-       
-       // get a value out of local storage
-        function getStorage(key){
-        	storageFactory.getLocalStorage(key)
-        		console.log("successfully getstorage in the aut controller!");
-        		return;
-        	
-
-        }
-       
-        
-
     }
 })();
