@@ -26,5 +26,10 @@
     "socket.io": "^1.6.0",
     "tether": "^1.3.7",
     "wiredep": "^4.0.0"
+  },
+  "devDependencies": {
+    "gulp-jshint": "^2.0.4",
+    "gulp-nodemon": "^2.2.1",
+    "jshint": "^2.9.4"
   }
 }

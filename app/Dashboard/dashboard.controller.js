@@ -233,21 +233,21 @@
 
         });
 
-        // capture a user connected event coming from server
+        // socket.io listener to capture a user connected event coming from server
         chatFactory.on('user connected', function(msg){
           // add chat message to the unordered list on this html page
           $('#messages').append($('<li>').text(msg)); 
         });
 
-        // capture a chat message coming from the server
+        // socket.io listener to capture a chat message coming from the server
         chatFactory.on('chat message', function(msg){
-          // only add the incoming chat message to the chat if the incoming roomid matches the roomid of the chat you are in
+          // only add the incoming chat message to the chat if the incoming roomid from the server matches the roomid of the chat you are in
           if ($rootScope.roomid === msg.roomid){
             $('#messages').append($('<li>').text(msg.username + ' said: ' + msg.message));
           }
         });
 
-        // capture a user disconnection event coming from server
+        // socket.io listener to capture a user disconnection event coming from server
         chatFactory.on('user disconnected', function(msg){
           // add chat message to the unordered list on this html page
           $('#messages').append($('<li>').text(msg)); 
