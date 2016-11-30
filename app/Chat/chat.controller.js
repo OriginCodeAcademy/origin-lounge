@@ -12,7 +12,7 @@
         var vm = this;
         
         //grab messagerecipient_id from the calendar state (once the user clicks on the name of a chat room)
-        vm.roomid = $stateParams.messagerecipient_id;
+        $rootScope.roomid = $stateParams.messagerecipient_id;
 
         // grab name of chat from the calendar state and bind to view (once the user clicks on the name of a chat room)
         vm.chatRoomName = $stateParams.chatRoomName;
@@ -38,7 +38,7 @@
             userId: userId,
             message: message,
             dateTimeCreated: dateTimeCreated,
-            roomid: vm.roomid
+            roomid: $rootScope.roomid
           };
           // emit a chat message that includes the datetime created as well as the username and userId
           //socket.emit('chat message', $('#m').val());
