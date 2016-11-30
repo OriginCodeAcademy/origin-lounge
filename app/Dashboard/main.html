@@ -7,20 +7,15 @@ body
 <!-- Top fixed nav -->
 
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <div class="col-md-3 col-lg-3 col-xs-3 col-sm-3">
-            <a href="#main/calendar_index"><img id="OCAlogo" src="app/img/OCAhat.jpg"></a>
+    <div class="">
+        <div class="col-xs-3">
+            <a href="#main/calendar"><img id="OCAlogo" src="app/img/OCAhat.jpg"></a>
         </div>
-        <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6 text-center">
+        <div class="col-xs-6 text-center">
             <h1 style="font-family: oswald; color: #1f0845"><strong> ORIGIN LOUNGE</strong></h1>
         </div>
-        <div id="loginbutton" class="col-md-3 col-lg-3 col-xs-3 col-sm-3 text-right">
-            <button class="form-control" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{vm.username}}
-            </button>
-
-            <div class="dropdown-menu dropdown-menu-right form-control" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item align-center content-title" ng-click="vm.logOut()"><center>Log Out</center></a>
-            </div>       
+        <div id="loginbutton" class="col-xs-3 text-right">
+            <p class="" id="dropdownMenuButton"><strong><h4>{{vm.username}} <i class="fa fa-power-off" aria-hidden="true" ng-click="vm.logOut()"></i></h4></strong></p>   
         </div>
     </div>
 </nav>
@@ -34,7 +29,7 @@ body
         <table>
             <tr ng-repeat="groups in vm.chatGroups">
                 <td class="col-xs-11" ng-hide="groups.groupType === 'direct'">
-                    <a ui-sref="main.chat"><h5 ng-val="groups.chatid">{{groups.channelname}}</h5></a>
+                    <a ui-sref="main.chat({messagerecipient_id: '{{groups._id}}', chatRoomName: '{{groups.channelname}}'})"><h5 ng-val="groups._id">{{groups.channelname}}</h5></a>
                 </td>
                 <td class="col-xs-1" ng-hide="groups.groupType === 'direct'">
                     <a><i class="fa fa-times-circle" aria-hidden="true"></i></a>
@@ -49,7 +44,7 @@ body
         <table>
             <tr ng-repeat="groups in vm.chatGroups">
                 <td class="col-xs-11" ng-show="groups.groupType === 'direct'">
-                    <a ui-sref="main.chat"><h5 ng-val="groups.chatid">{{groups.usernames}}</h5></a>
+                    <a ui-sref="main.chat({messagerecipient_id: '{{groups._id}}'})"><h5 ng-val="groups._id">{{groups.usernames}}</h5></a>
                 </td>
                 <td class="col-xs-1" ng-show="groups.groupType === 'direct'">
                     <a><i class="fa fa-times-circle" aria-hidden="true"></i></a>
@@ -75,12 +70,12 @@ body
         </li>
 
         <li> 
-             <a ui-sref="main.calendar_index" role="button">Calendar</a>
+             <a ui-sref="main.calendar" role="button">Calendar</a>
         <li>     
-             <a ui-sref="main.linkedin_index" role="button">Linkedin</a>
+             <a ui-sref="main.linkedin" role="button">Linkedin</a>
         </li>            
         <li>     
-             <a ui-sref="main.github_index" role="button">GitHub Content</a>
+             <a ui-sref="main.github" role="button">GitHub Content</a>
         </li>
         <li>
             <a ui-sref="main.managecontent" role="button" ng-show="vm.isAdmin">Manage Content</a>

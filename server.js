@@ -658,8 +658,6 @@ router.route('/messagerecipients')
     var messagesRecipients = new MessagesRecipients();
     messagesRecipients.userid = req.body.userid;
     messagesRecipients.usernames = req.body.usernames;
-    messagesRecipients.chatid = req.body.chatid;
-    messagesRecipients.groupid = req.body.groupid;
     messagesRecipients.channelname = req.body.channelname;
     messagesRecipients.groupType = req.body.groupType;
 
@@ -678,7 +676,7 @@ router.route('/messagerecipients/:userid')
 
 // get all messagerecipient entries for a specific userId (accessed at GET http://localhost:3000/api/messagerecipients/{userId})
 .get(function(req, res) {
-    MessagesRecipients.find({"userid": req.params.userid }, {"usernames":1, _id:0, "chatid":1, "channelname":1, "groupType":1},function(err, messagerecipients) {
+    MessagesRecipients.find({"userid": req.params.userid }, {"usernames":1, "_id":1, "channelname":1, "groupType":1},function(err, messagerecipients) {
         if (err)
             res.send(err);
 
@@ -687,16 +685,46 @@ router.route('/messagerecipients/:userid')
 });
 
 // =============================================================================
-// Routes that end in /messages/:chatid
+// Routes that end in /messages/:messagerecipient_id
 // =============================================================================
-router.route('/messages/:chatid')
+router.route('/messages/:messagerecipient_id')
 
-// get all messages associated with a specific chatid (accessed at GET http://localhost:3000/api/messages/{chatId})
+// get all messages associated with a specific chatid (accessed at GET http://localhost:3000/api/messages/{messagerecipient_id})
 .get(function(req, res) {
-    Messages.find({"chatid": req.params.chatid}, function(err, messages) {
+    Messages.find({"messagerecipient_id": req.params.messagerecipient_id}, function(err, messages) {
         if(err) res.send(err);
 
         res.json(messages);
+    });
+});
+// =============================================================================
+// Routes that end in /messages
+// =============================================================================
+router.route('/messages')
+
+// get all messages table entries (accessed at GET http://localhost:3000/api/messages)
+.get(function(req, res) {
+    Messages.find(function(err, category) {
+        if (err)
+            res.send(err);
+
+        res.json(category);
+    });
+})
+
+// post a new messages entry (accessed at POST http://localhost:3000/api/messages)
+.post(function(req, res) {
+    var messages = new Messages();
+    messages.messagerecipient_id = req.body.messagerecipient_id;
+    messages.message = req.body.message;
+    messages.sender = req.body.sender;
+    messages.created = req.body.created;
+
+    messages.save(function(err) {
+        if (err)
+            res.send(err);
+
+        res.json({ message: 'Message entry created!'});
     });
 });
 

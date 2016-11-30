@@ -6,8 +6,6 @@ angular
         .value ('originAPIBaseURL', 'http://origincodeacademyapi.azurewebsites.net/', 'ui.calendar')
         .value ('chatServerURLAndPort', 'http://localhost:3002')
         .value ('originLoungeExpressAPIBaseURL', 'http://localhost:3000/api/')
-        // .value ('originAPIBaseURL', 'http://localhost:53737/', 'ui.calendar')
-
 
         .config(['markedProvider', 'hljsServiceProvider', function(markedProvider, hljsServiceProvider) {
             // markdown config
@@ -80,15 +78,14 @@ angular
                         categoryId: null
                     }
             })
-
-                .state('main.calendar_index', {
-                    url: '/calendar_index',
-                    templateUrl: 'app/Apis/calendar/calendar_index.html',
+                .state('main.calendar', {
+                    url: '/calendar',
+                    templateUrl: 'app/Apis/calendar/calendar.html',
                     controller: 'CalendarController as vm'
             })
-                .state('main.linkedin_index', {
-                    url: '/calendar_index',
-                    templateUrl: 'app/Apis/linkedin/linkedin_index.html',
+                .state('main.linkedin', {
+                    url: '/linkedin',
+                    templateUrl: 'app/Apis/linkedin/linkedin.html',
                     controller: 'LinkedinController as vm'
             })
 
@@ -103,9 +100,9 @@ angular
 
             })
 
-                  .state('main.github_index', {
-                   url: '/github_index',
-                   templateUrl: 'app/Apis/github/github_index.html',
+                  .state('main.github', {
+                   url: '/github',
+                   templateUrl: 'app/Apis/github/github.html',
                    controller: 'GithubController as vm'
             })
 
@@ -120,7 +117,11 @@ angular
                     url: '/chat', 
                     templateUrl: 'app/Chat/Chat.html',
                     controllerAs: 'vm',
-                    controller: 'chatController'
+                    controller: 'chatController',
+                    params: {
+                        messagerecipient_id: null,
+                        chatRoomName: null
+                    }
 
             });
         })

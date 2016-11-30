@@ -60,6 +60,8 @@
   margin-left: 140px;
 }
 
+
+
 /* ---------------------------------- OTHER CSS STYLYING --------------------------------- */
 
 
@@ -173,9 +175,9 @@
 
 #dropdownMenuButton
 {
-   background-color: #64ABDD;
+   
    border: none;
-   color: white;
+   color: #64ABDD;
 }
 
 

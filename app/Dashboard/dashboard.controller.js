@@ -5,10 +5,10 @@
         .module('app')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['DashboardFactory', 'chatFactory', 'storageFactory', 'Idle', '$state', '$rootScope'];
+    DashboardController.$inject = ['DashboardFactory', 'chatFactory', 'storageFactory', 'Idle', '$state', '$rootScope', 'chatServerURLAndPort'];
 
     
-    function DashboardController(DashboardFactory, chatFactory, storageFactory, Idle, $state, $rootScope) {
+    function DashboardController(DashboardFactory, chatFactory, storageFactory, Idle, $state, $rootScope, chatServerURLAndPort) {
         var vm = this;
 
         vm.logOut = logOut;
@@ -57,21 +57,18 @@
 
                     // get all the Users that exist in the origin.API DB
                     getUsers();
-
-                     chatFactory.getChatsForAUser(vm.userId).then(function(response) {
-                        
-                         vm.chatGroups = response;
-                         $state.go('main.calendar_index');
-                     });
-
                 
                 },
 
                 function(error){
 
                     console.log(error);
+                    
                     // get all the Roles that exist in the origin.API DB
                     getRoles();
+
+                    // get all the Users that exist in the origin.API DB
+                    getUsers();
 
                 });
 
@@ -194,6 +191,66 @@
             // go to login page
             $state.go('login');
         }
+
+        // **********************************************************************************
+        // This is where we register all the socket listeners. This works if there is no way
+        // for the user to navigate back to the main state from another state, after they have logged in. As soon as
+        // the code changes to allow the user to navigate back to the main state from other states,
+        // you will now see these listeners register each time we come back to main state. This will
+        // create a situation where each time the users comes to the main state, another set of these listeners will be
+        // registered. This will manifest itself in many ways, one of which is the user seeing what they type show up 
+        // as many times as these events are registered. So if they were registered twice, the user will see the message
+        // twice.
+        // **********************************************************************************
+
+        // socket.io listener for connect event that signifies that client has connected to server
+        chatFactory.on('connect', function(){
+
+            console.log("Client connected to server"); 
+            
+            // get all chat rooms/private messages that the user is subscribed to
+            chatFactory.getChatsForAUser(vm.userId).then(
+
+                function(response) {
+                    
+                    // display chatgroups on the view           
+                    vm.chatGroups = response;
+
+                    for (var i = 0; i < response.length; i++) {
+                        // send server the full list of chat rooms the user is in
+                        chatFactory.emit('subscribe', response[i]._id);
+                    }
+                    //jump to calendar state
+                    $state.go('main.calendar');
+                },
+
+                function(error) {
+
+                     //jump to calendar state
+                    $state.go('main.calendar');                   
+
+            });
+
+        });
+
+        // capture a user connected event coming from server
+        chatFactory.on('user connected', function(msg){
+          // add chat message to the unordered list on this html page
+          $('#messages').append($('<li>').text(msg)); 
+        });
+
+        // capture a chat message coming from the server
+        chatFactory.on('chat message', function(msg){
+          // add chat message to the unordered list on this html page
+          $('#messages').append($('<li>').text(msg.username + ' said: ' + msg.message));
+        });
+
+        // capture a user disconnection event coming from server
+        chatFactory.on('user disconnected', function(msg){
+          // add chat message to the unordered list on this html page
+          $('#messages').append($('<li>').text(msg)); 
+            
+        });
 
     }
 })();
