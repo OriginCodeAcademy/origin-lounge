@@ -218,8 +218,9 @@
 
                     for (var i = 0; i < response.length; i++) {
                         // send server the full list of chat rooms the user is in
-                        chatFactory.emit('subscribe', response[i]._id);
+                        chatFactory.emit('subscribe', {chatgroupId: response[i]._id, username: vm.username});
                     }
+
                     //jump to calendar state
                     $state.go('main.calendar');
                 },
@@ -245,6 +246,15 @@
           if ($rootScope.roomid === msg.roomid){
             $('#messages').append($('<li>').text(msg.username + ' said: ' + msg.message));
           }
+        });
+
+        chatFactory.on('logged in', function(msg){
+            console.log(msg.username);
+            console.log(msg.chatgroupId);
+            // only add the logged in message to the chat if the incoming roomid from the server matches the roomid of the chat you are in
+            if ($rootScope.roomid === msg.chatgroupId){           
+                $('#messages').append($('<li>').text(msg.username + ' has logged in'));  
+            }
         });
 
         // socket.io listener to capture a user disconnection event coming from server

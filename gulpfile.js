@@ -22,21 +22,21 @@ gulp.task('watch', function() {
 var paths = ['./bower_components/','./app/*.js','./app/**/*.js','./app/**/*.css'];
 
 
-gulp.task('develop', function () {
-  var stream = nodemon({ script: 'server.js'
-          , ext: 'html js'
-          , ignore: ['ignored.js']
-          })
+// gulp.task('develop', function () {
+//   var stream = nodemon({ script: 'server.js'
+//           , ext: 'html js'
+//           , ignore: ['ignored.js']
+//           })
 
-  stream
-      .on('restart', function () {
-        console.log('restarted!')
-      })
-      .on('crash', function() {
-        console.error('Application has crashed!\n')
-         stream.emit('restart', 10)  // restart the server in 10 seconds
-      })
-})
+//   stream
+//       .on('restart', function () {
+//         console.log('restarted!')
+//       })
+//       .on('crash', function() {
+//         console.error('Application has crashed!\n')
+//          stream.emit('restart', 10)  // restart the server in 10 seconds
+//       })
+// })
 
 gulp.task('injectables', function() {
     var sources = gulp.src(paths, {read: false});
@@ -78,4 +78,5 @@ gulp.task('app', function(){
 });
 
 
-gulp.task('serve', ['connect', 'watch', 'injectables', 'app', 'develop']);
+//gulp.task('serve', ['connect', 'watch', 'injectables', 'app', 'develop']);
+gulp.task('serve', ['connect', 'watch', 'injectables', 'app']);
