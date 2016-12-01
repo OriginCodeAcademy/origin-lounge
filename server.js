@@ -671,11 +671,24 @@ router.route('/messagerecipients')
 });
 
 // =============================================================================
-// Routes that end in /messagerecipients/:userid
+// Routes that end in /messagerecipients/:messagerecipients_id
 // =============================================================================
-router.route('/messagerecipients/:userid')
+router.route('/messagerecipients/:messagerecipient_id')
+// get a specific messagerecipient entry (accessed at GET http://localhost:3000/api/messagerecipients/{messagerecipients_id})
+.get(function(req, res) {
+    MessagesRecipients.findById(req.params.messagerecipient_id, function(err, messagerecipient) {
+        if (err)
+            res.send(err);
+        res.json(messagerecipient);
+    });
+});
 
-// get all messagerecipient entries for a specific userId (accessed at GET http://localhost:3000/api/messagerecipients/{userId})
+// =============================================================================
+// Routes that end in /messagerecipients/userid/:userid
+// =============================================================================
+router.route('/messagerecipients/userid/:userid')
+
+// get all messagerecipient entries for a specific userId (accessed at GET http://localhost:3000/api/messagerecipients/userid/{userId})
 .get(function(req, res) {
     MessagesRecipients.find({"userid": req.params.userid }, {"usernames":1, "_id":1, "channelname":1, "groupType":1},function(err, messagerecipients) {
         if (err)

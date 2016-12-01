@@ -60,6 +60,28 @@
   margin-left: 140px;
 }
 
+/* ----------------------------------- TOP SIDE NAV ---------------------------------------- */
+
+#OCAlogo
+{
+    width: 100px;
+    height: 80px;
+}
+
+
+#loginBtn 
+{
+   background-color: #64ABDD ;
+}
+
+
+#dropdownMenuButton
+{
+   
+   border: none;
+   color: #64ABDD;
+}
+
 /* -----------------------------------CHAT SCREEN ---------------------------------------- */
 #user-icon {
 
@@ -122,6 +144,62 @@
   line-height: 1.4;
   word-wrap: break-word;
 }
+
+/* ---------------------------------- CALENDAR RELATED --------------------------------- */
+#eventBox 
+{
+    margin-top: 2em;
+    margin-bottom: 3em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+    padding: 1em;
+}
+
+#eventDate 
+ {
+    font-size: 1.5em;
+ }
+
+ #required 
+ {
+    color: red;
+ }
+
+#addButton 
+{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+ .vresize 
+ {
+    resize: vertical;
+ }
+
+/* ---------------------------------- GITHUB RELATED --------------------------------- */
+#john
+{
+  width: 51.0em;
+  height: 25.0em;
+}
+
+/* ---------------------------------- LOGIN PAGE RELATED --------------------------------- */
+#loginBtnMain {
+   background-color: #006dfd ;
+}
+
+.panel > .panel-heading 
+{
+    background-image: none;
+    color: black;
+}
+
+#panel 
+{
+    background: #525E6C;
+    color: white;
+}
+
 /* ---------------------------------- OTHER CSS STYLYING --------------------------------- */
 
 #loginbutton
@@ -139,27 +217,6 @@
     background-color: white;
     border-color: #64abdd;
 
-}
-
-#loginBtn 
-{
-   background-color: #64ABDD ;
-}
-
-#loginBtnMain {
-   background-color: #006dfd ;
-}
-
-#OCAlogo
-{
-    width: 100px;
-    height: 80px;
-}
-
-#john
-{
-  width: 51.0em;
-  height: 25.0em;
 }
 
 .ng-cloak 
@@ -188,19 +245,7 @@
   color: blue;
 }
 
-.panel > .panel-heading 
-{
-    background-image: none;
-    color: black;
-}
-
-#panel 
-{
-    background: #525E6C;
-    color: white;
-}
-
-#submit 
+/*#submit 
 {
     color: white;
     width: 100px;
@@ -226,14 +271,6 @@
 {
 	margin-top: 2%;
 }
-
-#dropdownMenuButton
-{
-   
-   border: none;
-   color: #64ABDD;
-}
-
 
 
 #links 
@@ -266,41 +303,12 @@
     border-color: #64ABDD;
 }
 
-#eventBox 
-{
-    margin-top: 2em;
-    margin-bottom: 3em;
-    border: 1px solid #ccc;
-    border-radius: 1em;
-    padding: 1em;
-}
-
-#addButton 
-{
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-
- .vresize 
- {
-    resize: vertical;
- }
-
- #eventDate 
- {
-    font-size: 1.5em;
- }
-
- #required 
- {
-    color: red;
- }
 
  #allButton 
  {
     padding: 1em;
  }
-
+*/
 
 
 /* Change the link color on hover */

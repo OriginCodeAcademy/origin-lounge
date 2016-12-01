@@ -36,9 +36,9 @@
       <div>
         <table>
           <caption><h4>Users</h4></caption>
-          <tr ng-repeat="participants in vm.participants">
+          <tr ng-repeat="participants in participants">
             <!-- users name -->
-            <td>{{participants.username}}</td>
+            <td>{{participants}}</td>
             <!-- Users login status-->
             <td><i ng-class="{'fa fa-circle-o': !participants.isLoggedIn, 'fa fa-circle': participants.isLoggedIn}"></i></td>
           </tr>

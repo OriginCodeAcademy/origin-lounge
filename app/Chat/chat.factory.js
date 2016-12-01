@@ -11,6 +11,7 @@
         var service = {
 
             getAllMessagesForAChatRoom: getAllMessagesForAChatRoom,
+            getAllUsersInAChatRoom: getAllUsersInAChatRoom,
             getChatsForAUser: getChatsForAUser,
             emit: emit,
             on: on,
@@ -49,13 +50,44 @@
             return defer.promise;
         }
 
+        function getAllUsersInAChatRoom(roomId) {
+            
+            var defer = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: originLoungeExpressAPIBaseURL + 'messagerecipients/' + roomId
+            })
+
+            .then(function(response){
+                
+                if (typeof response.data === "object") {
+
+                    defer.resolve(response.data);
+                
+                } else {
+
+                    defer.reject(response);
+                }
+    
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;
+        }
+
         function getChatsForAUser(userId) {
             
             var defer = $q.defer();
 
             $http({
                 method: 'GET',
-                url: originLoungeExpressAPIBaseURL + 'messagerecipients/' + userId
+                url: originLoungeExpressAPIBaseURL + 'messagerecipients/userid/' + userId
             })
 
             .then(function(response){
