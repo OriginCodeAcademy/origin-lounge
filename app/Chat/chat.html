@@ -10,7 +10,7 @@
     </style>
 
     <!-- Chat Window -->
-    <div id="chatwindow" class="col-xs-10">
+    <div scroll-glue id="chatwindow" class="col-xs-10">
       <!-- Chatroom name -->
       <h4>{{vm.chatRoomName}}</h4>
       <!-- Chat messages -->
@@ -25,8 +25,9 @@
             </li>
       </ul>
       <!-- Chat message form -->
-      <form action="">
-        <input id="m" autocomplete="off" /><button>Send</button>
+      <form name="chatMessage">
+        <input ng-model="vm.chatMessage" required>
+        <button type="submit" ng-click="vm.sendChatMessage()" ng-disabled="chatMessage.$invalid">Send</button>
       </form>
     </div>
 

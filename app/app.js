@@ -2,7 +2,17 @@
     'use strict';
 
 angular
-        .module('app', ['ui.router','LocalStorageModule', 'toastr', 'ngIdle', 'ui.bootstrap', 'hc.marked', 'hljs', 'angular-markdown-editor'])
+        .module('app', [
+            'ui.router',
+            'LocalStorageModule',
+            'toastr',
+            'ngIdle',
+            'ui.bootstrap',
+            'hc.marked',
+            'hljs',
+            'angular-markdown-editor',
+            'luegg.directives'
+            ])
         .value ('originAPIBaseURL', 'http://origincodeacademyapi.azurewebsites.net/', 'ui.calendar')
         .value ('chatServerURLAndPort', 'http://localhost:3002')
         .value ('originLoungeExpressAPIBaseURL', 'http://localhost:3000/api/')

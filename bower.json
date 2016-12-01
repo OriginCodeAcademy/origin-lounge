@@ -33,7 +33,8 @@
     "animate.css": "animate-css#^3.5.2",
     "tether": "^1.3.7",
     "socket-io": "^1.0.0",
-    "socket-io-client": "^1.4.5"
+    "socket-io-client": "^1.4.5",
+    "angular-scroll-glue": "^2.1.0"
   },
   "overrides": {
     "bootstrap": {

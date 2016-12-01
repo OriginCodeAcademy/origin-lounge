@@ -242,50 +242,13 @@
 
         // socket.io listener to capture a chat message coming from the server
         chatFactory.on('chat message', function(msg){
-            //     var li = $(
-            // '<li class="chat-message">' +
-            //     '<div class="chat-info">' +
-            //         '<img src="/app/img/OCAhat.jpg">' +
-            //         '<b>' + msg.sender + '</b>' +
-            //         '<i>' + msg.created | date:"MM/dd/yyyy @ h:mma" + '</i>' +
-            //     '</div>' +
-            //     '<p>' + msg.message + '</p>' +
-            // '</li>');
-
-            //             <li class='chat-message'>
-            //   <div class='chat-info'>
-            //     <img src='/app/img/OCAhat.jpg'>
-            //     <b>{{messages.sender}}</b>
-            //     <i>{{messages.created | date:'MM/dd/yyyy @ h:mma'}}</i>
-            //   </div>
-            //   <p>{{messages.message}}</p>
-            // </li>
-          
-
           // only add the incoming chat message to the chat if the incoming roomid from the server matches the roomid of the chat you are in
           if ($rootScope.roomid === msg.messagerecipient_id){
-            $rootScope.messages.push(msg);//$('#messages').append($('<li>').text(msg.sender + ' said: ' + msg.message));
+            $rootScope.messages.push(msg);
           }
         });
 
-
-      //         <ul id="messages" ng-repeat="messages in vm.messages">
-      //       <li class='chat-message'>
-      //         <div class='chat-info'>
-      //           <img src='/app/img/OCAhat.jpg'>
-      //           <b>{{messages.sender}}</b>
-      //           <i>{{messages.created | date:'MM/dd/yyyy @ h:mma'}}</i>
-      //         </div>
-      //         <p>{{messages.message}}</p>
-      //       </li>
-      // </ul>
-
-            //       sender: username,
-            // userId: userId,
-            // message: message,
-            // created: dateTimeCreated,
-            // messagerecipient_id: $rootScope.roomid
-
+        // socket.io listener to capture when a user has joined a socket.io room
         chatFactory.on('logged in', function(msg){
             console.log(msg.username);
             console.log(msg.chatgroupId);
