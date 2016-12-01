@@ -10,11 +10,44 @@
         $rootScope.socket = io.connect(chatServerURLAndPort);
         var service = {
 
+            getAllMessagesForAChatRoom: getAllMessagesForAChatRoom,
             getChatsForAUser: getChatsForAUser,
             emit: emit,
-            on: on
+            on: on,
+            postMessage: postMessage
         };
         return service;
+
+        function getAllMessagesForAChatRoom(roomId) {
+            
+            var defer = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: originLoungeExpressAPIBaseURL + 'messages/' + roomId
+            })
+
+            .then(function(response){
+                
+                if (typeof response.data === "object") {
+
+                    defer.resolve(response.data);
+                
+                } else {
+
+                    defer.reject(response);
+                }
+    
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;
+        }
 
         function getChatsForAUser(userId) {
             
@@ -59,6 +92,44 @@
             });
           
           });
+        }
+
+        function postMessage(message){
+
+            var defer = $q.defer();
+
+            var info = 'sender=' + message.sender + '&message=' + message.message + '&created=' + message.created + '&messagerecipient_id=' + message.messagerecipient_id;
+
+            $http({
+                method: 'POST',
+                url: originLoungeExpressAPIBaseURL + 'messages/',
+                data: info,
+                headers: {
+                'Content-Type' : 'application/x-www-form-urlencoded'
+              }
+            })
+
+            .then(function(response){
+                
+                if (typeof response.data === "object") {
+
+                    defer.resolve(response.data);
+                
+                } else {
+
+                    defer.reject(response);
+                }
+    
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;
+
         }
 
 

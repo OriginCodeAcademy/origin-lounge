@@ -60,10 +60,68 @@
   margin-left: 140px;
 }
 
+/* -----------------------------------CHAT SCREEN ---------------------------------------- */
+#user-icon {
 
+    width: 30px;
+    height: 30px;
+}
 
+#chatwindow {
+
+  overflow:scroll;
+  height: 470px;
+}
+
+.chat-info {
+  clear:both;
+  float:left;
+  height: 160px;
+  width: 80px;
+  text-align:center;
+  overflow: hidden;
+}
+
+.chat-info img {
+  float: left;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.chat-info b {
+  overflow: hidden;
+  display: block;
+  clear: both;
+  padding-top: 7px;
+}
+
+.chat-info i{
+  font-size: 12px;
+  line-height: 1.2;
+  display: block;
+  opacity: 0.8;
+  padding-top: 4px;
+}
+
+#messages .chat-message p {
+  text-align:left;
+  float: left;
+  display: inline-block;
+  margin-left: 20px;
+  margin-bottom:30px;
+  padding: 25px 34px;
+  min-width: 160px;
+  min-height: 10px;
+  max-width: 510px;
+  background-color: #FFF;
+  border-radius: 3px;
+  box-shadow: 0px 3px 3px #E3E4E6;
+  color: #637277;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
 /* ---------------------------------- OTHER CSS STYLYING --------------------------------- */
-
 
 #loginbutton
 {
@@ -118,11 +176,6 @@
 {
     cursor: pointer;
     color: #64abdd;
-}
-
-.chat-list 
-{
-  /*list-style-image: url(/app/img/origin1.jpeg);*/
 }
 
 .fa {

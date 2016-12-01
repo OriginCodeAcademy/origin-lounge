@@ -20,9 +20,26 @@
 
         activate();
 
-        // if you don't specify a URL within io() it will default to connecting to the host that serves the page
-        // $rootScope.socket = io(chatServerURLAndPort);
-        
+        function activate() {
+
+          // get message history and display it to chat room
+          chatFactory.getAllMessagesForAChatRoom($rootScope.roomid).then(
+
+            function(response){
+
+              $rootScope.messages = response;
+              console.log(response);
+
+            },
+
+            function(error){
+
+              console.log(error);
+            }
+          );
+
+        }
+       
         // when user clicks submit in the chat message form, do the following
         $('form').submit(function() {
           // grab username and userId from local storage, as well as the message typed into the form and the current date/time
@@ -34,26 +51,39 @@
           // create an object with chat info to send out
           var chatMessage = {
 
-            username: username,
+            sender: username,
             userId: userId,
             message: message,
-            dateTimeCreated: dateTimeCreated,
-            roomid: $rootScope.roomid
+            created: dateTimeCreated,
+            messagerecipient_id: $rootScope.roomid
           };
+
+
           // emit a chat message that includes the datetime created as well as the username and userId
           //socket.emit('chat message', $('#m').val());
 
-          // send the chat message out
-          //$rootScope.socket.emit('chat message', chatMessage);
+          // send the chat message out to the socket.io server
           chatFactory.emit('chat message', chatMessage);
           // blank out the chat message form after the message was emitted
           $('#m').val('');
+          // add message to message table in Express API server
+          chatFactory.postMessage(chatMessage).then(
+
+            function(response) {
+
+              $rootScope.messages.push(chatMessage);
+              console.log(response);
+            },
+
+            function(error) {
+
+              console.log(error);
+            }
+          );
           // unsure why the need to return a false...
           return false;
         });
 
-        function activate() {
 
-        }
     }
 })();
