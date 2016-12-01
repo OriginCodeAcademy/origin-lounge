@@ -218,7 +218,7 @@
 
                     for (var i = 0; i < response.length; i++) {
                         // send server the full list of chat rooms the user is in
-                        chatFactory.emit('subscribe', {chatgroupId: response[i]._id, username: vm.username});
+                        chatFactory.emit('subscribe', {chatid: response[i]._id, username: vm.username});
                     }
 
                     //jump to calendar state
@@ -243,7 +243,7 @@
         // socket.io listener to capture a chat message coming from the server
         chatFactory.on('chat message', function(msg){
           // only add the incoming chat message to the chat if the incoming roomid from the server matches the roomid of the chat you are in
-          if ($rootScope.roomid === msg.messagerecipient_id){
+          if ($rootScope.chatid === msg.chatid){
             $rootScope.messages.push(msg);
           }
         });
@@ -253,7 +253,7 @@
             console.log(msg.username);
             console.log(msg.chatgroupId);
             // only add the logged in message to the chat if the incoming roomid from the server matches the roomid of the chat you are in
-            if ($rootScope.roomid === msg.chatgroupId){           
+            if ($rootScope.chatid === msg.chatid){           
                 $('#userlist').append($('<li>').text(msg.username));
                 $('#chatwindow').append($('<li>').text(msg.username + ' has logged in'));  
             }

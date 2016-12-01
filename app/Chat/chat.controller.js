@@ -12,7 +12,7 @@
         var vm = this;
         
         //grab messagerecipient_id from the calendar state (once the user clicks on the name of a chat room)
-        $rootScope.roomid = $stateParams.messagerecipient_id;
+        $rootScope.chatid = $stateParams.chatid;
 
         // grab name of chat from the calendar state and bind to view (once the user clicks on the name of a chat room)
         vm.chatRoomName = $stateParams.chatRoomName;
@@ -25,7 +25,7 @@
         function activate() {
 
           // get message history and display it to chat room
-          chatFactory.getAllMessagesForAChatRoom($rootScope.roomid).then(
+          chatFactory.getAllMessagesForAChatRoom($rootScope.chatid).then(
 
             function(response){
 
@@ -42,7 +42,7 @@
           );
 
           // get list of all users in a specific chat room
-          chatFactory.getAllUsersInAChatRoom($rootScope.roomid).then(
+          chatFactory.getAllUsersInAChatRoom($rootScope.chatid).then(
 
             function(response) {
 
@@ -74,7 +74,7 @@
             userId: userId,
             message: vm.chatMessage,
             created: dateTimeCreated,
-            messagerecipient_id: $rootScope.roomid
+            chatid: $rootScope.chatid
           };
 
           // send the chat message out to the socket.io server

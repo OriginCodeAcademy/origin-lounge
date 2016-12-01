@@ -29,6 +29,7 @@ var port = process.env.PORT || 3000;
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://origin-dev:pass1@ds149297-a0.mlab.com:49297/heroku_nrxdgp9h/'); 
 
+//messageRecipients
 // ============================================================================
 // TABLES
 // ============================================================================ 
@@ -39,7 +40,7 @@ var ContentCategory = require('./server/models/custom-content/contentcategory');
 var ApiCode = require('./server/models/api-content/apicode');
 var CalendarUserGroup = require('./server/models/calendar-content/usergroup');
 var Messages = require('./server/models/chat/message');
-var MessagesRecipients = require('./server/models/chat/messagerecipients');
+var Chats = require('./server/models/chat/chats');
 var CalendarGroup = require('./server/models/calendar-content/group');
 var CalendarUserGroupEvent = require('./server/models/calendar-content/usergroupevent');
 var CalendarEvent = require('./server/models/calendar-content/event');
@@ -640,13 +641,13 @@ router.route('/contentcategory/:contentcategory_id')
 });
 
 // =============================================================================
-// Routes that end in /messagerecipients
+// Routes that end in /chats
 // =============================================================================
-router.route('/messagerecipients')
+router.route('/chats')
 
-// get all messagerecipient table entries (accessed at GET http://localhost:3000/api/messagerecipients)
+// get all chats table entries (accessed at GET http://localhost:3000/api/chats)
 .get(function(req, res) {
-    MessagesRecipients.find(function(err, category) {
+    Chats.find(function(err, category) {
         if (err)
             res.send(err);
 
@@ -654,58 +655,58 @@ router.route('/messagerecipients')
     });
 })
 
-// post a new messagerecipient entry (accessed at POST http://localhost:3000/api/messagerecipients)
+// post a new chat entry (accessed at POST http://localhost:3000/api/chats)
 .post(function(req, res) {
-    var messagesRecipients = new MessagesRecipients();
-    messagesRecipients.userid = req.body.userid;
-    messagesRecipients.usernames = req.body.usernames;
-    messagesRecipients.channelname = req.body.channelname;
-    messagesRecipients.groupType = req.body.groupType;
+    var chats = new Chats();
+    chats.userid = req.body.userid;
+    chats.usernames = req.body.usernames;
+    chats.channelname = req.body.channelname;
+    chats.groupType = req.body.groupType;
 
-    messagesRecipients.save(function(err) {
+    chats.save(function(err) {
         if (err)
             res.send(err);
 
-        res.json({ message: 'MessageRecipient entry created!'});
+        res.json({ message: 'Chat entry created!'});
     });
 });
 
 // =============================================================================
-// Routes that end in /messagerecipients/:messagerecipients_id
+// Routes that end in /chats/:chatid
 // =============================================================================
-router.route('/messagerecipients/:messagerecipient_id')
-// get a specific messagerecipient entry (accessed at GET http://localhost:3000/api/messagerecipients/{messagerecipients_id})
+router.route('/chats/:chatid')
+// get a specific messagerecipient entry (accessed at GET http://localhost:3000/api/chats/{chatid})
 .get(function(req, res) {
-    MessagesRecipients.findById(req.params.messagerecipient_id, function(err, messagerecipient) {
+    Chats.findById(req.params.chatid, function(err, chat) {
         if (err)
             res.send(err);
-        res.json(messagerecipient);
+        res.json(chat);
     });
 });
 
 // =============================================================================
-// Routes that end in /messagerecipients/userid/:userid
+// Routes that end in /chats/userid/:userid
 // =============================================================================
-router.route('/messagerecipients/userid/:userid')
+router.route('/chats/userid/:userid')
 
-// get all messagerecipient entries for a specific userId (accessed at GET http://localhost:3000/api/messagerecipients/userid/{userId})
+// get all chat entries for a specific userId (accessed at GET http://localhost:3000/api/chats/userid/{userId})
 .get(function(req, res) {
-    MessagesRecipients.find({"userid": req.params.userid }, {"usernames":1, "_id":1, "channelname":1, "groupType":1},function(err, messagerecipients) {
+    Chats.find({"userid": req.params.userid }, {"usernames":1, "_id":1, "channelname":1, "groupType":1},function(err, chats) {
         if (err)
             res.send(err);
 
-        res.json(messagerecipients);
+        res.json(chats);
     });
 });
 
 // =============================================================================
-// Routes that end in /messages/:messagerecipient_id
+// Routes that end in /messages/:chatid
 // =============================================================================
-router.route('/messages/:messagerecipient_id')
+router.route('/messages/:chatid')
 
-// get all messages associated with a specific chatid (accessed at GET http://localhost:3000/api/messages/{messagerecipient_id})
+// get all messages associated with a specific chatid (accessed at GET http://localhost:3000/api/messages/{chatid})
 .get(function(req, res) {
-    Messages.find({"messagerecipient_id": req.params.messagerecipient_id}, function(err, messages) {
+    Messages.find({"chatid": req.params.chatid}, function(err, messages) {
         if(err) res.send(err);
 
         res.json(messages);
@@ -729,7 +730,7 @@ router.route('/messages')
 // post a new messages entry (accessed at POST http://localhost:3000/api/messages)
 .post(function(req, res) {
     var messages = new Messages();
-    messages.messagerecipient_id = req.body.messagerecipient_id;
+    messages.chatid = req.body.chatid;
     messages.message = req.body.message;
     messages.sender = req.body.sender;
     messages.created = req.body.created;

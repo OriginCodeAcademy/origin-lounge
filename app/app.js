@@ -129,7 +129,7 @@ angular
                     controllerAs: 'vm',
                     controller: 'chatController',
                     params: {
-                        messagerecipient_id: null,
+                        chatid: null,
                         chatRoomName: null
                     }
 

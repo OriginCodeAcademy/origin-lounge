@@ -56,7 +56,7 @@
 
             $http({
                 method: 'GET',
-                url: originLoungeExpressAPIBaseURL + 'messagerecipients/' + roomId
+                url: originLoungeExpressAPIBaseURL + 'chats/' + roomId
             })
 
             .then(function(response){
@@ -87,7 +87,7 @@
 
             $http({
                 method: 'GET',
-                url: originLoungeExpressAPIBaseURL + 'messagerecipients/userid/' + userId
+                url: originLoungeExpressAPIBaseURL + 'chats/userid/' + userId
             })
 
             .then(function(response){
@@ -130,7 +130,7 @@
 
             var defer = $q.defer();
 
-            var info = 'sender=' + message.sender + '&message=' + message.message + '&created=' + message.created + '&messagerecipient_id=' + message.messagerecipient_id;
+            var info = 'sender=' + message.sender + '&message=' + message.message + '&created=' + message.created + '&chatid=' + message.chatid;
 
             $http({
                 method: 'POST',
