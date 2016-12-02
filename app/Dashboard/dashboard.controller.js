@@ -249,13 +249,58 @@
 
         // socket.io listener to capture a user connected event coming from server
         chatFactory.on('logged in', function(msg){
+          var participant = {};
           // store all the users currently logged in
           $rootScope.usersLoggedIn = msg;
 
-          // add chat message to the unordered list on this html page
-          //$('#messages').append($('<li>').text(msg)); 
+          // if this is not the first time a user has logged in, find the user that just logged in and mark them as being logged in
+          if ($rootScope.participants !== undefined) {
 
+              for (var i = 0; i < $rootScope.participants.length; i++) {
+
+                for (var j = 0; j < msg.length; j++) {
+                        if ($rootScope.participants[i].userid === msg[j]) {
+                            $rootScope.participants[i].isLoggedIn = true;
+                            }
+                        } 
+                }
+          }
         });
+
+              //         loop1: 
+              // for (var i = 0; i < response.users.length; i++) {
+              //   // loop through all the users logged in and see which match the users subscribed to this chatroom
+              //   loop2:
+              //   for (var j = 0; j < $rootScope.usersLoggedIn.length; j++) {
+              //     // check to see if any of the users logged in are in this specific chat room
+              //     if (response.users[i].userid === $rootScope.usersLoggedIn[j]){
+              //       // if the user is online, build up the user object to indicate the user is online (set isLogged in to true)
+              //       participant = {
+              //         isLoggedIn: true,
+              //         userid: response.users[i].userid,
+              //         username: response.users[i].username
+              //       };
+              //       // add the user that is online to the list of users to be displayed to the chat view
+              //       participants.push(participant);
+
+              //       // break out of loop 2
+              //       break loop2; 
+              //     // if user is not online, build up the user object accordingly (set isLoggedIn to false)
+              //     } else if (j === $rootScope.usersLoggedIn.length - 1) {
+
+              //       participant = {
+              //         isLoggedIn: false,
+              //         userid: response.users[i].userid,
+              //         username: response.users[i].username
+              //       };
+              //       // add the user that is not online to the list of users to be displayed to the chat view
+              //       participants.push(participant);
+
+              //     }
+
+              //   }
+
+              // }
 
         // socket.io listener to capture a chat message coming from the server
         chatFactory.on('chat message', function(msg){
