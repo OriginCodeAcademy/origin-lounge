@@ -675,7 +675,7 @@ router.route('/chats')
 // Routes that end in /chats/:chatid
 // =============================================================================
 router.route('/chats/:chatid')
-// get a specific messagerecipient entry (accessed at GET http://localhost:3000/api/chats/{chatid})
+// get a specific chats entry (accessed at GET http://localhost:3000/api/chats/{chatid})
 .get(function(req, res) {
     Chats.findById(req.params.chatid, function(err, chat) {
         if (err)
@@ -691,7 +691,7 @@ router.route('/chats/userid/:userid')
 
 // get all chat entries for a specific userId (accessed at GET http://localhost:3000/api/chats/userid/{userId})
 .get(function(req, res) {
-    Chats.find({"userid": req.params.userid }, {"usernames":1, "_id":1, "channelname":1, "groupType":1},function(err, chats) {
+    Chats.find({"users.userid": req.params.userid }, {"users":1, "usernames":1, "_id":1, "channelname":1, "groupType":1},function(err, chats) {
         if (err)
             res.send(err);
 

@@ -47,7 +47,7 @@
             function(response) {
 
               // store chat room participants
-              $rootScope.participants = response.usernames;
+              $rootScope.participants = response.users;
               console.log(response);
             },
 

@@ -44,7 +44,7 @@ body
         <table>
             <tr ng-repeat="groups in vm.chatGroups">
                 <td class="col-xs-11" ng-show="groups.groupType === 'direct'">
-                    <a ui-sref="main.chat({chatid: '{{groups._id}}'})"><h5 ng-val="groups._id">{{groups.usernames}}</h5></a>
+                    <a ui-sref="main.chat({chatid: '{{groups._id}}'})"><h5 ng-val="groups._id">{{groups._id}}</h5></a>
                 </td>
                 <td class="col-xs-1" ng-show="groups.groupType === 'direct'">
                     <a><i class="fa fa-times-circle" aria-hidden="true"></i></a>
