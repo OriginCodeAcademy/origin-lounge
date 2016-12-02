@@ -211,9 +211,6 @@
         function logOut(){
             // // disconnect any chat socket that may be opened, before logging out
             $rootScope.socket.disconnect();
-
-            // $rootScope.socket.removeAllListeners();
-            // $rootScope.socket.socket.removeAllListeners();
             
             // clear local storage
             storageFactory.clearAllLocalStorage();
@@ -245,7 +242,8 @@
           // store all the clients that are currently registered in the socket.io server
           $rootScope.usersLoggedIn = msg.users;
 
-          // if this is not the first time this event was emitted by the socket.io server, find the user that just registered and mark them as being logged in
+           // if the client has already navigated to the chat state (which is where $rootScope.participants is first defined)
+           // then find the user that just logged in and mark them as logged in
           if ($rootScope.participants !== undefined) {
 
               for (var i = 0; i < $rootScope.participants.length; i++) {
@@ -264,11 +262,24 @@
           }
         });
 
-        // socket.io listener that captures when a client has disconnected from the server
-        // chatFactory.on('disconnect', function(){
-        //     console.log("in disconnect");
-        //     //$rootScope.socket.reconnect();
 
-        // });
+        // socket.io listener for when server emits 'logged out' event
+        // this grabs the latest snapshot of clients that are registered on the socket.io server
+        // this will also inform the current client if any other clients have logged out
+        chatFactory.on('logged out', function(msg){
+           console.log(msg.userLoggedOut + ' has logged out'); 
+           // store all the clients that are currently registered in the socket.io server
+           $rootScope.usersLoggedIn = msg.users;
+
+           // if the client has already navigated to the chat state (which is where $rootScope.participants is first defined)
+           // then find the user that just logged out and mark them as logged out 
+           if ($rootScope.participants !== undefined) {
+               for (var i = 0; i < $rootScope.participants.length; i++){
+                    if ($rootScope.participants[i].userid === msg.userLoggedOut) {
+                        $rootScope.participants[i].isLoggedIn = false;
+                    }
+               }
+           }
+        });
     }
 })();
