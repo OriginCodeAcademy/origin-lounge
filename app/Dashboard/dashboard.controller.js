@@ -190,10 +190,8 @@
                     // display chatgroups on the view           
                     vm.chatGroups = response;
 
-                    // for (var i = 0; i < response.length; i++) {
-                        // send server the full list of chat rooms the user is in
+                        // send socket.io server the full list of chat rooms the user is subscribed to
                         chatFactory.emit('add user', {chatGroups: vm.chatGroups, userid: vm.userId});
-                    // }
 
                     //jump to calendar state
                     $state.go('main.calendar');
@@ -205,7 +203,6 @@
                     $state.go('main.calendar');                   
 
             });
-
 
         }
 
@@ -235,72 +232,29 @@
         // twice.
         // **********************************************************************************
 
-        // chatFactory.on('disconnect', function(){
-        //     console.log("in disconnect");
-        //     //$rootScope.socket.reconnect();
-
-        // });
-
         // socket.io listener for connect event that signifies that client has connected to server
         chatFactory.on('connect', function(){
 
             console.log("Client connected to server"); 
         });
 
-        // socket.io listener to capture a user connected event coming from server
+        // socket.io listener for when server emits 'logged in' event
+        // this grabs the latest snapshot of clients that are registered on the socket.io server
+        // this will also inform the current client if any other clients have logged in
         chatFactory.on('logged in', function(msg){
-          var participant = {};
-          // store all the users currently logged in
-          $rootScope.usersLoggedIn = msg;
+          // store all the clients that are currently registered in the socket.io server
+          $rootScope.usersLoggedIn = msg.users;
 
-          // if this is not the first time a user has logged in, find the user that just logged in and mark them as being logged in
+          // if this is not the first time this event was emitted by the socket.io server, find the user that just registered and mark them as being logged in
           if ($rootScope.participants !== undefined) {
 
               for (var i = 0; i < $rootScope.participants.length; i++) {
-
-                for (var j = 0; j < msg.length; j++) {
-                        if ($rootScope.participants[i].userid === msg[j]) {
-                            $rootScope.participants[i].isLoggedIn = true;
-                            }
-                        } 
-                }
-          }
+                    if ($rootScope.participants[i].userid === msg.userLoggedIn) {
+                        $rootScope.participants[i].isLoggedIn = true;
+                        }                 
+                } 
+            }
         });
-
-              //         loop1: 
-              // for (var i = 0; i < response.users.length; i++) {
-              //   // loop through all the users logged in and see which match the users subscribed to this chatroom
-              //   loop2:
-              //   for (var j = 0; j < $rootScope.usersLoggedIn.length; j++) {
-              //     // check to see if any of the users logged in are in this specific chat room
-              //     if (response.users[i].userid === $rootScope.usersLoggedIn[j]){
-              //       // if the user is online, build up the user object to indicate the user is online (set isLogged in to true)
-              //       participant = {
-              //         isLoggedIn: true,
-              //         userid: response.users[i].userid,
-              //         username: response.users[i].username
-              //       };
-              //       // add the user that is online to the list of users to be displayed to the chat view
-              //       participants.push(participant);
-
-              //       // break out of loop 2
-              //       break loop2; 
-              //     // if user is not online, build up the user object accordingly (set isLoggedIn to false)
-              //     } else if (j === $rootScope.usersLoggedIn.length - 1) {
-
-              //       participant = {
-              //         isLoggedIn: false,
-              //         userid: response.users[i].userid,
-              //         username: response.users[i].username
-              //       };
-              //       // add the user that is not online to the list of users to be displayed to the chat view
-              //       participants.push(participant);
-
-              //     }
-
-              //   }
-
-              // }
 
         // socket.io listener to capture a chat message coming from the server
         chatFactory.on('chat message', function(msg){
@@ -310,23 +264,11 @@
           }
         });
 
-        // socket.io listener to capture when a user has joined a socket.io room
-        // chatFactory.on('logged in', function(msg){
-        //     console.log(msg.username);
-        //     console.log(msg.chatgroupId);
-        //     // only add the logged in message to the chat if the incoming roomid from the server matches the roomid of the chat you are in
-        //     if ($rootScope.chatid === msg.chatid){           
-        //         $('#userlist').append($('<li>').text(msg.username));
-        //         $('#chatwindow').append($('<li>').text(msg.username + ' has logged in'));  
-        //     }
-        // });
+        // socket.io listener that captures when a client has disconnected from the server
+        // chatFactory.on('disconnect', function(){
+        //     console.log("in disconnect");
+        //     //$rootScope.socket.reconnect();
 
-        // socket.io listener to capture a user disconnection event coming from server
-        // chatFactory.on('user disconnected', function(msg){
-        //   // add chat message to the unordered list on this html page
-        //   $('#messages').append($('<li>').text(msg)); 
-            
         // });
-
     }
 })();
