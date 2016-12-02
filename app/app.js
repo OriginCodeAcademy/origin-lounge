@@ -142,9 +142,12 @@ angular
             // rootScope handler for when user changes states
             $rootScope.$on('$stateChangeStart', function() {
 
-                // if a token doesn't exist in local storage, log the user out
+                // if a token doesn't exist in local storage, close the socket.io connection and log the user out
                 var isLogin = storageFactory.getLocalStorage("userSession");
                 if(isLogin === null){
+                    // close socket connection to socket.io server
+                    $rootScope.socket.disconnect();
+                    // jump to login page
                    $location.path('/login');
                 }
 
@@ -200,8 +203,8 @@ angular
                 // stop the idle watch
                 Idle.unwatch();
                 
-                // // close any chat socket that is currently open
-                // $rootScope.socket.disconnect();
+                //close any chat socket that is currently open
+                $rootScope.socket.disconnect();
                 
                 // jump to the login page
                 $state.go('login');
@@ -218,11 +221,13 @@ angular
             });
 
 
-            // On Before Unload event that clears local storage and redirects to the login page
-            // window.onbeforeunload = function() {
-            //     storageFactory.clearAllLocalStorage();
-            //     return '';
-            // };
+            //On Before Unload event that clears local storage and redirects to the login page
+            window.onbeforeunload = function() {
+                storageFactory.clearAllLocalStorage();
+                $rootScope.socket.disconnect();
+                $state.go('login');
+                return '';
+            };
         })
 
         // controller for markdown editor

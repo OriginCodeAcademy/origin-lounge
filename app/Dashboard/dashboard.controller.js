@@ -21,7 +21,8 @@
         activate();
 
         function activate() {
-            
+            // connect to socket.io server
+            $rootScope.socket = io.connect(chatServerURLAndPort);
             // this starts watching for idle. This also starts the Keepalive service by default.
             Idle.watch();
 
@@ -54,9 +55,6 @@
 
                     // get all the Roles that exist in the origin.API DB
                     getRoles();
-
-                    // get all the Users that exist in the origin.API DB
-                    getUsers();
                 
                 },
 
@@ -66,9 +64,6 @@
                     
                     // get all the Roles that exist in the origin.API DB
                     getRoles();
-
-                    // get all the Users that exist in the origin.API DB
-                    getUsers();
 
                 });
 
@@ -155,6 +150,9 @@
                     vm.roles = response;
                     console.log(response);
 
+                    // get all the Users that exist in the origin.API DB
+                    getUsers();
+
                 },
 
                 function(error) {
@@ -173,6 +171,7 @@
 
                     vm.users = response;
                     console.log(response);
+                    getChatsForAUser();
                 },
 
                 function(error) {
@@ -181,13 +180,46 @@
                 });
         }
 
+        function getChatsForAUser() {
+
+            // get all chat rooms/private messages that the user is subscribed to
+            chatFactory.getChatsForAUser(vm.userId).then(
+
+                function(response) {
+                    
+                    // display chatgroups on the view           
+                    vm.chatGroups = response;
+
+                    // for (var i = 0; i < response.length; i++) {
+                        // send server the full list of chat rooms the user is in
+                        chatFactory.emit('add user', {chatGroups: vm.chatGroups, userid: vm.userId});
+                    // }
+
+                    //jump to calendar state
+                    $state.go('main.calendar');
+                },
+
+                function(error) {
+
+                     //jump to calendar state
+                    $state.go('main.calendar');                   
+
+            });
+
+
+        }
+
        
         // Logout on-click function
         function logOut(){
+            // // disconnect any chat socket that may be opened, before logging out
+            $rootScope.socket.disconnect();
+
+            // $rootScope.socket.removeAllListeners();
+            // $rootScope.socket.socket.removeAllListeners();
+            
             // clear local storage
             storageFactory.clearAllLocalStorage();
-            // // disconnect any chat socket that may be opened, before logging out
-            // $rootScope.socket.disconnect();
             // go to login page
             $state.go('login');
         }
@@ -203,41 +235,26 @@
         // twice.
         // **********************************************************************************
 
+        // chatFactory.on('disconnect', function(){
+        //     console.log("in disconnect");
+        //     //$rootScope.socket.reconnect();
+
+        // });
+
         // socket.io listener for connect event that signifies that client has connected to server
         chatFactory.on('connect', function(){
 
             console.log("Client connected to server"); 
-            
-            // get all chat rooms/private messages that the user is subscribed to
-            chatFactory.getChatsForAUser(vm.userId).then(
-
-                function(response) {
-                    
-                    // display chatgroups on the view           
-                    vm.chatGroups = response;
-
-                    for (var i = 0; i < response.length; i++) {
-                        // send server the full list of chat rooms the user is in
-                        chatFactory.emit('subscribe', {chatid: response[i]._id, username: vm.username});
-                    }
-
-                    //jump to calendar state
-                    $state.go('main.calendar');
-                },
-
-                function(error) {
-
-                     //jump to calendar state
-                    $state.go('main.calendar');                   
-
-            });
-
         });
 
         // socket.io listener to capture a user connected event coming from server
-        chatFactory.on('user connected', function(msg){
+        chatFactory.on('logged in', function(msg){
+          // store all the users currently logged in
+          $rootScope.usersLoggedIn = msg;
+
           // add chat message to the unordered list on this html page
-          $('#messages').append($('<li>').text(msg)); 
+          //$('#messages').append($('<li>').text(msg)); 
+
         });
 
         // socket.io listener to capture a chat message coming from the server
@@ -249,22 +266,22 @@
         });
 
         // socket.io listener to capture when a user has joined a socket.io room
-        chatFactory.on('logged in', function(msg){
-            console.log(msg.username);
-            console.log(msg.chatgroupId);
-            // only add the logged in message to the chat if the incoming roomid from the server matches the roomid of the chat you are in
-            if ($rootScope.chatid === msg.chatid){           
-                $('#userlist').append($('<li>').text(msg.username));
-                $('#chatwindow').append($('<li>').text(msg.username + ' has logged in'));  
-            }
-        });
+        // chatFactory.on('logged in', function(msg){
+        //     console.log(msg.username);
+        //     console.log(msg.chatgroupId);
+        //     // only add the logged in message to the chat if the incoming roomid from the server matches the roomid of the chat you are in
+        //     if ($rootScope.chatid === msg.chatid){           
+        //         $('#userlist').append($('<li>').text(msg.username));
+        //         $('#chatwindow').append($('<li>').text(msg.username + ' has logged in'));  
+        //     }
+        // });
 
         // socket.io listener to capture a user disconnection event coming from server
-        chatFactory.on('user disconnected', function(msg){
-          // add chat message to the unordered list on this html page
-          $('#messages').append($('<li>').text(msg)); 
+        // chatFactory.on('user disconnected', function(msg){
+        //   // add chat message to the unordered list on this html page
+        //   $('#messages').append($('<li>').text(msg)); 
             
-        });
+        // });
 
     }
 })();

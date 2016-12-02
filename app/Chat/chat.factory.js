@@ -7,7 +7,7 @@
     chatFactory.$inject = ['$http', '$q', 'originLoungeExpressAPIBaseURL', 'chatServerURLAndPort', '$rootScope'];
     /* @ngInject */
     function chatFactory($http, $q, originLoungeExpressAPIBaseURL, chatServerURLAndPort, $rootScope) {
-        $rootScope.socket = io.connect(chatServerURLAndPort);
+        // $rootScope.socket = io.connect(chatServerURLAndPort);
         var service = {
 
             getAllMessagesForAChatRoom: getAllMessagesForAChatRoom,

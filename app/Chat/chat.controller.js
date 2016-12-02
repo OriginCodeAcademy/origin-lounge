@@ -11,7 +11,13 @@
     function chatController(chatFactory, storageFactory, $rootScope, $stateParams, chatServerURLAndPort) {
         var vm = this;
         
-        //grab messagerecipient_id from the calendar state (once the user clicks on the name of a chat room)
+        // list of users in chat
+        var participants = [];
+
+        // one user in the chat
+        var participant = {};
+
+        //grab chatid from the calendar state (once the user clicks on the name of a chat room)
         $rootScope.chatid = $stateParams.chatid;
 
         // grab name of chat from the calendar state and bind to view (once the user clicks on the name of a chat room)
@@ -23,6 +29,9 @@
         activate();
 
         function activate() {
+
+          console.log($rootScope.usersLoggedIn);
+          // isLoggedIn
 
           // get message history and display it to chat room
           chatFactory.getAllMessagesForAChatRoom($rootScope.chatid).then(
@@ -46,9 +55,46 @@
 
             function(response) {
 
-              // store chat room participants
-              $rootScope.participants = response.users;
-              console.log(response);
+              // loop through all the users subscribed to this specific chat 
+              loop1: 
+              for (var i = 0; i < response.users.length; i++) {
+                // loop through all the users logged in and see which match the users subscribed to this chatroom
+                loop2:
+                for (var j = 0; j < $rootScope.usersLoggedIn.length; j++) {
+                  // check to see if any of the users logged in are in this specific chat room
+                  if (response.users[i].userid === $rootScope.usersLoggedIn[j]){
+                    // if the user is online, build up the user object to indicate the user is online (set isLogged in to true)
+                    participant = {
+                      isLoggedIn: true,
+                      userid: response.users[i].userid,
+                      username: response.users[i].username
+                    };
+                    // add the user that is online to the list of users to be displayed to the chat view
+                    participants.push(participant);
+
+                    // break out of loop 2
+                    break loop2; 
+                  // if user is not online, build up the user object accordingly (set isLoggedIn to false)
+                  } else if (j === $rootScope.usersLoggedIn.length - 1) {
+
+                    participant = {
+                      isLoggedIn: false,
+                      userid: response.users[i].userid,
+                      username: response.users[i].username
+                    };
+                    // add the user that is not online to the list of users to be displayed to the chat view
+                    participants.push(participant);
+
+                  }
+
+                }
+
+              }
+
+              console.log(participants);
+
+              $rootScope.participants = participants;
+
             },
 
             function(error){
