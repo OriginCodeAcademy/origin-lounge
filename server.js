@@ -367,7 +367,7 @@ router.route('/rolecategory/:rolecategory_id')
 
 // get a specific rolecategory entry (accessed at GET http://localhost:3000/api/roleCategory/{rolecategory_Id})
 .get(function(req, res) {
-    RoleCategory.findById(req.params.roleCategory_id, function(err, roleCategory) {
+    RoleCategory.findById(req.params.rolecategory_id, function(err, roleCategory) {
         if (err)
             res.send(err);
         res.json(roleCategory);
@@ -376,7 +376,7 @@ router.route('/rolecategory/:rolecategory_id')
 
 // update a specific rolecategory (accessed at PUT http://localhost:3000/api/roleCategory/{rolecategory_Id})
 .put(function(req, res) {
-    RoleCategory.findById(req.params.roleCategory_id, function(err, roleCategory) {
+    RoleCategory.findById(req.params.rolecategory_id, function(err, roleCategory) {
 
         if (err)
             res.send(err);
@@ -397,7 +397,7 @@ router.route('/rolecategory/:rolecategory_id')
 // delete a specific role category (accessed at DELETE http://localhost:3000/api/roleCategory/{rolecategory_Id})
 .delete(function(req, res) {
     RoleCategory.remove({
-        _id: req.params.roleCategory_id
+        _id: req.params.rolecategory_id
     }, function(err, roleCategory) {
         if (err)
             res.send(err);
@@ -601,7 +601,7 @@ router.route('/contentcategory/:contentcategory_id')
 
 // get a specific contentcategory entry (accessed at GET http://localhost:3000/api/contentcategory/{contentcategory_Id})
 .get(function(req, res) {
-    ContentCategory.findById(req.params.contentCategory_id, function(err, contentCategory) {
+    ContentCategory.findById(req.params.contentcategory_id, function(err, contentCategory) {
         if (err)
             res.send(err);
         res.json(contentCategory);
@@ -610,7 +610,7 @@ router.route('/contentcategory/:contentcategory_id')
 
 // update a specific contentcategory entry (accessed at PUT http://localhost:3000/api/contentcategory/{contentcategory_Id})
 .put(function(req, res) {
-    ContentCategory.findById(req.params.contentCategory_id, function(err, contentCategory) {
+    ContentCategory.findById(req.params.contentcategory_id, function(err, contentCategory) {
 
         if (err)
             res.send(err);
@@ -631,7 +631,7 @@ router.route('/contentcategory/:contentcategory_id')
 // delete a specific contentcategory entry (accessed at DELETE http://localhost:3000/api/contentcategory/{contentcategory_Id})
 .delete(function(req, res) {
     ContentCategory.remove({
-        _id: req.params.contentCategory_id
+        _id: req.params.contentcategory_id
     }, function(err, contentCategory) {
         if (err)
             res.send(err);
@@ -764,7 +764,7 @@ router.route('/usergroup')
         if (err)
             res.send(err);
 
-        res.json({ message: 'Code created!'});
+        res.json({ message: 'Calendar Usergroup created!'});
     });
 
 })
@@ -808,7 +808,7 @@ router.route('/usergroup/:usergroup_id')
             if (err)
                 res.send(err);
 
-            res.json({ message: 'Code updated!' });
+            res.json({ message: 'Calendar Usergroup updated!' });
         });
 
     });
@@ -847,7 +847,7 @@ router.route('/group')
         if (err)
             res.send(err);
 
-        res.json({ message: 'Code created!'});
+        res.json({ message: 'Calendar group created!'});
     });
 
 })
@@ -932,7 +932,7 @@ router.route('/usergroupevent')
         if (err)
             res.send(err);
 
-        res.json({ message: 'Code created!'});
+        res.json({ message: 'Calendar Usergroup event created!'});
     });
 
 })
@@ -991,7 +991,7 @@ router.route('/usergroupevent/:usergroupevent_id')
             if (err)
                 res.send(err);
 
-            res.json({ message: 'Code updated!' });
+            res.json({ message: 'Calendar Usergroup event updated!' });
         });
 
     });
@@ -1035,7 +1035,7 @@ router.route('/event')
         if (err)
             res.send(err);
 
-        res.json({ message: 'Code created!'});
+        res.json({ message: 'Calendar event created!'});
     });
 
 })
@@ -1059,7 +1059,7 @@ router.route('/event/:eventId')
 
 // get a specific Calendar event by event ID (accessed at GET http://localhost:3000/api/event/{eventId})
 .get(function(req, res) {
-    CalendarEvent.find({"eventId":req.params.eventId}, function(err, usergroupevent) {
+    CalendarEvent.findById(req.params.eventId, function(err, usergroupevent) {
         if (err)
             res.send(err);
         res.json(usergroupevent);
@@ -1068,7 +1068,7 @@ router.route('/event/:eventId')
 
 // update a specific Calendar event by event ID (accessed at PUT http://localhost:3000/api/event/{eventId})
 .put(function(req, res) {
-    CalendarEvent.findById(req.params.event_id, function(err, event) {
+    CalendarEvent.findById(req.params.eventId, function(err, event) {
 
         if (err)
             res.send(err);
@@ -1084,7 +1084,7 @@ router.route('/event/:eventId')
             if (err)
                 res.send(err);
 
-            res.json({ message: 'Code updated!' });
+            res.json({ message: 'Calendar event updated!' });
         });
 
     });
@@ -1093,7 +1093,7 @@ router.route('/event/:eventId')
 // delete a specific Calendar event by event Id (accessed at DELETE http://localhost:3000/api/event/{eventId})
 .delete(function(req, res) {
    CalendarEvent.remove({
-        _id: req.params.event_id
+        _id: req.params.eventId
     }, function(err, event) {
         if (err)
             res.send(err);
@@ -1124,7 +1124,7 @@ router.route('/eventtype')
         if (err)
             res.send(err);
 
-        res.json({ message: 'Code created!'});
+        res.json({ message: 'Calendar Event Type created!'});
     });
 
 })
@@ -1169,7 +1169,7 @@ router.route('/eventtype/:eventtype_id')
             if (err)
                 res.send(err);
 
-            res.json({ message: 'Code updated!' });
+            res.json({ message: 'Calendar Event Type updated!' });
         });
 
     });

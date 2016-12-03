@@ -3,20 +3,21 @@
 
 angular
         .module('app', [
-            'ui.router',
-            'LocalStorageModule',
-            'toastr',
-            'ngIdle',
-            'ui.bootstrap',
-            'hc.marked',
-            'hljs',
-            'angular-markdown-editor',
-            'luegg.directives'
+            'ui.router', // adds state routing capabilities
+            'LocalStorageModule', // adds localstorage capabilities
+            'toastr', // adds toastr alerts
+            'ngIdle', // adds idle capabilities
+            'ui.bootstrap', 
+            'hc.marked', // markdown editor related
+            'hljs', // markdown editor related
+            'angular-markdown-editor', // markdown editor related
+            'luegg.directives' // for scroll-glue capability (which is being used to ensure the latest chat message is shown at the bottom of the chat window)
             ])
         .value ('originAPIBaseURL', 'http://origincodeacademyapi.azurewebsites.net/', 'ui.calendar')
         .value ('chatServerURLAndPort', 'http://localhost:3002')
         .value ('originLoungeExpressAPIBaseURL', 'http://localhost:3000/api/')
 
+        // config that is specific for the markdown editor
         .config(['markedProvider', 'hljsServiceProvider', function(markedProvider, hljsServiceProvider) {
             // markdown config
             markedProvider.setOptions({
@@ -40,7 +41,13 @@ angular
             });
         }])
 
-        .config(function($stateProvider, $urlRouterProvider, localStorageServiceProvider, $httpProvider, IdleProvider, KeepaliveProvider) {
+        .config(function(
+            $stateProvider, 
+            $urlRouterProvider,
+            localStorageServiceProvider,
+            $httpProvider,
+            IdleProvider,
+            KeepaliveProvider) {
             // local storage config
               localStorageServiceProvider
              .setPrefix('')
@@ -136,7 +143,14 @@ angular
             });
         })
 
-        .run(function($rootScope, $location, $state, storageFactory, Idle, toastr, $uibModal) {
+        .run(function(
+            $rootScope,
+            $location,
+            $state,
+            storageFactory,
+            Idle,
+            toastr,
+            $uibModal) {
 
 
             // rootScope handler for when user changes states
