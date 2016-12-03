@@ -9,10 +9,10 @@
       #messages li:nth-child(odd) { background: #eee; }
     </style>
 
-    <!-- Chat Window -->
-    <div scroll-glue id="chatwindow" class="col-xs-10">
       <!-- Chatroom name -->
       <h4>{{vm.chatRoomName}}</h4>
+    <!-- Chat Window -->
+    <div scroll-glue id="chatwindow" class="col-xs-10">
       <!-- Chat messages -->
       <ul id="messages" ng-repeat="messages in messages">
             <li class='chat-message'>

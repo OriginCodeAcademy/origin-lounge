@@ -33,7 +33,7 @@
 
             calendarFactory.getEvent().then(function(result){
                 // console.log(result);
-            })
+            });
 
             calendarFactory.getUserEvent(vm.userId).then(function(result){
                 // console.log(result);
@@ -44,18 +44,18 @@
                 }
 
                 console.log(vm.eventTypeArray);
-                for(var i = 0; i < vm.eventIdsArray.length; i++){
+                for(var j = 0; j < vm.eventIdsArray.length; j++){
                 // console.log(vm.eventIdsArray[i]);
-                calendarFactory.getEventTitles(vm.eventIdsArray[i]).then(function(result){
+                calendarFactory.getEventTitles(vm.eventIdsArray[j]).then(function(result){
                     // console.log(result.data[0].eventTypeId);
-                    vm.events.push({'title' : result.data[0].title, 'start' : result.data[0].date, 'eventTypeId' : result.data[0].eventTypeId, 'detail' : result.data[0].detail});
+                    vm.events.push({'title' : result.data.title, 'start' : result.data.date, 'eventTypeId' : result.data.eventTypeId, 'detail' : result.data.detail});
                     console.log(vm.events);
 
                 $('#calendar').fullCalendar( 'removeEventSource', vm.events );
                 $('#calendar').fullCalendar( 'addEventSource', vm.events );
                 });
             }
-            })
+            });
             //Hides event add box on page load
             $('#eventBox').hide();
         }
@@ -82,7 +82,7 @@
                 $('#eventAddButton').replaceWith('<button class="btn col-sm-4" id="eventUpdateButton" onclick ="updateEvent()">Update Event</button>');
                 $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
 
-                console.log($('#eventUpdateButton'))
+                console.log($('#eventUpdateButton'));
         if (event.url) {
             window.open(event.url);
             return false;
@@ -95,7 +95,7 @@
     },
     defaultView: 'agendaWeek',
          events: vm.eventsArray
-    })
+    });
 
     //Add event button
     vm.addEvent = function(eventDate, eventTitle, eventUrl, eventDetails, eventType){
@@ -114,7 +114,9 @@
 
         // console.log(vm.eventsArray);
         calendarFactory.getEvent().then(function(result){
+            // should remove this as there is no need to create eventIds when the event collection itself already has a unique id for each document
             vm.eventId = result+1;
+
             console.log(result);
             console.log(vm.eventId);
 
@@ -133,17 +135,17 @@
         vm.eventUrl = '';
 
         $('#eventBox').hide();
-    }
+    };
 
     //Cancel event add button
-    vm.cancelEvenAdd = function(){
+    vm.cancelEventAdd = function(){
 
         //Resets the add event box
         vm.eventTitle = '';
         vm.eventUrl = '';
 
         $('#eventBox').hide();
-    }
+    };
 
 }
 
