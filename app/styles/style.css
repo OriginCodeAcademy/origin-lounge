@@ -64,8 +64,10 @@
 
 #OCAlogo
 {
-    width: 100px;
-    height: 80px;
+    width: 150px;
+    height: 35px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 
@@ -75,12 +77,12 @@
 }
 
 
-#dropdownMenuButton
+/*#dropdownMenuButton
 {
    
    border: none;
    color: #64ABDD;
-}
+}*/
 
 /* -----------------------------------CHAT SCREEN ---------------------------------------- */
 #user-icon {
@@ -205,7 +207,8 @@
 
 #loginbutton
 {
-    margin-top: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 #main
