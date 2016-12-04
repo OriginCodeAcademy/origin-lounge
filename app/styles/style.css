@@ -145,6 +145,7 @@
   word-wrap: break-word;
 }
 
+
 /* ---------------------------------- CALENDAR RELATED --------------------------------- */
 #eventBox 
 {
@@ -244,6 +245,21 @@
 .fa:hover {
   color: blue;
 }
+
+
+.fa-circle,
+.fa-power-off,
+.chatgroup-and-category-links {
+
+  color: #64ABDD;
+}
+
+.category-title,
+.manage-content-title,
+.linked-in-title {
+  font-family: oswald;
+}
+
 
 /*#submit 
 {
