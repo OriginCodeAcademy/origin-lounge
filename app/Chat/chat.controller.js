@@ -102,6 +102,12 @@
 
             function(response) {
 
+              // grab the # of users subscribed to this chat room and display to the view
+              vm.usersSubscribedToChatRoom = response.users.length;
+
+              // zero out #of users online and subscribed to this chatroom before finding out just how many are in this chat room
+              $rootScope.usersOnlineAndSubscribedToChatRoom = 0;
+
               // loop through all the users subscribed to this specific chat 
               loop1: 
               for (var i = 0; i < response.users.length; i++) {
@@ -111,6 +117,8 @@
                   // check to see if any of the users logged in are in this specific chat room
                   if (response.users[i].userid === $rootScope.usersLoggedIn[j]){
                     // if the user is online, build up the user object to indicate the user is online (set isLogged in to true)
+                    
+                    $rootScope.usersOnlineAndSubscribedToChatRoom++;
                     participant = {
                       isLoggedIn: true,
                       userid: response.users[i].userid,

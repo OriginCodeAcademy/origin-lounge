@@ -186,9 +186,19 @@
             chatFactory.getChatsForAUser(vm.userId).then(
 
                 function(response) {
-                    
+                    vm.numberOfChannels = 0;
+                    vm.numberOfDirectMessages = 0;
                     // display chatgroups on the view           
                     vm.chatGroups = response;
+                    
+                    // determine how many chat channels and direct messages the user is subscribed to
+                    for (var i = 0; i < response.length; i++) {
+                        if (response[i].groupType !== "direct") {
+                            vm.numberOfChannels++;
+                        } else {
+                            vm.numberOfDirectMessages++;
+                        }
+                    }
 
                         // send socket.io server the full list of chat rooms the user is subscribed to
                         chatFactory.emit('add user', {chatGroups: vm.chatGroups, userid: vm.userId});
@@ -249,6 +259,7 @@
               for (var i = 0; i < $rootScope.participants.length; i++) {
                     if ($rootScope.participants[i].userid === msg.userLoggedIn) {
                         $rootScope.participants[i].isLoggedIn = true;
+                        $rootScope.usersOnlineAndSubscribedToChatRoom++;
                         }                 
                 } 
             }
@@ -277,6 +288,7 @@
                for (var i = 0; i < $rootScope.participants.length; i++){
                     if ($rootScope.participants[i].userid === msg.userLoggedOut) {
                         $rootScope.participants[i].isLoggedIn = false;
+                        $rootScope.usersOnlineAndSubscribedToChatRoom--;
                     }
                }
            }
