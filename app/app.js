@@ -12,7 +12,8 @@ angular
             'hljs', // markdown editor related
             'angular-markdown-editor', // markdown editor related
             'luegg.directives', // for scroll-glue capability (which is being used to ensure the latest chat message is shown at the bottom of the chat window)
-            'angular-nicescroll' // for custom scroll-bar
+            'angular-nicescroll', // for custom scroll-bar
+            'ngFileUpload' // for file uploading
             ])
         .value ('originAPIBaseURL', 'http://origincodeacademyapi.azurewebsites.net/', 'ui.calendar')
         .value ('chatServerURLAndPort', 'http://localhost:3002')

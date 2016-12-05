@@ -5,10 +5,24 @@
         .module('app')
         .controller('chatController', chatController);
 
-    chatController.$inject = ['chatFactory', 'storageFactory','$rootScope', '$stateParams','chatServerURLAndPort'];
+    chatController.$inject = [
+      'Upload',
+      'chatFactory',
+      'storageFactory',
+      '$rootScope',
+      '$stateParams',
+      'chatServerURLAndPort'
+    ];
     
     /* @ngInject */
-    function chatController(chatFactory, storageFactory, $rootScope, $stateParams, chatServerURLAndPort) {
+    function chatController(
+      Upload,
+      chatFactory,
+      storageFactory,
+      $rootScope,
+      $stateParams,
+      chatServerURLAndPort) {
+      
         var vm = this;
         
         // list of users in chat
@@ -25,6 +39,9 @@
         
         // on click function for when user clicks "Send" in chat room
         vm.sendChatMessage = sendChatMessage;
+
+        // on click function for uploading files to server (and possibly attaching them to the room in which they were sent?)
+        vm.upload = upload;
 
         activate();
 
@@ -160,5 +177,20 @@
           ); 
 
         }
-    }
+
+        // upload on file select
+        function upload (file) {
+              Upload.upload({
+                  url: 'upload/url',
+                  data: {file: file, 'username': 'test'}
+              }).then(function (resp) {
+                  console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+              }, function (resp) {
+                  console.log('Error status: ' + resp.status);
+              }, function (evt) {
+                  var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                  console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+              });
+          };
+        }
 })();

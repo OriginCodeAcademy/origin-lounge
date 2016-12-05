@@ -5,10 +5,25 @@
         .module('app')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = ['DashboardFactory', 'chatFactory', 'storageFactory', 'Idle', '$state', '$rootScope', 'chatServerURLAndPort'];
+    DashboardController.$inject = [
+        'DashboardFactory',
+        'chatFactory',
+        'storageFactory',
+        'Idle',
+        '$state',
+        '$rootScope',
+        'chatServerURLAndPort'];
 
     
-    function DashboardController(DashboardFactory, chatFactory, storageFactory, Idle, $state, $rootScope, chatServerURLAndPort) {
+    function DashboardController(
+        DashboardFactory,
+        chatFactory,
+        storageFactory,
+        Idle,
+        $state,
+        $rootScope,
+        chatServerURLAndPort) {
+        
         var vm = this;
 
         vm.logOut = logOut;
