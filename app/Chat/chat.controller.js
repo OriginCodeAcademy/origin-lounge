@@ -11,7 +11,8 @@
       'storageFactory',
       '$rootScope',
       '$stateParams',
-      'chatServerURLAndPort'
+      'chatServerURLAndPort',
+      'originLoungeExpressAPIBaseURL'
     ];
     
     /* @ngInject */
@@ -21,7 +22,8 @@
       storageFactory,
       $rootScope,
       $stateParams,
-      chatServerURLAndPort) {
+      chatServerURLAndPort,
+      originLoungeExpressAPIBaseURL) {
       
         var vm = this;
         
@@ -40,8 +42,14 @@
         // on click function for when user clicks "Send" in chat room
         vm.sendChatMessage = sendChatMessage;
 
+        // flag to tell if a file is in process of being uploaded
+        vm.fileUploadInProgress = false;
+
         // on click function for uploading files to server (and possibly attaching them to the room in which they were sent?)
         vm.upload = upload;
+
+        // on click function for downloading a file from the server
+        vm.download = download;
 
         activate();
 
@@ -180,17 +188,52 @@
 
         // upload on file select
         function upload (file) {
+
+              // catch the upload file event that's triggered when the user clicks on the + button
+              if (file === null)
+                return;
+
+              // grab username
+              var username = storageFactory.getLocalStorage('userSession').user.userName;
+
+              console.log(file);
+
               Upload.upload({
-                  url: 'upload/url',
-                  data: {file: file, 'username': 'test'}
-              }).then(function (resp) {
+                  url: originLoungeExpressAPIBaseURL + 'files',
+                  data: {file: file, 'username': username}
+              }).then(
+
+              function (resp) {
+                  console.log(resp);
                   console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
-              }, function (resp) {
-                  console.log('Error status: ' + resp.status);
-              }, function (evt) {
+              },
+
+              function (error) {
+                  console.log('Error status: ' + error.status);
+              },
+
+              function (evt) {
+                  vm.fileUploadInProgress = true;
                   var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                    if (progressPercentage === 100)
+                      vm.fileUploadInProgress = false;
                   console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
               });
           };
+
+          function download(fileId) {
+
+            chatFactory.downloadFile(fileId).then(
+
+              function (response) {
+                console.log(response);
+              },
+
+              function (error) {
+
+                console.log(error);
+              }
+            );
+          }
         }
 })();

@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/Exponent500/UserAdmin#readme",
   "dependencies": {
+    "busboy": "^0.2.13",
+    "busboy-body-parser": "^0.2.0",
+    "connect-busboy": "0.0.2",
+    "gridfs-stream": "^1.1.1",
     "gulp": "^3.9.1",
     "gulp-connect": "^5.0.0",
     "gulp-inject": "^4.1.0",

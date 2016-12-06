@@ -7,12 +7,19 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var app = express();
+var mongoose = require('mongoose');
+var Grid = require('gridfs-stream');
+var fs = require('fs');
+// this bodyparser to be used when dealing with file uploads to this server
+var busboyBodyParser = require('busboy-body-parser');
 
+var conn = mongoose.connection;
+var app = express();
 
 // configure app
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(busboyBodyParser ({limit: '200mb'}));
 
 // Enable CORS
 app.use(function(req, res, next) {
@@ -25,13 +32,19 @@ app.use(function(req, res, next) {
 // set the port
 var port = process.env.PORT || 3000;
 
+Grid.mongo = mongoose.mongo;
 // connect to our mongoDB database instance hosted on heroku
-var mongoose = require('mongoose');
 mongoose.connect('mongodb://origin-dev:pass1@ds149297-a0.mlab.com:49297/heroku_nrxdgp9h/'); 
 
-//messageRecipients
+// adds the fs.chunks and fs.files collections to the mongo DB
+conn.once('open', function () {
+    console.log('open');
+    var gfs = Grid(conn.db);
+
+});
+
 // ============================================================================
-// TABLES
+// Collections
 // ============================================================================ 
 var Category = require('./server/models/custom-content/category');
 var Content = require('./server/models/custom-content/content');
@@ -47,7 +60,7 @@ var CalendarEvent = require('./server/models/calendar-content/event');
 var CalendarEventType = require('./server/models/calendar-content/eventtype');
 
 // =============================================================================
-// ROUTES FOR OUR API
+// Routes
 // =============================================================================
 
 // create our router
@@ -64,6 +77,89 @@ router.use(function(req, res, next) {
 router.get('/', function(req, res) {
 
     res.json({ message: 'hooray! welcome to our api!' });
+});
+
+// =============================================================================
+// GridFS routes (that end in /files)
+// =============================================================================
+router.route('/files')
+
+// write a file (accessed at POST http://localhost:3000/api/files)
+.post(function(req,res){
+    console.log("hit the /files post route");
+    
+    // lets see what the request looks like
+    console.log(req);
+
+    var part = req.files.file;
+
+    // add the user who uploaded the file to the metadata field of the GridFS file document
+    var metadata = {
+        username: req.body.username
+    };
+
+    var gfs = Grid(conn.db);
+    // writes the file provided to the GridFS collections and gives it a name
+    // the name is specified by the filename field
+    
+    // opens a write stream with the follow parameters
+    var writeStream = gfs.createWriteStream({
+        filename: part.name,
+        mode: 'w',
+        content_type: part.mimetype,
+        metadata: metadata
+    });
+
+    // close event that's triggered when you call writeStream.end()?
+    writeStream.on('close', function() {
+        return res.status(200).send({
+            message: 'Success'
+        });
+    });
+
+    // writes the data to GridFS?
+    writeStream.write(part.data);
+
+    // closes the write stream
+    writeStream.end();
+
+});
+
+router.route('/files/:file_id')
+
+// get a specific file (accessed at GET http://localhost:3000/api/files{file_id})
+.get(function(req,res){
+    console.log("hit the /files get route");
+
+    console.log(req);
+    // creates a path for the file name we will write to when we read a file out of the GridFS DB.
+    // in this case we are calling the name of the file -- write.txt.
+    var fs_write_stream = fs.createWriteStream('/dev/write.txt');
+
+    var gfs = Grid(conn.db);
+
+    // finds the specific file by id
+    gfs.files.find({ "_id": mongoose.Types.ObjectId(req.params.file_id) }).toArray(function (err, files) {
+            // if no results returned, send message that file was not found
+            if(files.length===0){
+                return res.status(400).send({
+                    message: 'File not found'
+                });
+            }
+
+        console.log(files);
+        console.log(files.length);
+        var readstream = gfs.createReadStream({
+              filename: files[0].filename
+        });
+
+        console.log("readstream has this value:" + readstream);
+        // set up the readstream pipe to send the result out to the file system
+        readstream.pipe(fs_write_stream);
+        // set up the readstream pipe to send the result out as a html response
+        readstream.pipe(res);
+    });
+
 });
 
 // =============================================================================

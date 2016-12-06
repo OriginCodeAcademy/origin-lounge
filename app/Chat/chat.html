@@ -3,6 +3,7 @@
     #messages { list-style-type: none; margin: 0; padding: 0; width:50%; }
     #messages li { padding: 5px 0px 5px 0px; }
     #messages li:nth-child(odd) { background: #eee; }
+/*    #send-message-button {background: transparent; border: none !important; font-size: 0;}*/
   </style>    
 
   <div class="row">
@@ -41,22 +42,26 @@
       </div>
     </div>
 
-    <!-- Chat message form -->
-  <div class="col-xs-9">
-  <form name="chatMessage">
-    <div class="input-group">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button" ngf-select="vm.upload($file)">+</button>
-      </span>
-      <input type="text" class="form-control" ng-model="vm.chatMessage" required>
-      <span class="input-group-btn">
-        <button type="submit" class="btn btn-default" ng-click="vm.sendChatMessage()" ng-disabled="chatMessage.$invalid">Send
-        </button>
-      </span>
+      <!-- Chat message form -->
+    <div class="col-xs-9">
+    <form name="chatMessage">
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button" ngf-select="vm.upload($file)">+</button>
+        </span>
+        <input type="text" class="form-control" ng-model="vm.chatMessage" required>
+        <span class="input-group-btn">
+          <button id="send-message-button" type="submit" class="btn btn-default" ng-click="vm.sendChatMessage()" ng-disabled="chatMessage.$invalid">Send
+          </button>
+        </span>
+      </div>
+    </form>
     </div>
-  </form>
-  </div>
-
+    <div ng-show="vm.fileUploadInProgress" idle-countdown="countdown" ng-init="" class="col-xs-9">
+      <uib-progressbar max="10" value="countdown" animate="false" class="progress-striped active">
+      </uib-progressbar>
+      File upload in progress...
+    </div>
   </div>
 
 

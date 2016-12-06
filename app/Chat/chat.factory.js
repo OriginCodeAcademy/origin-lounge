@@ -10,6 +10,8 @@
         // $rootScope.socket = io.connect(chatServerURLAndPort);
         var service = {
 
+            downloadFile: downloadFile,
+
             getAllMessagesForAChatRoom: getAllMessagesForAChatRoom,
             getAllUsersInAChatRoom: getAllUsersInAChatRoom,
             getChatsForAUser: getChatsForAUser,
@@ -18,6 +20,30 @@
             postMessage: postMessage
         };
         return service;
+
+        function downloadFile(fileId) {
+            
+            var defer = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: originLoungeExpressAPIBaseURL + 'files/' + fileId
+            })
+
+            .then(function(response){
+
+                defer.resolve(response);
+    
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;
+        }
 
         function getAllMessagesForAChatRoom(roomId) {
             
