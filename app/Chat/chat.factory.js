@@ -22,17 +22,20 @@
         };
         return service;
 
-        function downloadFile(fileId) {
+        function downloadFile(fileId, filename) {
             
             var defer = $q.defer();
 
             $http({
                 method: 'GET',
-                url: originLoungeExpressAPIBaseURL + 'files/' + fileId
+                url: originLoungeExpressAPIBaseURL + 'files/' + fileId,
+                responseType: 'arraybuffer'
+
             })
 
             .then(function(response){
-
+                var file = new Blob([response.data]);
+                saveAs(file, filename);
                 defer.resolve(response);
     
             },

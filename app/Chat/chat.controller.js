@@ -51,7 +51,7 @@
         vm.upload = upload;
 
         // on click function for downloading a file from the server
-        vm.download = download;
+        vm.downloadFile = downloadFile;
 
         activate();
 
@@ -279,9 +279,10 @@
               });
           };
 
-          function download(fileId) {
+          // download a file from GridFS collection in mongoDB
+          function downloadFile(fileId, filename) {
 
-            chatFactory.downloadFile(fileId).then(
+            chatFactory.downloadFile(fileId, filename).then(
 
               function (response) {
                 console.log(response);

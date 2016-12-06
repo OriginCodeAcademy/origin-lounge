@@ -156,7 +156,7 @@ router.route('/files/:file_id')
     console.log(req);
     // creates a path for the file name we will write to when we read a file out of the GridFS DB.
     // in this case we are calling the name of the file -- write.txt.
-    var fs_write_stream = fs.createWriteStream('/dev/write.txt');
+    var fs_write_stream = fs.createWriteStream('/dev/logo-black.png');
 
     var gfs = Grid(conn.db);
 
@@ -172,10 +172,18 @@ router.route('/files/:file_id')
         console.log(files);
         console.log(files.length);
         var readstream = gfs.createReadStream({
-              filename: files[0].filename
+              filename: files[0].filename,
+              contentType: files[0].contentType
         });
 
         console.log("readstream has this value:" + readstream);
+
+        // readstream.on('close', function(file){
+        //     console.log("in close event of readstream");
+        //     console.log(file);
+        // });
+
+        res.set('Content-Type', files[0].contentType);
         // set up the readstream pipe to send the result out to the file system
         readstream.pipe(fs_write_stream);
         // set up the readstream pipe to send the result out as a html response

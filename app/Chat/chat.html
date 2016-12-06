@@ -45,7 +45,7 @@
             <!-- users name -->
             <td>{{files.filename}}</td>
             <!-- Users login status-->
-            <td><i class='fa fa-download'></i></td>
+            <td><i class='fa fa-download' ng-click="vm.downloadFile(files._id, files.filename)"></i></td>
           </tr>
         </table>
       </div>
