@@ -111,17 +111,21 @@ router.route('/files')
     });
 
     // close event that's triggered when you call writeStream.end()?
-    writeStream.on('close', function() {
-        return res.status(200).send({
-            message: 'Success'
+    writeStream.on('close', function(file) {
+        console.log("in callback function of writeStream.on('close')");
+        // send back the fileid
+        res.json({
+            id: file._id,
+            dateUploaded: file.uploadDate
         });
     });
 
     // writes the data to GridFS?
     writeStream.write(part.data);
-
+    console.log("after writeStream.write()");
     // closes the write stream
     writeStream.end();
+    console.log("after writeStream.end()");
 
 });
 

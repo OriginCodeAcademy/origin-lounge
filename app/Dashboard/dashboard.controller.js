@@ -288,6 +288,15 @@
           }
         });
 
+        // socket.io listener to capture file info coming from the server
+        chatFactory.on('receive file info', function(msg){
+
+            if ($rootScope.chatid === msg.chatid) {
+                $rootScope.messages.push(msg);
+            }
+
+        });
+
 
         // socket.io listener for when server emits 'logged out' event
         // this grabs the latest snapshot of clients that are registered on the socket.io server

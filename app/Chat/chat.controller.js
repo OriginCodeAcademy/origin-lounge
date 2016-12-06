@@ -102,20 +102,7 @@
           // blank out the chat message form after the message was emitted
           vm.chatMessage = '';
           // add message to message table in Express API server
-          chatFactory.postMessage(chatMessage).then(
-
-            function(response) {
-
-              // add latest message to local list of messages
-              $rootScope.messages.push(chatMessage);
-              console.log(response);
-            },
-
-            function(error) {
-
-              console.log(error);
-            }
-          );
+          postChatMessage(chatMessage);
 
         }
 
@@ -186,6 +173,25 @@
 
         }
 
+        function postChatMessage(chatMessage){
+
+          chatFactory.postMessage(chatMessage).then(
+
+            function(response) {
+
+              // add latest message to local list of messages
+              $rootScope.messages.push(chatMessage);
+              console.log(response);
+            },
+
+            function(error) {
+
+              console.log(error);
+            }
+          );
+
+        }
+
         // upload on file select
         function upload (file) {
 
@@ -206,6 +212,23 @@
               function (resp) {
                   console.log(resp);
                   console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+  
+                  vm.fileUploadInProgress = false;
+                  
+                  var message = 'uploaded a file: ' + resp.config.data.file.name;
+
+                  var chatMessage = {
+                    sender: resp.config.data.username,
+                    userId: resp.data.id, // need to create another field in the chat message table for a fileid
+                    message: message,
+                    created: resp.data.dateUploaded,
+                    chatid: $rootScope.chatid // consider storing a chatid in the metadata portion of the GridFS files collection
+                  };                  
+                  // send file to socket.io server to broadcast to everyone in this chatroom
+                  chatFactory.emit("send file info", chatMessage);
+
+                  // send chat message to express API DB
+                  postChatMessage(chatMessage);
               },
 
               function (error) {
@@ -213,10 +236,9 @@
               },
 
               function (evt) {
+                  vm.fileUploadMessage = "Uploading " + evt.config.data.file.name + "... , please be patient!";
                   vm.fileUploadInProgress = true;
                   var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                    if (progressPercentage === 100)
-                      vm.fileUploadInProgress = false;
                   console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
               });
           };
