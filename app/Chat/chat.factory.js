@@ -12,6 +12,7 @@
 
             downloadFile: downloadFile,
 
+            getAllFilesSharedInAChatRoom: getAllFilesSharedInAChatRoom,
             getAllMessagesForAChatRoom: getAllMessagesForAChatRoom,
             getAllUsersInAChatRoom: getAllUsersInAChatRoom,
             getChatsForAUser: getChatsForAUser,
@@ -33,6 +34,37 @@
             .then(function(response){
 
                 defer.resolve(response);
+    
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;
+        }
+
+        function getAllFilesSharedInAChatRoom(chatId) {
+            
+            var defer = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: originLoungeExpressAPIBaseURL + 'files/chat/' + chatId
+            })
+
+            .then(function(response){
+                
+                if (typeof response.data === "object") {
+
+                    defer.resolve(response.data);
+                
+                } else {
+
+                    defer.reject(response);
+                }
     
             },
 

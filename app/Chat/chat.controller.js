@@ -45,6 +45,8 @@
         // flag to tell if a file is in process of being uploaded
         vm.fileUploadInProgress = false;
 
+        $rootScope.numberOfFilesSharedInChatRoom = '';
+
         // on click function for uploading files to server (and possibly attaching them to the room in which they were sent?)
         vm.upload = upload;
 
@@ -106,6 +108,26 @@
 
         }
 
+        // get all the files that are shared in a chat room
+        function getAllFilesSharedInAChatRoom(chatId){
+
+          chatFactory.getAllFilesSharedInAChatRoom(chatId).then(
+            
+            function(response) {
+
+              console.log("Response from getAllFilesSharedInAChatRoom" + response);
+              $rootScope.filesSharedInChatRoom = response;
+              $rootScope.numberOfFilesSharedInChatRoom = response.length;
+            },
+
+            function(error){
+
+              console.log("Error from getAllFilesSharedInAChatRoom" + error);
+            }
+
+          );
+        }
+
         // get list of all users that are associated with a specific chat room
         function getAllUsersInAChatRoom() {
 
@@ -114,6 +136,7 @@
 
             function(response) {
 
+              getAllFilesSharedInAChatRoom($rootScope.chatid);
               // grab the # of users subscribed to this chat room and display to the view
               vm.usersSubscribedToChatRoom = response.users.length;
 
@@ -173,17 +196,18 @@
 
         }
 
+        // post a chat message to mongoDB
         function postChatMessage(chatMessage){
-
+          // issue POST request
           chatFactory.postMessage(chatMessage).then(
-
+            // handle success response to POST
             function(response) {
 
               // add latest message to local list of messages
               $rootScope.messages.push(chatMessage);
               console.log(response);
             },
-
+            // handle error response to POST
             function(error) {
 
               console.log(error);
@@ -192,7 +216,7 @@
 
         }
 
-        // upload on file select
+        // upload a file to GRIDfs collections on mongoDB
         function upload (file) {
 
               // catch the upload file event that's triggered when the user clicks on the + button
@@ -204,37 +228,49 @@
 
               console.log(file);
 
+              // send upload request
               Upload.upload({
                   url: originLoungeExpressAPIBaseURL + 'files',
-                  data: {file: file, 'username': username}
+                  data: {file: file, 'username': username, 'chatid': $rootScope.chatid}
               }).then(
 
+              // response to upload request (represents when file has finished being written to backend)
               function (resp) {
                   console.log(resp);
                   console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
   
+                  // hide file upload progress bar
                   vm.fileUploadInProgress = false;
                   
+                  // construct "uploaded file" chat message 
                   var message = 'uploaded a file: ' + resp.config.data.file.name;
 
+                  // create the chat message to send to other clients in the room and to the express API DB
                   var chatMessage = {
                     sender: resp.config.data.username,
-                    userId: resp.data.id, // need to create another field in the chat message table for a fileid
+                    userId: resp.data.id, // need to create another field in the chat message table for a fileid if we want to have a link to download the file, within the message itself
                     message: message,
                     created: resp.data.dateUploaded,
-                    chatid: $rootScope.chatid // consider storing a chatid in the metadata portion of the GridFS files collection
+                    chatid: resp.config.data.chatid 
                   };                  
-                  // send file to socket.io server to broadcast to everyone in this chatroom
+                  // send chat message to socket.io server to broadcast to everyone in this chatroom
                   chatFactory.emit("send file info", chatMessage);
 
                   // send chat message to express API DB
                   postChatMessage(chatMessage);
+
+                  // get latest snapshot of files associated with the chatroom 
+                  getAllFilesSharedInAChatRoom($rootScope.chatid);
+
+
               },
 
+              // error handler
               function (error) {
                   console.log('Error status: ' + error.status);
               },
 
+              // upload progress handler (not representative of when file write is complete on backend)
               function (evt) {
                   vm.fileUploadMessage = "Uploading " + evt.config.data.file.name + "... , please be patient!";
                   vm.fileUploadInProgress = true;

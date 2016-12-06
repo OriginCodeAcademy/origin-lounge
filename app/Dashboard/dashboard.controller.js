@@ -293,8 +293,22 @@
 
             if ($rootScope.chatid === msg.chatid) {
                 $rootScope.messages.push(msg);
-            }
+                // get latest snapshot of files associated with the chatroom 
+                 chatFactory.getAllFilesSharedInAChatRoom($rootScope.chatid).then(
+                    
+                    function(response) {
 
+                      console.log("Response from getAllFilesSharedInAChatRoom" + response);
+                      $rootScope.filesSharedInChatRoom = response;
+                      $rootScope.numberOfFilesSharedInChatRoom = response.length;
+                    },
+
+                    function(error){
+
+                      console.log("Error from getAllFilesSharedInAChatRoom" + error);
+                    }
+                );
+             }
         });
 
 

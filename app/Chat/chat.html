@@ -31,12 +31,21 @@
     <div class="col-xs-3">
       <div>
         <table>
-          <caption><h4><i class="fa fa-users" aria-hidden="true"></i> ({{usersOnlineAndSubscribedToChatRoom}}/{{vm.usersSubscribedToChatRoom}})</h4></caption>
+          <caption><h4><i class="fa fa-users" aria-hidden="true"></i> Users ({{usersOnlineAndSubscribedToChatRoom}}/{{vm.usersSubscribedToChatRoom}})</h4></caption>
           <tr ng-repeat="participants in participants">
             <!-- users name -->
             <td>{{participants.username}}</td>
             <!-- Users login status-->
             <td><i ng-class="{'fa fa-circle-o': !participants.isLoggedIn, 'fa fa-circle': participants.isLoggedIn}"></i></td>
+          </tr>
+        </table>
+        <table>
+          <caption><h4><i class="fa fa-files-o" aria-hidden="true"></i> Files ({{numberOfFilesSharedInChatRoom}})</h4></caption>
+          <tr ng-repeat="files in filesSharedInChatRoom">
+            <!-- users name -->
+            <td>{{files.filename}}</td>
+            <!-- Users login status-->
+            <td><i class='fa fa-download'></i></td>
           </tr>
         </table>
       </div>

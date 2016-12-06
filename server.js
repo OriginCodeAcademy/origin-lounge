@@ -95,7 +95,8 @@ router.route('/files')
 
     // add the user who uploaded the file to the metadata field of the GridFS file document
     var metadata = {
-        username: req.body.username
+        username: req.body.username,
+        chatid: req.body.chatid
     };
 
     var gfs = Grid(conn.db);
@@ -129,9 +130,26 @@ router.route('/files')
 
 });
 
+router.route('/files/chat/:chat_id')
+// get all files associated with a specific chat (Accessed at GET http://localhost:3000/api/files/chat/{chat_id})
+.get(function(req, res){
+    console.log("hit the /files/chat get route");
+
+    var gfs = Grid(conn.db);
+
+    // why the need for the .toArray, when with other non-GridFS routes there is no need...?
+    gfs.files.find({"metadata.chatid": req.params.chat_id}).toArray(function(err, files) {
+        if (err)
+            res.send(err);
+        res.json(files);
+        
+    });
+
+});
+
 router.route('/files/:file_id')
 
-// get a specific file (accessed at GET http://localhost:3000/api/files{file_id})
+// get a specific file (accessed at GET http://localhost:3000/api/files/{file_id})
 .get(function(req,res){
     console.log("hit the /files get route");
 
