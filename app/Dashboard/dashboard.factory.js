@@ -274,7 +274,7 @@
 
             $http({
                 method: 'GET',
-                url: originAPIBaseURL + 'api/users',
+                url: originAPIBaseURL + 'api/users/dropdown',
                 headers: {
                     'Authorization' : 'Bearer ' + token
                 }
