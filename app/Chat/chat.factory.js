@@ -10,15 +10,21 @@
         // $rootScope.socket = io.connect(chatServerURLAndPort);
         var service = {
 
+            //GridFS related
             downloadFile: downloadFile,
-
             getAllFilesSharedInAChatRoom: getAllFilesSharedInAChatRoom,
+
+            //mongoDB Chat collection related
             getAllMessagesForAChatRoom: getAllMessagesForAChatRoom,
             getAllUsersInAChatRoom: getAllUsersInAChatRoom,
             getChatsForAUser: getChatsForAUser,
+            postChat: postChat,
+            postMessage: postMessage,
+            
+            // socket.io related
             emit: emit,
             on: on,
-            postMessage: postMessage
+
         };
         return service;
 
@@ -197,6 +203,46 @@
                 method: 'POST',
                 url: originLoungeExpressAPIBaseURL + 'messages/',
                 data: info,
+                headers: {
+                'Content-Type' : 'application/x-www-form-urlencoded'
+              }
+            })
+
+            .then(function(response){
+                
+                if (typeof response.data === "object") {
+
+                    defer.resolve(response.data);
+                
+                } else {
+
+                    defer.reject(response);
+                }
+    
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;
+
+        }
+
+        function postChat(chatType, chatName, users){
+
+            var defer = $q.defer();
+
+            $http({
+                method: 'POST',
+                url: originLoungeExpressAPIBaseURL + 'chats/',
+                data: $.param({
+                    groupType: chatType,
+                    channelname: chatName,
+                    users: users
+                }),
                 headers: {
                 'Content-Type' : 'application/x-www-form-urlencoded'
               }

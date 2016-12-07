@@ -24,7 +24,7 @@ body
 
 <div class="navbar navbar-fixed-left">
     <!-- List of Channels User Is Subscribed To -->
-    <a class="navbar-brand" style="font-family: oswald; color: #1f0845" ><strong> Chat Channels ({{vm.numberOfChannels}}) </strong><i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+    <a class="navbar-brand" style="font-family: oswald; color: #1f0845" ><strong> Chat Channels ({{vm.numberOfChannels}}) </strong><i class="fa fa-plus-circle" ui-sref="main.addOrJoinChannel" aria-hidden="true"></i></a>
     <ul class="nav navbar-nav">
         <table>
             <tr ng-repeat="groups in vm.chatGroups">
@@ -39,7 +39,7 @@ body
     </ul>   
     
     <!-- List of Direct Messages User is involved in -->
-    <a class="navbar-brand" style="font-family: oswald; color: #1f0845"><strong>Messages ({{vm.numberOfDirectMessages}}) </strong> <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+    <a class="navbar-brand" style="font-family: oswald; color: #1f0845"><strong>Messages ({{vm.numberOfDirectMessages}}) </strong> <i class="fa fa-plus-circle" ui-sref="main.addDirectMessage" aria-hidden="true"></i></a>
     <ul class="nav navbar-nav">    
         <table>
             <tr ng-repeat="groups in vm.chatGroups">
@@ -86,7 +86,7 @@ body
 <!-- Content Displayed in the "middle" pane of the dashboard -->
 
 <div id="main" class="container">
-    <div class="col-xs-7 col-lg-10 col-sm-9 col-md-10">
+    <div class="col-xs-10">
 
         <div ui-view></div>       
     </div>

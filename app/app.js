@@ -125,9 +125,16 @@ angular
                    controller: 'GithubController as vm'
             })
 
-                .state('main.chatAdd', {
-                    url: '/newChat',
-                    templateUrl: 'app/Chat/newChat.html',
+                .state('main.addDirectMessage', {
+                    url: '/addDirectMessage',
+                    templateUrl: 'app/Chat/addDirectMessage.html',
+                    controllerAs: 'vm',
+                    controller: 'addChatController'
+            })
+
+                .state('main.addOrJoinChannel', {
+                    url: '/addOrJoinChannel',
+                    templateUrl: 'app/Chat/addOrJoinChannel.html',
                     controllerAs: 'vm',
                     controller: 'addChatController'
             })

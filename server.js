@@ -153,39 +153,32 @@ router.route('/files/:file_id')
 .get(function(req,res){
     console.log("hit the /files get route");
 
+    // see what the request looks like
     console.log(req);
-    // creates a path for the file name we will write to when we read a file out of the GridFS DB.
-    // in this case we are calling the name of the file -- write.txt.
-    var fs_write_stream = fs.createWriteStream('/dev/logo-black.png');
 
     var gfs = Grid(conn.db);
 
     // finds the specific file by id
     gfs.files.find({ "_id": mongoose.Types.ObjectId(req.params.file_id) }).toArray(function (err, files) {
-            // if no results returned, send message that file was not found
-            if(files.length===0){
-                return res.status(400).send({
-                    message: 'File not found'
-                });
-            }
+
+        // if no results returned, send message that file was not found
+        if(files.length===0){
+            return res.status(400).send({
+                message: 'File not found'
+            });
+        }
 
         console.log(files);
         console.log(files.length);
+
+        // unsure why there is a need to specify the filename or contentType
         var readstream = gfs.createReadStream({
               filename: files[0].filename,
               contentType: files[0].contentType
         });
 
-        console.log("readstream has this value:" + readstream);
-
-        // readstream.on('close', function(file){
-        //     console.log("in close event of readstream");
-        //     console.log(file);
-        // });
-
+        // not sure if this is needed or not, but keeping it in here for now...
         res.set('Content-Type', files[0].contentType);
-        // set up the readstream pipe to send the result out to the file system
-        readstream.pipe(fs_write_stream);
         // set up the readstream pipe to send the result out as a html response
         readstream.pipe(res);
     });
@@ -783,11 +776,28 @@ router.route('/chats')
 
 // post a new chat entry (accessed at POST http://localhost:3000/api/chats)
 .post(function(req, res) {
+    
+    // // convert the comma separated body string to an array of comma separate strings
+    // var array = req.body.categoryId.split(',');
+
+    console.log(req.body);
+    console.log(req.body.length);
+    console.log(req.body.users[0]);
+
     var chats = new Chats();
-    chats.userid = req.body.userid;
-    chats.usernames = req.body.usernames;
     chats.channelname = req.body.channelname;
     chats.groupType = req.body.groupType;
+
+    for (var i = 0; i < req.body.users.length; i++) {
+        var user = {
+            userid: req.body.users[i].userid,
+            username: req.body.users[i].username
+        };
+        console.log(i);
+        chats.users.push(user);
+    }
+
+    //console.log(chats);
 
     chats.save(function(err) {
         if (err)
