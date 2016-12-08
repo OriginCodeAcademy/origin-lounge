@@ -22,8 +22,7 @@
         // to capture the channel name to be used for the new channel that is created
         vm.newChannelName = '';
 
-        vm.createDirectMessage = createDirectMessage;
-        vm.createChannel = createChannel;
+        vm.createChat = createChat;
 
 
         activate();
@@ -55,12 +54,20 @@
             );
         }
 
-        // creates a new Direct Message group
-        function createDirectMessage() {
+        // creates a new Channel or Direct Message (depends on the channelType received)
+        // if creating a direct message, we will pass nothing for channelName and instead build
+        // up the channel name based on the names of the users being added to said direct message.
+        // if creating a channel we will pass the channel name provided
+        function createChat(channelName, channelType) {
 
-            var chatType = 'direct';
-            var chatName = storageFactory.getLocalStorage('userSession').user.userName + ', ';
-
+            var chatType = channelType;
+            var chatName = '';
+            
+            if (channelName === 'none') {
+                chatName = storageFactory.getLocalStorage('userSession').user.userName + ', ';
+            } else {
+                chatName  = channelName;
+            }
             // find username that matches userId of selected people to include in the direct message group
             for (var i = 0; i < vm.selectedUsers.length; i++) {
                 for (var j = 0; j < vm.users.length; j++) {
@@ -71,9 +78,9 @@
                             username: vm.users[j].FullName
                         };
 
-                        if (i === vm.selectedUsers.length - 1) {
+                        if ((i === vm.selectedUsers.length - 1) && (channelName === 'none')) {
                             chatName += vm.users[j].FullName;
-                        } else {
+                        } else if (channelName === 'none') {
                             chatName += vm.users[j].FullName + ', ';   
                         }
                         // add user object to list of users that will be added to this chat

@@ -13,7 +13,7 @@
 			<div class="row">
 				<div class="form-group col-xs-8">
 					<label for="users">Select Users</label>
-					<select class="form-control" name="users" id="users-to-add"ng-model="vm.selectedUsers" multiple required ng-options="users.Id as users.FullName  disable when users.isLoggedIn for users in vm.users">
+					<select class="form-control" name="users" id="users-to-add" ng-model="vm.selectedUsers" multiple required ng-options="users.Id as users.FullName  disable when users.isLoggedIn for users in vm.users">
 						<option value=""></option>
 					</select>
 				</div>
@@ -21,7 +21,7 @@
 			<div class="row">
 				<div class="col-xs-4">
 					<button class="btn btn-danger">Cancel</button>
-					<button class="btn btn-primary" ng-click="vm.createChannel()" ng-disabled="createAChannel.$invalid">Go</button>
+					<button class="btn btn-primary" ng-click="vm.createChat(vm.newChannelName, 'channel')" ng-disabled="createAChannel.$invalid">Go</button>
 				</div>
 			</div>
 		</form>
