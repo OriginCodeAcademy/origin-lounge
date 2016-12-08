@@ -201,17 +201,17 @@
             chatFactory.getChatsForAUser(vm.userId).then(
 
                 function(response) {
-                    vm.numberOfChannels = 0;
-                    vm.numberOfDirectMessages = 0;
+                    $rootScope.numberOfChannels = 0;
+                    $rootScope.numberOfDirectMessages = 0;
                     // display chatgroups on the view           
                     $rootScope.chatGroups = response;
                     
                     // determine how many chat channels and direct messages the user is subscribed to
                     for (var i = 0; i < response.length; i++) {
                         if (response[i].groupType !== "direct") {
-                            vm.numberOfChannels++;
+                            $rootScope.numberOfChannels++;
                         } else {
-                            vm.numberOfDirectMessages++;
+                            $rootScope.numberOfDirectMessages++;
                         }
                     }
 
@@ -339,9 +339,22 @@
             chatFactory.emit('create chatroom', msg);
            
         });
+        
         // socket.io listener for when server informs client that they have been added to the chat room
         chatFactory.on('chatroom created', function(msg){
             console.log(msg);
+            
+            // update the # of direct messages or channels based on the type of chatroom that was created
+            if (msg.groupType === 'direct'){
+            
+                $rootScope.numberOfDirectMessages++;
+            
+            } else {
+            
+                $rootScope.numberOfChannels++;
+            
+            }
+
             // update clients local list of chatgroups they are a part of
            $rootScope.chatGroups.push(msg);  
         });

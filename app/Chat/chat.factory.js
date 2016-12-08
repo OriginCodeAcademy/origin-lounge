@@ -15,6 +15,7 @@
             getAllFilesSharedInAChatRoom: getAllFilesSharedInAChatRoom,
 
             //mongoDB Chat collection related
+            getAllChats: getAllChats,
             getAllMessagesForAChatRoom: getAllMessagesForAChatRoom,
             getAllUsersInAChatRoom: getAllUsersInAChatRoom,
             getChatsForAUser: getChatsForAUser,
@@ -43,6 +44,37 @@
                 var file = new Blob([response.data]);
                 saveAs(file, filename);
                 defer.resolve(response);
+    
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;
+        }
+
+       function getAllChats() {
+            
+            var defer = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: originLoungeExpressAPIBaseURL + 'chats'
+            })
+
+            .then(function(response){
+                
+                if (typeof response.data === "object") {
+
+                    defer.resolve(response.data);
+                
+                } else {
+
+                    defer.reject(response);
+                }
     
             },
 
