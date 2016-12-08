@@ -34,7 +34,7 @@ var port = process.env.PORT || 3000;
 
 Grid.mongo = mongoose.mongo;
 // connect to our mongoDB database instance hosted on heroku
-mongoose.connect('mongodb://origin-dev:pass1@ds149297-a0.mlab.com:49297/heroku_nrxdgp9h/'); 
+mongoose.connect('mongodb://origin-dev:pass1@ds149297-a1.mlab.com:49297/heroku_nrxdgp9h/'); 
 
 // adds the fs.chunks and fs.files collections to the mongo DB
 conn.once('open', function () {
@@ -777,12 +777,6 @@ router.route('/chats')
 // post a new chat entry (accessed at POST http://localhost:3000/api/chats)
 .post(function(req, res) {
     
-    // // convert the comma separated body string to an array of comma separate strings
-    // var array = req.body.categoryId.split(',');
-
-    console.log(req.body);
-    console.log(req.body.length);
-    console.log(req.body.users[0]);
 
     var chats = new Chats();
     chats.channelname = req.body.channelname;
@@ -803,7 +797,7 @@ router.route('/chats')
         if (err)
             res.send(err);
 
-        res.json({ message: 'Chat entry created!'});
+        res.json(chats);
     });
 });
 

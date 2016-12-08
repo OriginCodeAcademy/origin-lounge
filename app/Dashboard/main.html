@@ -27,9 +27,9 @@ body
     <a class="navbar-brand" style="font-family: oswald; color: #1f0845" ><strong> Chat Channels ({{vm.numberOfChannels}}) </strong><i class="fa fa-plus-circle" ui-sref="main.addOrJoinChannel" aria-hidden="true"></i></a>
     <ul class="nav navbar-nav">
         <table>
-            <tr ng-repeat="groups in vm.chatGroups">
+            <tr ng-repeat="groups in chatGroups">
                 <td class="col-xs-11" ng-hide="groups.groupType === 'direct'">
-                    <a class="chatgroup-and-category-links" ui-sref="main.chat({chatid: '{{groups._id}}', chatRoomName: '{{groups.channelname}}'})"><h5 ng-val="groups._id"><strong>{{groups.channelname}}</strong></h5></a>
+                    <a class="chatgroup-and-category-links" ui-sref="main.chat({chatid: '{{groups._id}}', chatRoomName: '{{groups.channelname}}'})"><h5 ng-val="groups._id"><strong>{{groups.channelname | limitTo: 15}}{{groups.channelname.length > 15 ? '...' : ''}}</strong></h5></a>
                 </td>
                 <td class="col-xs-1" ng-hide="groups.groupType === 'direct'">
                     <a><i class="fa fa-times-circle" aria-hidden="true"></i></a>
@@ -42,9 +42,9 @@ body
     <a class="navbar-brand" style="font-family: oswald; color: #1f0845"><strong>Messages ({{vm.numberOfDirectMessages}}) </strong> <i class="fa fa-plus-circle" ui-sref="main.addDirectMessage" aria-hidden="true"></i></a>
     <ul class="nav navbar-nav">    
         <table>
-            <tr ng-repeat="groups in vm.chatGroups">
+            <tr ng-repeat="groups in chatGroups">
                 <td class="col-xs-11" ng-show="groups.groupType === 'direct'">
-                    <a class="chatgroup-and-category-links" ui-sref="main.chat({chatid: '{{groups._id}}'})"><h5 ng-val="groups._id"><strong>{{groups._id}}</strong></h5></a>
+                    <a class="chatgroup-and-category-links" ui-sref="main.chat({chatid: '{{groups._id}}', chatRoomName: '{{groups.channelname}}'})"><h5 ng-val="groups._id"><strong>{{groups.channelname | limitTo: 15}}{{groups.channelname.length > 15 ? '...' : ''}}</strong></h5></a>
                 </td>
                 <td class="col-xs-1" ng-show="groups.groupType === 'direct'">
                     <a><i class="fa fa-times-circle" aria-hidden="true"></i></a>

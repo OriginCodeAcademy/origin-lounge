@@ -5,10 +5,10 @@
         .module('app')
         .controller('addChatController', addChatController);
 
-    addChatController.$inject = ['chatFactory', 'DashboardFactory', 'storageFactory'];
+    addChatController.$inject = ['chatFactory', 'DashboardFactory', 'storageFactory', '$state', '$rootScope'];
     
     /* @ngInject */
-    function addChatController(chatFactory, DashboardFactory, storageFactory) {
+    function addChatController(chatFactory, DashboardFactory, storageFactory, $state, $rootScope) {
         var vm = this;
         vm.title = 'addChatController';
 
@@ -19,6 +19,7 @@
         // for holding the selected users to be added to a direct message/channel
         vm.selectedUsers = [];
 
+        // to capture the channel name to be used for the new channel that is created
         vm.newChannelName = '';
 
         vm.createDirectMessage = createDirectMessage;
@@ -58,7 +59,7 @@
         function createDirectMessage() {
 
             var chatType = 'direct';
-            var chatName = 'test';
+            var chatName = storageFactory.getLocalStorage('userSession').user.userName + ', ';
 
             // find username that matches userId of selected people to include in the direct message group
             for (var i = 0; i < vm.selectedUsers.length; i++) {
@@ -69,6 +70,12 @@
                             userid: vm.users[j].Id,
                             username: vm.users[j].FullName
                         };
+
+                        if (i === vm.selectedUsers.length - 1) {
+                            chatName += vm.users[j].FullName;
+                        } else {
+                            chatName += vm.users[j].FullName + ', ';   
+                        }
                         // add user object to list of users that will be added to this chat
                         usersToAddToNewChat.push(userToAddToNewChat);
                     }
@@ -98,6 +105,13 @@
                 function(response) {
 
                     console.log(response);
+                    // let all other socket.io clients be aware that a new chat room was created
+                    // and add this client to a new socket.io room as well
+                    chatFactory.emit('create chatroom notification', response);
+                    // update this users chatgroup list
+                    $rootScope.chatGroups.push(response);  
+                    // jump to the new chat room just created
+                    $state.go('main.chat', {chatid: response._id, chatRoomName: chatName});
                 },
 
                 function(error){

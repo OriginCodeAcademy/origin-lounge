@@ -204,7 +204,7 @@
                     vm.numberOfChannels = 0;
                     vm.numberOfDirectMessages = 0;
                     // display chatgroups on the view           
-                    vm.chatGroups = response;
+                    $rootScope.chatGroups = response;
                     
                     // determine how many chat channels and direct messages the user is subscribed to
                     for (var i = 0; i < response.length; i++) {
@@ -216,7 +216,7 @@
                     }
 
                         // send socket.io server the full list of chat rooms the user is subscribed to
-                        chatFactory.emit('add user', {chatGroups: vm.chatGroups, userid: vm.userId});
+                        chatFactory.emit('add user', {chatGroups: $rootScope.chatGroups, userid: vm.userId});
 
                     //jump to calendar state
                     $state.go('main.calendar');
@@ -330,6 +330,20 @@
                     }
                }
            }
+        });
+
+        // socket.io listener for when server informs client that another client just created a room that they are part of
+        chatFactory.on('notify chatroom created', function(msg){
+            console.log(msg);
+            // inform socket.io server to add this client to this chat room
+            chatFactory.emit('create chatroom', msg);
+           
+        });
+        // socket.io listener for when server informs client that they have been added to the chat room
+        chatFactory.on('chatroom created', function(msg){
+            console.log(msg);
+            // update clients local list of chatgroups they are a part of
+           $rootScope.chatGroups.push(msg);  
         });
     }
 })();
