@@ -33,6 +33,7 @@
         // one user in the chat
         var participant = {};
 
+        vm.chatMessage = '';
         //grab chatid from the calendar state (once the user clicks on the name of a chat room)
         $rootScope.chatid = $stateParams.chatid;
 
@@ -52,6 +53,20 @@
 
         // on click function for downloading a file from the server
         vm.downloadFile = downloadFile;
+
+        /**************************** FOR EMOJI PICKER ***************************************/
+        $(document).ready(function() {
+          // Initializes and creates emoji set from sprite sheet
+          window.emojiPicker = new EmojiPicker({
+          emojiable_selector: '[data-emojiable=true]',
+          assetsPath: 'lib/img/',
+          popupButtonClasses: 'fa fa-smile-o'
+          });
+          // Finds all elements with emojiable_selector and converts them to rich emoji input fields
+          // You may want to delay this step if you have dynamically created input fields that appear later in the loading process
+          // It can be called as many times as necessary; previously converted input fields will not be converted again
+          window.emojiPicker.discover();
+        });
 
         activate();
 
@@ -89,20 +104,25 @@
           var userId = storageFactory.getLocalStorage('userSession').user.userId;
           var dateTimeCreated = new Date().toISOString();
 
+          // these two statements are needed in order to take the unicode emoji and convert it to "colon" style (i.e. :smile:)
+          var input = document.getElementById('chatmessage').value;
+          var output = emojione.toShort(input);
+
           // create an object with chat info to send out
           var chatMessage = {
 
             sender: username,
             userId: userId,
-            message: vm.chatMessage,
+            message: output,
             created: dateTimeCreated,
             chatid: $rootScope.chatid
           };
 
           // send the chat message out to the socket.io server
           chatFactory.emit('chat message', chatMessage);
-          // blank out the chat message form after the message was emitted
-          vm.chatMessage = '';
+          // blank out the chat message form after the message was emitted (emoji-wysiwyg-editor is the class associated with the content editable div that gets inserted into
+          // the element that is tagged with data-emojiable=true)
+          $('.emoji-wysiwyg-editor').empty();
           // add message to message table in Express API server
           postChatMessage(chatMessage);
 

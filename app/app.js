@@ -13,7 +13,9 @@ angular
             'angular-markdown-editor', // markdown editor related
             'luegg.directives', // for scroll-glue capability (which is being used to ensure the latest chat message is shown at the bottom of the chat window)
             'angular-nicescroll', // for custom scroll-bar
-            'ngFileUpload' // for file uploading
+            'ngFileUpload', // for file uploading
+            'dbaq.emoji', // for filtering of emoji text (e.g. turning :smile: into a smiley face)
+            'ngSanitize' // also needed for emoji filtering (and who knows what else...)
             ])
         .value ('originAPIBaseURL', 'http://origincodeacademyapi.azurewebsites.net/', 'ui.calendar')
         .value ('chatServerURLAndPort', 'http://localhost:3002')

@@ -147,6 +147,11 @@
   word-wrap: break-word;
 }
 
+     .emoji-picker-icon{
+    font-size:20px;
+    right: 86px;
+    top: 17px;
+  }
 /* ---------------------------------- CREATE CHAT RELATED --------------------------------- */
 #users-to-add {
   height: 250px;

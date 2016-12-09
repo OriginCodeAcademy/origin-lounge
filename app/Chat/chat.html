@@ -22,7 +22,7 @@
                 <b>{{messages.sender}}</b>
                 <i>{{messages.created | date:'MM/dd/yyyy @ h:mma'}}</i>
               </div>
-              <p>{{messages.message}}</p>
+              <p ng-bind-html="messages.message | emoji"</p>
             </li>
       </ul>
     </div>
@@ -51,21 +51,33 @@
       </div>
     </div>
 
-      <!-- Chat message form -->
-    <div class="col-xs-9">
-    <form name="chatMessage">
+  <!-- Chat message form -->
+  <form name="chatMessage">
+    <div class="col-xs-8">
+
       <div class="input-group">
         <span class="input-group-btn">
           <button class="btn btn-default" type="button" ngf-select="vm.upload($file)">+</button>
         </span>
-        <input type="text" class="form-control" ng-model="vm.chatMessage" required>
-        <span class="input-group-btn">
+        <textinput id="chatmessage" data-emojiable="true" type="text" class="form-control" ng-model="vm.chatMessage"></textinput>
+
+
+<!-- ***** FOR HAVING THE SEND BUTTON BE AN INPUT ADD ON ******-->
+<!--         <span class="input-group-btn">
           <button id="send-message-button" type="submit" class="btn btn-default" ng-click="vm.sendChatMessage()" ng-disabled="chatMessage.$invalid">Send
           </button>
-        </span>
+        </span> -->
+<!-- *************************************************** -->
+
+
       </div>
-    </form>
     </div>
+    <div style="margin-left:-32px;" class="col-xs-1">
+      <button style="padding-top:5px; padding-bottom:8px;" id="send-message-button" type="submit" class="btn btn-primary" ng-click="vm.sendChatMessage()" ng-disabled="chatMessage.$invalid">Send
+      </button>
+    </div>
+  </form>
+
     <div ng-show="vm.fileUploadInProgress" idle-countdown="countdown" ng-init="" class="col-xs-9">
       <uib-progressbar max="10" value="countdown" animate="false" class="progress-striped active">
       {{vm.fileUploadMessage}}</uib-progressbar>
