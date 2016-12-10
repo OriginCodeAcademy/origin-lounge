@@ -108,8 +108,8 @@
 
           chatMessageEntered = document.getElementById('chatmessage').value;
           
-          // check to see if user typed in /giphy
-          if (chatMessageEntered.indexOf("/giphy ") !== -1) {
+          // check to see if user typed in /giphy and that it was the very first thing typed
+          if (chatMessageEntered.indexOf("/giphy ") === 0) {
             //strip out /giphy and pass along what follows to the giphy API to get the random image
             chatMessageEntered = chatMessageEntered.replace("/giphy ", "");
             getGiphy(chatMessageEntered, username, userId, dateTimeCreated);
@@ -237,7 +237,10 @@
 
             function(response) {
               console.log(response.images.fixed_height.url);
+
+              // construct the html for the giphy to be displayed
               vm.giphy = '<img src="' + response.images.fixed_height.url + '">';
+
               // create an object with chat info to send out
               var chatMessage = {
 
