@@ -10,6 +10,9 @@
         // $rootScope.socket = io.connect(chatServerURLAndPort);
         var service = {
 
+            //giphy related
+            getGiphy: getGiphy,
+            
             //GridFS related
             downloadFile: downloadFile,
             getAllFilesSharedInAChatRoom: getAllFilesSharedInAChatRoom,
@@ -19,6 +22,7 @@
             getAllMessagesForAChatRoom: getAllMessagesForAChatRoom,
             getAllUsersInAChatRoom: getAllUsersInAChatRoom,
             getChatsForAUser: getChatsForAUser,
+
             postChat: postChat,
             postMessage: postMessage,
             
@@ -163,6 +167,42 @@
                 if (typeof response.data === "object") {
 
                     defer.resolve(response.data);
+                
+                } else {
+
+                    defer.reject(response);
+                }
+    
+            },
+
+            function(error){
+
+                defer.reject(error);
+
+            });
+
+            return defer.promise;
+        }
+
+        // gets a random giphy based on the string passed in
+        function getGiphy(string) {
+            
+            var defer = $q.defer();
+
+            $http({
+                method: 'GET',
+                url: 'http://api.giphy.com/v1/gifs/translate',
+                params: {
+                    s: string,
+                    api_key: 'dc6zaTOxFJmzC'
+                }
+            })
+
+            .then(function(response){
+                
+                if (typeof response.data === "object") {
+
+                    defer.resolve(response.data.data);
                 
                 } else {
 

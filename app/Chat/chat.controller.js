@@ -34,6 +34,7 @@
         var participant = {};
 
         vm.chatMessage = '';
+
         //grab chatid from the calendar state (once the user clicks on the name of a chat room)
         $rootScope.chatid = $stateParams.chatid;
 
@@ -72,9 +73,6 @@
 
         function activate() {
 
-          console.log($rootScope.usersLoggedIn);
-          // isLoggedIn
-
           // get message history and display it to chat room
           chatFactory.getAllMessagesForAChatRoom($rootScope.chatid).then(
 
@@ -99,32 +97,49 @@
         // when user clicks submit in the chat message form, do the following
        function sendChatMessage() {
        
+          var chatMessageEntered;
+          var chatMessageWithEmojisInShortForm;
+
           // grab username and userId from local storage, as well as the current date/time
           var username = storageFactory.getLocalStorage('userSession').user.userName;
           var userId = storageFactory.getLocalStorage('userSession').user.userId;
           var dateTimeCreated = new Date().toISOString();
 
-          // these two statements are needed in order to take the unicode emoji and convert it to "colon" style (i.e. :smile:)
-          var input = document.getElementById('chatmessage').value;
-          var output = emojione.toShort(input);
 
-          // create an object with chat info to send out
-          var chatMessage = {
+          chatMessageEntered = document.getElementById('chatmessage').value;
+          
+          // check to see if user typed in /giphy
+          if (chatMessageEntered.indexOf("/giphy ") !== -1) {
+            //strip out /giphy and pass along what follows to the giphy API to get the random image
+            chatMessageEntered = chatMessageEntered.replace("/giphy ", "");
+            getGiphy(chatMessageEntered, username, userId, dateTimeCreated);
 
-            sender: username,
-            userId: userId,
-            message: output,
-            created: dateTimeCreated,
-            chatid: $rootScope.chatid
-          };
+          } else {
+          
+              // these two statements are needed in order to take a unicode emoji and convert it to "colon" style (i.e. :smile:)
+              chatMessageEntered = document.getElementById('chatmessage').value;
+              chatMessageWithEmojisInShortForm = emojione.toShort(chatMessageEntered);
 
-          // send the chat message out to the socket.io server
-          chatFactory.emit('chat message', chatMessage);
-          // blank out the chat message form after the message was emitted (emoji-wysiwyg-editor is the class associated with the content editable div that gets inserted into
-          // the element that is tagged with data-emojiable=true)
-          $('.emoji-wysiwyg-editor').empty();
-          // add message to message table in Express API server
-          postChatMessage(chatMessage);
+              // create an object with chat info to send out
+              var chatMessage = {
+
+                sender: username,
+                userId: userId,
+                message: chatMessageWithEmojisInShortForm,
+                created: dateTimeCreated,
+                chatid: $rootScope.chatid
+              };
+
+              // send the chat message out to the socket.io server
+              chatFactory.emit('chat message', chatMessage);
+
+              // blank out the chat message form after the message was emitted (emoji-wysiwyg-editor is the class associated with the content editable div that gets inserted into
+              // the element that is tagged with data-emojiable=true)
+              $('.emoji-wysiwyg-editor').empty();
+
+              // add message to message table in Express API server
+              postChatMessage(chatMessage);
+          }
 
         }
 
@@ -214,6 +229,39 @@
 
           ); 
 
+        }
+
+        function getGiphy(chatMessageEntered, username, userId, dateTimeCreated) {
+
+          chatFactory.getGiphy(chatMessageEntered).then(
+
+            function(response) {
+              console.log(response.images.fixed_height.url);
+              vm.giphy = '<img src="' + response.images.fixed_height.url + '">';
+              // create an object with chat info to send out
+              var chatMessage = {
+
+                sender: username,
+                userId: userId,
+                message: vm.giphy,
+                created: dateTimeCreated,
+                chatid: $rootScope.chatid
+              };
+
+              // send the chat message out to the socket.io server
+              chatFactory.emit('chat message', chatMessage);
+              // blank out the chat message form after the message was emitted (emoji-wysiwyg-editor is the class associated with the content editable div that gets inserted into
+              // the element that is tagged with data-emojiable=true)
+              $('.emoji-wysiwyg-editor').empty();
+              // add message to message table in Express API server
+              postChatMessage(chatMessage);
+
+            },
+
+            function (error) {
+
+            }
+          );
         }
 
         // post a chat message to mongoDB

@@ -27,9 +27,10 @@
       </ul>
     </div>
 
-    <!-- List of users in Chatroom-->
+    <!-- Chat room info -->
     <div class="col-xs-3">
       <div>
+        <!-- List of users -->
         <table>
           <caption><h4><i class="fa fa-users" aria-hidden="true"></i> Users ({{usersOnlineAndSubscribedToChatRoom}}/{{vm.usersSubscribedToChatRoom}})</h4></caption>
           <tr ng-repeat="participants in participants">
@@ -39,12 +40,13 @@
             <td><i ng-class="{'fa fa-circle-o': !participants.isLoggedIn, 'fa fa-circle': participants.isLoggedIn}"></i></td>
           </tr>
         </table>
+        <!-- List of files -->
         <table>
           <caption><h4><i class="fa fa-files-o" aria-hidden="true"></i> Files ({{numberOfFilesSharedInChatRoom}})</h4></caption>
           <tr ng-repeat="files in filesSharedInChatRoom">
-            <!-- users name -->
+            <!-- file name -->
             <td>{{files.filename}}</td>
-            <!-- Users login status-->
+            <!-- file download icon-->
             <td><i class='fa fa-download' ng-click="vm.downloadFile(files._id, files.filename)"></i></td>
           </tr>
         </table>
