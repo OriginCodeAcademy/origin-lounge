@@ -20,9 +20,14 @@
         // array to hold the categories to be pre-selected when we come into the manage content state from the category content state
         vm.selectedCategories = [];
 
+        // array that holds the selected Role
+        vm.selectedRole = [];
+
         vm.addCategory = addCategory;
+        vm.addCategoriesToRole = addCategoriesToRole;
         vm.addContent = addContent;
         vm.addContentCategory = addContentCategory;
+        vm.selectedRoleChanged = selectedRoleChanged;
 
         vm.editCategory = editCategory;
    
@@ -31,6 +36,9 @@
         ////////////////
 
         function activate() {
+
+            // get all Roles from local storage
+            vm.roles = storageFactory.getLocalStorage('roles');
 
             // get all Categories
             DashboardFactory.getCategories().then(
@@ -77,6 +85,10 @@
                     console.log(error);
 
                 }); 
+        }
+
+        function addCategoriesToRole () {
+
         }
 
         // add content to the mongoDB
@@ -139,6 +151,26 @@
                 
                 });
         } 
+
+        // on-select function when selecting a role
+        function selectedRoleChanged () {
+
+            console.log(vm.selectedRole);
+            DashboardFactory.getCategoryNamesByRoleId(vm.selectedRole).then(
+
+                function(response){
+
+                    for (var i = 0; i < response.length; i++) {
+                        // set the categories to be pre-selected in the category pull down menu
+                        vm.selectedCategories [i] = response[i].categoryId;
+                    }
+                },
+
+                function(error){
+
+                }
+            );
+        }
                       
     }
 })();

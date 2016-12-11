@@ -157,6 +157,13 @@
   height: 250px;
 }
 
+
+/* ---------------------------------- MANAGE CATEGORIES RELATED ----------------------------- */
+
+#select-categories-menu {
+  height: 150px;
+}
+
 /* ---------------------------------- CALENDAR RELATED --------------------------------- */
 #eventBox 
 {

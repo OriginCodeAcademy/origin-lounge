@@ -59,9 +59,10 @@ body
 <div class="navbar navbar-fixed-right">
     <a class="navbar-brand" style="font-family: oswald; color: #1f0845"><strong>User Feed</strong></a>
     <ul class="nav navbar-nav">
-        <li>
+        <li ng-hide="vm.isAdmin">
             <a ui-sref="main.countdown">
-                <iframe src="http://free.timeanddate.com/countdown/i5gd5j01/n770/cf12/cm0/cu4/ct0/cs0/ca0/cr0/ss0/cac525e6c/cpc525e6c/pct/tcfff/fs100/szw320/szh135/tac000/tptTime%20since%20Event%20started%20in/tpc000/mac000/mpc000/iso2016-12-16T00:00:00" allowTransparency="true" frameborder="0" width="113" height="50"></iframe>
+             <iframe src="http://free.timeanddate.com/countdown/i5hwqdh9/n770/cf12/cm0/cu4/ct3/cs1/ca0/co1/cr0/ss0/cac000/cpc64abdd/pcfff/tcfff/fs100/szw320/szh135/tatDemo%20Day%206.0!/tac000/tptTime%20since%20Event%20started%20in/tpc000/iso2016-12-16T13:00:00" allowTransparency="true" frameborder="0" width="131" height="50"></iframe>
+
             </a>
         </li>
         <li>
@@ -77,8 +78,11 @@ body
         <li>     
              <a class="chatgroup-and-category-links" ui-sref="main.github" role="button"><strong>GitHub</strong></a>
         </li>
-        <li>
-            <a class="chatgroup-and-category-links" ui-sref="main.managecontent" role="button" ng-show="vm.isAdmin"><strong>Manage Content</strong></a>
+        <li ng-show="vm.isAdmin">
+            <a class="chatgroup-and-category-links" ui-sref="main.managecontent" role="button"><strong>Manage Content</strong></a>
+        </li>
+        <li ng-show="vm.isAdmin">
+            <a class="chatgroup-and-category-links" ui-sref="main.managecategories" role="button"><strong>Manage Categories</strong></a>
         </li>
     </ul>
 </div>

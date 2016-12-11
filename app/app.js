@@ -99,6 +99,11 @@ angular
                         categoryId: null
                     }
             })
+                .state('main.managecategories', {
+                    url: '/managecategories',
+                    templateUrl: 'app/CustomContent/manage_categories.html',
+                    controller: 'CustomContentController as vm'
+            })
                 .state('main.calendar', {
                     url: '/calendar',
                     templateUrl: 'app/Apis/calendar/calendar.html',

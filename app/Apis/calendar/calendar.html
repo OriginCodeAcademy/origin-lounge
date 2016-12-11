@@ -8,20 +8,20 @@ body
 <div id='calendar' class="basicWeek fc"></div>
 
 <form name="inputForm">
-	<div name="inputBox" id='eventBox' class="col-sm-offset-1 col-sm-10">
+	<div name="inputBox" id='eventBox' class="col-xs-offset-1 col-xs-10">
 			<label id='eventDate'>Date</label>
 		<div name="eventInput">
-			<div class="col-sm-12">
-				<div class="col-sm-6">
+			<div class="col-xs-12">
+				<div class="col-xs-6">
 					<label>Event Title</label>
 					<label id="required"> (Required)</label>
 					<input class="form-control" type="text" name="title" id='eventTitle' ng-model="vm.eventTitle" required="">
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-6">
 					<div>
 						<label>Event Type</label>
 						<label id="required"> (Required)</label>
-						<select class="form-control col-sm-4" ng-model="vm.eventType" id="eventType" required>
+						<select class="form-control col-xs-4" ng-model="vm.eventType" id="eventType" required>
 							<option value="0">Speaker</option>
 							<option value="1">Meetup</option>
 							<option value="2">Deadline</option>
@@ -35,9 +35,9 @@ body
 			<label>Details (Optional)</label>
 			<textarea class="form-control vresize" rows="3" id='eventDetails' placeholder="Add Details" ng-model="vm.eventDetails"></textarea>
 		</div>
-		<div id="addButton" class="col-sm-offset-1 col-sm-12">
-			<button class="btn btn-primary col-sm-4" id='eventAddButton' ng-click="vm.addEvent(vm.eventDate, vm.eventTitle, vm.eventUrl, vm.eventDetails, vm.eventType)" ng-disabled="inputForm.$invalid">Add Event</button>
-			<button class="btn btn-primary col-sm-offset-1 col-sm-4" ng-click="vm.cancelEventAdd()">Cancel</button>
+		<div id="addButton" class="col-xs-offset-1 col-xs-12">
+			<button class="btn btn-primary col-xs-4" id='eventAddButton' ng-click="vm.addEvent(vm.eventDate, vm.eventTitle, vm.eventUrl, vm.eventDetails, vm.eventType)" ng-disabled="inputForm.$invalid">Add Event</button>
+			<button class="btn btn-primary col-xs-offset-1 col-xs-4" ng-click="vm.cancelEventAdd()">Cancel</button>
 		</div>
 	</div>
 </form>
