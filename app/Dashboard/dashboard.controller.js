@@ -41,43 +41,44 @@
             // this starts watching for idle. This also starts the Keepalive service by default.
             Idle.watch();
 
-            //grabs username and userId from local storage and binds to view
+            // Grab username and userId from local storage and bind to view
             vm.username = storageFactory.getLocalStorage('userSession').user.userName;
             vm.userId = storageFactory.getLocalStorage('userSession').user.userId;
             
-            //grabs roles from local storage
+            // Grab roles from local storage
             var roles = storageFactory.getLocalStorage('userSession').roles;
 
-            // array to store the roleIds
+            // Array to store the roleIds
             var roleIds = [];
 
+            // Fill up roleIds array with roles obtained from local storage
             for (var i = 0; i < roles.length; i++) {
 
                 roleIds.push(roles[i].RoleId);
             }
 
-            // see if the user logged in is an admin or not
+            // See if the user logged in is an admin or not
             vm.isAdmin = storageFactory.getLocalStorage('isAdmin');
 
-            // get all categories for the specific role of the user that is logged in
+            // Get all categories for the specific role of the user that is logged in
             DashboardFactory.getCategoryNamesByRoleId(roleIds).then(
 
                 function(response) {
                 
-                    // bind categories to the view
+                    // Bind categories to the view
                     vm.categories = response;
                     console.log(response);
 
-                    // get all the Roles that exist in the origin.API DB
+                    // Get all the Roles that exist in the origin.API DB
                     getRoles();
                 
                 },
 
-                function(error){
+                function(error) {
 
                     console.log(error);
                     
-                    // get all the Roles that exist in the origin.API DB
+                    // Get all the Roles that exist in the origin.API DB
                     getRoles();
 
                 });
@@ -91,41 +92,40 @@
 
             DashboardFactory.deleteContentCategoryEntry(contentCategoryId).then(
 
-                function(response){
+                function(response) {
 
                 // remove content from local content array
 
                 },
 
-                function(error){
+                function(error) {
 
                     console.log(error);
 
                 });
         }
 
-        // on-click function that goes to the custom content state and brings along the category ID and name of the category selected
+        // On-click function that goes to the custom content state and brings along the category ID and name of the category selected
         function getContentByCategoryId(categoryId, categoryName) {
 
 
-            // display category name to content view
+            // Display category name to CustomContent view
             vm.categoryName = categoryName;
-
             vm.categoryId = categoryId;
 
-            // get all content associated with the specific category Id
+            // Get all content associated with the specific category Id
             DashboardFactory.getContentByCategoryId(categoryId).then(
 
-                function(response){
+                function(response) {
 
                     vm.content = response;
                     $state.go('main.customcontent');
 
                 },
 
-                function(error){
+                function(error) {
 
-                    // clear content from custom content view if no content is found for a specific category
+                    // Clear content from custom content view if no content is found for a specific category
                     vm.content = '';
                     $state.go('main.customcontent');
 
@@ -133,12 +133,12 @@
            
         }
 
-        // get the content body and title for a specific content Id
+        // Get the content body and title for a specific content Id
         function getContentByContentId(contentId) {
 
             DashboardFactory.getContentByContentId(contentId).then(
 
-                function(response){
+                function(response) {
 
                     vm.contentTitle = response.title;
                     vm.contentBody = response.bodyDescr;
@@ -147,7 +147,7 @@
 
                 },
 
-                function(error){
+                function(error) {
 
 
                 });
@@ -155,8 +155,8 @@
 
         }
 
-        // grabs all the roles from the origin.api database
-        function getRoles(){
+        // Grab all the roles from the origin.api database
+        function getRoles() {
 
             DashboardFactory.getRoles().then(
 
@@ -165,7 +165,7 @@
                     vm.roles = response;
                     console.log(response);
 
-                    // get all the Users that exist in the origin.API DB
+                    // Get all the Users that exist in the origin.API DB
                     getUsers();
 
                 },
@@ -178,6 +178,7 @@
 
         }
 
+        // Gets all Users that exist in the Origin API DB
         function getUsers() {
 
             DashboardFactory.getUsers().then(
@@ -186,6 +187,8 @@
 
                     vm.users = response;
                     console.log(response);
+                    
+                    // Get all the chats that the user is subscribed to
                     getChatsForAUser();
                 },
 
@@ -195,18 +198,22 @@
                 });
         }
 
+        // Gets all the chats that a user is subscribed to
         function getChatsForAUser() {
 
-            // get all chat rooms/private messages that the user is subscribed to
+            // Send GET request to mongoDB to get all chats associated with a specific userId
             chatFactory.getChatsForAUser(vm.userId).then(
 
                 function(response) {
+                    
+                    // Zero out the # of channels and direct messages
                     $rootScope.numberOfChannels = 0;
                     $rootScope.numberOfDirectMessages = 0;
-                    // display chatgroups on the view           
+
+                    // Display chatgroup names on the view           
                     $rootScope.chatGroups = response;
                     
-                    // determine how many chat channels and direct messages the user is subscribed to
+                    // Determine how many chat channels and direct messages the user is subscribed to
                     for (var i = 0; i < response.length; i++) {
                         if (response[i].groupType !== "direct") {
                             $rootScope.numberOfChannels++;
@@ -215,16 +222,16 @@
                         }
                     }
 
-                        // send socket.io server the full list of chat rooms the user is subscribed to
+                        // Send socket.io server the full list of chat rooms the user is subscribed to
                         chatFactory.emit('add user', {chatGroups: $rootScope.chatGroups, userid: vm.userId});
 
-                    //jump to calendar state
+                    // Jump to calendar state
                     $state.go('main.calendar');
                 },
 
                 function(error) {
 
-                     //jump to calendar state
+                    // Jump to calendar state
                     $state.go('main.calendar');                   
 
             });
@@ -233,13 +240,13 @@
 
        
         // Logout on-click function
-        function logOut(){
-            // // disconnect any chat socket that may be opened, before logging out
+        function logOut() {
+            // Disconnect any chat socket that may be opened, before logging out
             $rootScope.socket.disconnect();
             
-            // clear local storage
+            // Clear local storage
             storageFactory.clearAllLocalStorage();
-            // go to login page
+            // Go to login page
             $state.go('login');
         }
 
@@ -255,19 +262,19 @@
         // **********************************************************************************
 
         // socket.io listener for connect event that signifies that client has connected to server
-        chatFactory.on('connect', function(){
+        chatFactory.on('connect', function() {
 
             console.log("Client connected to server"); 
         });
 
-        // socket.io listener for when server emits 'logged in' event
-        // this grabs the latest snapshot of clients that are registered on the socket.io server
-        // this will also inform the current client if any other clients have logged in
-        chatFactory.on('logged in', function(msg){
-          // store all the clients that are currently registered in the socket.io server
+        // socket.io listener for when server emits 'logged in' event.
+        // This grabs the latest snapshot of clients that are registered on the socket.io server.
+        // This will also inform the current client if any other clients have logged in.
+        chatFactory.on('logged in', function(msg) {
+          // Store all the clients that are currently registered in the socket.io server
           $rootScope.usersLoggedIn = msg.users;
 
-           // if the client has already navigated to the chat state (which is where $rootScope.participants is first defined)
+           // If the client has already navigated to the chat state (which is where $rootScope.participants is first defined)
            // then find the user that just logged in and mark them as logged in
           if ($rootScope.participants !== undefined) {
 
@@ -281,19 +288,19 @@
         });
 
         // socket.io listener to capture a chat message coming from the server
-        chatFactory.on('chat message', function(msg){
-          // only add the incoming chat message to the chat if the incoming roomid from the server matches the roomid of the chat you are in
-          if ($rootScope.chatid === msg.chatid){
+        chatFactory.on('chat message', function(msg) {
+          // Only add the incoming chat message to the chat if the incoming roomid from the server matches the roomid of the chat you are in
+          if ($rootScope.chatid === msg.chatid) {
             $rootScope.messages.push(msg);
           }
         });
 
         // socket.io listener to capture file info coming from the server
-        chatFactory.on('receive file info', function(msg){
-
+        chatFactory.on('receive file info', function(msg) {
+            // Only do the follownig if the incoming received file notification matches has a chatId that matches the chatId the client is currently in
             if ($rootScope.chatid === msg.chatid) {
                 $rootScope.messages.push(msg);
-                // get latest snapshot of files associated with the chatroom 
+                // Get latest snapshot of files associated with the chatroom 
                  chatFactory.getAllFilesSharedInAChatRoom($rootScope.chatid).then(
                     
                     function(response) {
@@ -303,7 +310,7 @@
                       $rootScope.numberOfFilesSharedInChatRoom = response.length;
                     },
 
-                    function(error){
+                    function(error) {
 
                       console.log("Error from getAllFilesSharedInAChatRoom" + error);
                     }
@@ -312,18 +319,18 @@
         });
 
 
-        // socket.io listener for when server emits 'logged out' event
-        // this grabs the latest snapshot of clients that are registered on the socket.io server
-        // this will also inform the current client if any other clients have logged out
-        chatFactory.on('logged out', function(msg){
+        // socket.io listener for when server emits 'logged out' event.
+        // This grabs the latest snapshot of clients that are registered on the socket.io server.
+        // This will also inform the current client if any other clients have logged out.
+        chatFactory.on('logged out', function(msg) {
            console.log(msg.userLoggedOut + ' has logged out'); 
-           // store all the clients that are currently registered in the socket.io server
+           // Store all the clients that are currently registered in the socket.io server
            $rootScope.usersLoggedIn = msg.users;
 
-           // if the client has already navigated to the chat state (which is where $rootScope.participants is first defined)
+           // If the client has already navigated to the chat state (which is where $rootScope.participants is first defined)
            // then find the user that just logged out and mark them as logged out 
            if ($rootScope.participants !== undefined) {
-               for (var i = 0; i < $rootScope.participants.length; i++){
+               for (var i = 0; i < $rootScope.participants.length; i++) {
                     if ($rootScope.participants[i].userid === msg.userLoggedOut) {
                         $rootScope.participants[i].isLoggedIn = false;
                         $rootScope.usersOnlineAndSubscribedToChatRoom--;
@@ -335,17 +342,17 @@
         // socket.io listener for when server informs client that another client just created a room that they are part of
         chatFactory.on('notify chatroom created', function(msg){
             console.log(msg);
-            // inform socket.io server to add this client to this chat room
+            // Inform socket.io server to add this client to this chat room
             chatFactory.emit('create chatroom', msg);
            
         });
         
         // socket.io listener for when server informs client that they have been added to the chat room
-        chatFactory.on('chatroom created', function(msg){
+        chatFactory.on('chatroom created', function(msg) {
             console.log(msg);
             
-            // update the # of direct messages or channels based on the type of chatroom that was created
-            if (msg.groupType === 'direct'){
+            // Update the # of direct messages or channels based on the type of chatroom that was created
+            if (msg.groupType === 'direct') {
             
                 $rootScope.numberOfDirectMessages++;
             
@@ -355,7 +362,7 @@
             
             }
 
-            // update clients local list of chatgroups they are a part of
+            // Update client's local list of chatgroups they are a part of
            $rootScope.chatGroups.push(msg);  
         });
     }

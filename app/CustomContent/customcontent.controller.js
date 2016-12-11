@@ -5,22 +5,30 @@
         .module('app')
         .controller('CustomContentController', CustomContentController);
 
-    CustomContentController.$inject = ['DashboardFactory', 'storageFactory', '$stateParams', 'toastr'];
+    CustomContentController.$inject = [
+        'DashboardFactory',
+        'storageFactory',
+        '$stateParams',
+        'toastr'];
 
-    /* @ngInject */
-    function CustomContentController(DashboardFactory, storageFactory, $stateParams, toastr) {
+    function CustomContentController(
+        DashboardFactory,
+        storageFactory,
+        $stateParams,
+        toastr) {
+        
         var vm = this;
 
-        // grab these state Params that are passed into this state through the ui router from another state
+        // Grab these state Params that are passed into this state through the ui router from another state
         vm.categoryId = $stateParams.categoryId;        
         vm.contentBody = $stateParams.contentBody;
         vm.contentId = $stateParams.contentId;
         vm.contentTitle = $stateParams.contentTitle;
 
-        // array to hold the categories to be pre-selected when we come into the manage content state from the category content state
+        // Array to hold the categories to be shown as "selected"
         vm.selectedCategories = [];
 
-        // array that holds the selected Role
+        // Array that holds the selected Role
         vm.selectedRole = [];
 
         vm.addCategory = addCategory;
@@ -28,31 +36,27 @@
         vm.addContent = addContent;
         vm.addContentCategory = addContentCategory;
         vm.selectedRoleChanged = selectedRoleChanged;
-
-        vm.editCategory = editCategory;
    
         activate();
 
-        ////////////////
 
         function activate() {
 
-            // get all Roles from local storage
+            // Get all Roles from local storage (This is so the Manage Categories state can display all the roles available)
             vm.roles = storageFactory.getLocalStorage('roles');
 
-            // get all Categories
+            // Get all Categories (This is so the Manage Categories and Manage Content states can display all Categories)
             DashboardFactory.getCategories().then(
 
                 function(response) {
 
                     vm.categories = response;
 
-                    // check list of categories returned from the mongoDB to find the one that matches the specific category Id of the category we have come into this state from
+                    // Check list of categories returned from the mongoDB to find the one that matches the specific category Id of the category we have come into this state from
                     for (var i = 0; i < vm.categories.length; i++) {
 
                         if (vm.categoryId === vm.categories[i]._id) {
-                        
-                            // set the category to be pre-selected in the category pull down menu
+                            // Set the category to be pre-selected in the category pull down menu
                             vm.selectedCategories [0] = vm.categories[i];
 
                         }
@@ -62,14 +66,14 @@
 
                 },
 
-                function(error){
+                function(error) {
 
 
                 });
         
         }
 
-        // add a category to the mongoDB
+        // Add a category to the mongoDB
         function addCategory () {
 
             DashboardFactory.postCategory(vm.category).then(
@@ -91,7 +95,7 @@
 
         }
 
-        // add content to the mongoDB
+        // Add content to the mongoDB
         function addContent(){
 
 
@@ -101,7 +105,7 @@
 
                     console.log(response);
 
-                    //adds ContentCategory entries based on which Categories were selected and the contentId returned from posting a new content item
+                    // Add ContentCategory entries based on which Categories were selected and the contentId returned from posting a new content item
                     addContentCategory(vm.selectedCategories, response.contentId);
                 
                 },
@@ -115,7 +119,7 @@
           
         }
 
-        // add a contentcategory to the mongoDB 
+        // Add a contentcategory to the mongoDB 
         function addContentCategory(categories, contentId) {
 
             DashboardFactory.postContentCategory(categories, contentId).then (
@@ -134,25 +138,7 @@
 
         }
 
-        // edit a Category in the mongoDB
-        function editCategory(){
-           
-            DashboardFactory.editCategory(vm.data).then(
-
-                function(response){    
-                   
-                    console.log(response);
-                
-                },
-           
-                function(error){
-                
-                    console.log(error);
-                
-                });
-        } 
-
-        // on-select function when selecting a role
+        // On-select function when selecting a role
         function selectedRoleChanged () {
 
             console.log(vm.selectedRole);

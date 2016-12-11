@@ -15,7 +15,7 @@
       'originLoungeExpressAPIBaseURL'
     ];
     
-    /* @ngInject */
+
     function chatController(
       Upload,
       chatFactory,
@@ -27,33 +27,28 @@
       
         var vm = this;
         
-        // list of users in chat
+        // List of users in chat
         var participants = [];
-
-        // one user in the chat
+        // One user in the chat
         var participant = {};
 
         vm.chatMessage = '';
-
-        //grab chatid from the calendar state (once the user clicks on the name of a chat room)
-        $rootScope.chatid = $stateParams.chatid;
-
-        // grab name of chat from the calendar state and bind to view (once the user clicks on the name of a chat room)
+        // Grab name of chat from the calendar state and bind to view (once the user clicks on the name of a chat room)
         vm.chatRoomName = $stateParams.chatRoomName;
-        
-        // on click function for when user clicks "Send" in chat room
-        vm.sendChatMessage = sendChatMessage;
-
-        // flag to tell if a file is in process of being uploaded
+        // Flag to tell if a file is in process of being uploaded
         vm.fileUploadInProgress = false;
 
+        // Grab chatid from the calendar state (once the user clicks on the name of a chat room)
+        $rootScope.chatid = $stateParams.chatid;
+        // Global counter for how many files are shared in a chat room
         $rootScope.numberOfFilesSharedInChatRoom = '';
 
-        // on click function for uploading files to server (and possibly attaching them to the room in which they were sent?)
+        // On click function for downloading a file from the server
+        vm.downloadFile = downloadFile;        
+        // On click function for when user clicks "Send" in chat room
+        vm.sendChatMessage = sendChatMessage;
+        // On click function for uploading files to server (and possibly attaching them to the room in which they were sent?)
         vm.upload = upload;
-
-        // on click function for downloading a file from the server
-        vm.downloadFile = downloadFile;
 
         /**************************** FOR EMOJI PICKER ***************************************/
         $(document).ready(function() {
@@ -68,59 +63,60 @@
           // It can be called as many times as necessary; previously converted input fields will not be converted again
           window.emojiPicker.discover();
         });
+        /**************************************************************************************/
 
         activate();
 
         function activate() {
 
-          // get message history and display it to chat room
+          // Get message history and display it to chat room
           chatFactory.getAllMessagesForAChatRoom($rootScope.chatid).then(
 
-            function(response){
+            function(response) {
 
-              // store message history 
+              // Store message history to global scope
               $rootScope.messages = response;
               console.log(response);
 
             },
 
-            function(error){
+            function(error) {
 
               console.log(error);
             }
           );
 
-          // get all users associated with a chat room
+          // Get all users associated with a chat room
           getAllUsersInAChatRoom();
 
         }
-        // when user clicks submit in the chat message form, do the following
+        // When user clicks submit in the chat message form, do the following
        function sendChatMessage() {
        
           var chatMessageEntered;
+          // Version of chat message that has emojis converted into their short form (i.e. smile emoji becomes ':smile:')
           var chatMessageWithEmojisInShortForm;
 
-          // grab username and userId from local storage, as well as the current date/time
+          // Grab username and userId from local storage, as well as the current date/time
           var username = storageFactory.getLocalStorage('userSession').user.userName;
           var userId = storageFactory.getLocalStorage('userSession').user.userId;
           var dateTimeCreated = new Date().toISOString();
 
-
+          // Grab the chat message 
           chatMessageEntered = document.getElementById('chatmessage').value;
           
-          // check to see if user typed in /giphy and that it was the very first thing typed
+          // Check to see if user typed in /giphy and that it was the very first thing typed
           if (chatMessageEntered.indexOf("/giphy ") === 0) {
-            //strip out /giphy and pass along what follows to the giphy API to get the random image
+            // If '/giphy ' was found, then strip out /giphy and pass along what follows to the giphy API to get the random image
             chatMessageEntered = chatMessageEntered.replace("/giphy ", "");
             getGiphy(chatMessageEntered, username, userId, dateTimeCreated);
 
           } else {
-          
-              // these two statements are needed in order to take a unicode emoji and convert it to "colon" style (i.e. :smile:)
+              // If '/giphy ' was not found, then convert unicode emoji to "colon" style (i.e. :smile:)
               chatMessageEntered = document.getElementById('chatmessage').value;
               chatMessageWithEmojisInShortForm = emojione.toShort(chatMessageEntered);
 
-              // create an object with chat info to send out
+              // Create chat message object to send
               var chatMessage = {
 
                 sender: username,
@@ -130,32 +126,35 @@
                 chatid: $rootScope.chatid
               };
 
-              // send the chat message out to the socket.io server
+              // Send the chat message out to the socket.io server
               chatFactory.emit('chat message', chatMessage);
 
-              // blank out the chat message form after the message was emitted (emoji-wysiwyg-editor is the class associated with the content editable div that gets inserted into
-              // the element that is tagged with data-emojiable=true)
+              // Blank out the chat message form after the message was emitted.
+              // Emoji-wysiwyg-editor is the class associated with the content editable div that gets inserted into
+              // the element that is tagged with data-emojiable=true
               $('.emoji-wysiwyg-editor').empty();
 
-              // add message to message table in Express API server
+              // Add message to message table in Express API DB
               postChatMessage(chatMessage);
           }
 
         }
 
-        // get all the files that are shared in a chat room
-        function getAllFilesSharedInAChatRoom(chatId){
-
+        // Get all the files that are shared in a chat room
+        function getAllFilesSharedInAChatRoom(chatId) {
+          // Reach out to MongoDB to get all files stored for this chat room
           chatFactory.getAllFilesSharedInAChatRoom(chatId).then(
             
             function(response) {
 
               console.log("Response from getAllFilesSharedInAChatRoom" + response);
+              // Add files for this chat room to the global list of files for said chat room
               $rootScope.filesSharedInChatRoom = response;
+              // Grab the total # of files for this chat room and store it globally
               $rootScope.numberOfFilesSharedInChatRoom = response.length;
             },
 
-            function(error){
+            function(error) {
 
               console.log("Error from getAllFilesSharedInAChatRoom" + error);
             }
@@ -163,30 +162,32 @@
           );
         }
 
-        // get list of all users that are associated with a specific chat room
+        // Get list of all users that are associated with a specific chat room
         function getAllUsersInAChatRoom() {
 
-          // make the call to the express API to get all users for a specific chat room
+          // Make the call to the express API to get all users for a specific chat room
           chatFactory.getAllUsersInAChatRoom($rootScope.chatid).then(
 
             function(response) {
-
+              // Get all Files associated with a chat room
               getAllFilesSharedInAChatRoom($rootScope.chatid);
-              // grab the # of users subscribed to this chat room and display to the view
+              // Grab the # of users subscribed to this chat room and display to the view
               vm.usersSubscribedToChatRoom = response.users.length;
 
-              // zero out #of users online and subscribed to this chatroom before finding out just how many are in this chat room
+              // Zero out #of users online and subscribed to this chatroom before finding out just how many are in this chat room
               $rootScope.usersOnlineAndSubscribedToChatRoom = 0;
 
-              // loop through all the users subscribed to this specific chat 
+              // Loop through all the users subscribed to this specific chat 
               loop1: 
               for (var i = 0; i < response.users.length; i++) {
-                // loop through all the users logged in and see which match the users subscribed to this chatroom
+                // Loop through all the users logged in and see which match the users subscribed to this chatroom
                 loop2:
                 for (var j = 0; j < $rootScope.usersLoggedIn.length; j++) {
-                  // check to see if any of the users logged in are in this specific chat room
+                  // Check to see if any of the users currently logged in are in this specific chat room
                   if (response.users[i].userid === $rootScope.usersLoggedIn[j]){
-                    // if the user is online, build up the user object to indicate the user is online (set isLogged in to true)
+                    // If the user is online, build up the user object to indicate the user is online (set isLogged in to true)
+                    // Also increment the global variable that keeps track of how many users that are subscribed to this room
+                    // and are online
                     
                     $rootScope.usersOnlineAndSubscribedToChatRoom++;
                     participant = {
@@ -194,12 +195,12 @@
                       userid: response.users[i].userid,
                       username: response.users[i].username
                     };
-                    // add the user that is online to the list of users to be displayed to the chat view
+                    // Add the user that is online to the list of users to be displayed to the chat view
                     participants.push(participant);
 
-                    // break out of loop 2
+                    // Break out of loop 2
                     break loop2; 
-                  // if user is not online, build up the user object accordingly (set isLoggedIn to false)
+                  // If user is not online, build up the user object accordingly (set isLoggedIn to false)
                   } else if (j === $rootScope.usersLoggedIn.length - 1) {
 
                     participant = {
@@ -207,7 +208,7 @@
                       userid: response.users[i].userid,
                       username: response.users[i].username
                     };
-                    // add the user that is not online to the list of users to be displayed to the chat view
+                    // Add the user that is not online to the list of users to be displayed to the chat view
                     participants.push(participant);
 
                   }
@@ -231,17 +232,18 @@
 
         }
 
+        // Function that will get a random Giphy based on a what was typed after '/giphy '
         function getGiphy(chatMessageEntered, username, userId, dateTimeCreated) {
-
+          // Grab random Giphy from Giphy's DB
           chatFactory.getGiphy(chatMessageEntered).then(
 
             function(response) {
               console.log(response.images.fixed_height.url);
 
-              // construct the html for the giphy to be displayed
+              // Construct the html for the giphy to be displayed
               vm.giphy = '<img src="' + response.images.fixed_height.url + '">';
 
-              // create an object with chat info to send out
+              // Create an object with chat info to send out
               var chatMessage = {
 
                 sender: username,
@@ -251,12 +253,13 @@
                 chatid: $rootScope.chatid
               };
 
-              // send the chat message out to the socket.io server
+              // Send the chat message out to the socket.io server
               chatFactory.emit('chat message', chatMessage);
-              // blank out the chat message form after the message was emitted (emoji-wysiwyg-editor is the class associated with the content editable div that gets inserted into
-              // the element that is tagged with data-emojiable=true)
+              // Blank out the chat message form after the message was emitted.
+              // Emoji-wysiwyg-editor is the class associated with the content editable div that gets inserted into
+              // the element that is tagged with data-emojiable=true
               $('.emoji-wysiwyg-editor').empty();
-              // add message to message table in Express API server
+              // Add message to message table in Express API DB
               postChatMessage(chatMessage);
 
             },
@@ -267,18 +270,18 @@
           );
         }
 
-        // post a chat message to mongoDB
-        function postChatMessage(chatMessage){
-          // issue POST request
+        // Post a chat message to mongoDB
+        function postChatMessage(chatMessage) {
+          // Issue POST request
           chatFactory.postMessage(chatMessage).then(
-            // handle success response to POST
+            // Handle success response to POST
             function(response) {
 
-              // add latest message to local list of messages
+              // Add latest message to global list of messages
               $rootScope.messages.push(chatMessage);
               console.log(response);
             },
-            // handle error response to POST
+            // Handle error response to POST
             function(error) {
 
               console.log(error);
@@ -287,61 +290,61 @@
 
         }
 
-        // upload a file to GRIDfs collections on mongoDB
+        // Upload a file to GridFS collections in mongoDB
         function upload (file) {
 
-              // catch the upload file event that's triggered when the user clicks on the + button
+              // Catch the upload file event that's triggered when the user clicks on the + button
               if (file === null)
                 return;
 
-              // grab username
+              // Grab the user's username
               var username = storageFactory.getLocalStorage('userSession').user.userName;
 
               console.log(file);
 
-              // send upload request
+              // Send upload request to Express API
               Upload.upload({
                   url: originLoungeExpressAPIBaseURL + 'files',
                   data: {file: file, 'username': username, 'chatid': $rootScope.chatid}
               }).then(
 
-              // response to upload request (represents when file has finished being written to backend)
+              // Response to upload request (This represents when file has finished being written to backend)
               function (resp) {
                   console.log(resp);
                   console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
   
-                  // hide file upload progress bar
+                  // Hide file upload progress bar since we are done uploading
                   vm.fileUploadInProgress = false;
                   
-                  // construct "uploaded file" chat message 
+                  // Construct "uploaded file" chat message 
                   var message = 'uploaded a file: ' + resp.config.data.file.name;
 
-                  // create the chat message to send to other clients in the room and to the express API DB
+                  // Create the chat message to send to other clients in the room and to the express API DB
                   var chatMessage = {
                     sender: resp.config.data.username,
-                    userId: resp.data.id, // need to create another field in the chat message table for a fileid if we want to have a link to download the file, within the message itself
+                    userId: resp.data.id, // Need to create another field in the chat message table for a fileid if we want to have a link to download the file, within the message itself
                     message: message,
                     created: resp.data.dateUploaded,
                     chatid: resp.config.data.chatid 
                   };                  
-                  // send chat message to socket.io server to broadcast to everyone in this chatroom
+                  // Send chat message to socket.io server to broadcast to everyone in this chatroom
                   chatFactory.emit("send file info", chatMessage);
 
-                  // send chat message to express API DB
+                  // Send chat message to express API DB
                   postChatMessage(chatMessage);
 
-                  // get latest snapshot of files associated with the chatroom 
+                  // Get latest snapshot of files associated with the chatroom 
                   getAllFilesSharedInAChatRoom($rootScope.chatid);
 
 
               },
 
-              // error handler
+              // Error handler
               function (error) {
                   console.log('Error status: ' + error.status);
               },
 
-              // upload progress handler (not representative of when file write is complete on backend)
+              // Upload progress handler (not representative of when file write is complete on backend)
               function (evt) {
                   vm.fileUploadMessage = "Uploading " + evt.config.data.file.name + "... , please be patient!";
                   vm.fileUploadInProgress = true;
@@ -350,9 +353,9 @@
               });
           };
 
-          // download a file from GridFS collection in mongoDB
+          // Download a file from GridFS collection in mongoDB
           function downloadFile(fileId, filename) {
-
+            // Send GET request to GridFS collection in mongoDB
             chatFactory.downloadFile(fileId, filename).then(
 
               function (response) {

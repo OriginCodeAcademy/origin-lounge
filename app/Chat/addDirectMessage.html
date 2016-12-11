@@ -6,6 +6,7 @@
     <div class="panel-body">
 		<form name="createDirectMessage">
 			<div class="row">
+				<!-- List of users to select -->
 				<div class="form-group col-xs-8">
 					<label for="users">Select Users</label>
 					<select class="form-control" name="users" id="users-to-add"ng-model="vm.selectedUsers" multiple required ng-options="users.Id as users.FullName  disable when users.isLoggedIn for users in vm.users">
@@ -14,6 +15,7 @@
 				</div>
 			</div>
 			<div class="row">
+				<!-- Cancel and Go buttons -->
 				<div class="col-xs-4">
 					<button class="btn btn-danger">Cancel</button>
 					<button class="btn btn-primary" ng-click="vm.createChat('direct')" ng-disabled="createDirectMessage.$invalid">Go</button>

@@ -15,8 +15,6 @@
         };
         return service;
 
-        ////////////////
-
         // httpRequest handler
         function request(httpRequest) {
             // httpRequest.headers = httpRequest.headers || {};

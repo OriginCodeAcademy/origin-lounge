@@ -4,20 +4,31 @@
     angular
         .module('app')
         .factory('chatFactory', chatFactory);
-    chatFactory.$inject = ['$http', '$q', 'originLoungeExpressAPIBaseURL', 'chatServerURLAndPort', '$rootScope'];
-    /* @ngInject */
-    function chatFactory($http, $q, originLoungeExpressAPIBaseURL, chatServerURLAndPort, $rootScope) {
-        // $rootScope.socket = io.connect(chatServerURLAndPort);
+    chatFactory.$inject = [
+        '$http',
+        '$q',
+        'originLoungeExpressAPIBaseURL',
+        'chatServerURLAndPort',
+        '$rootScope'
+        ];
+
+    function chatFactory(
+        $http,
+        $q,
+        originLoungeExpressAPIBaseURL,
+        chatServerURLAndPort,
+        $rootScope) {
+
         var service = {
 
-            //giphy related
+            // Giphy related
             getGiphy: getGiphy,
             
-            //GridFS related
+            // GridFS related
             downloadFile: downloadFile,
             getAllFilesSharedInAChatRoom: getAllFilesSharedInAChatRoom,
 
-            //mongoDB Chat collection related
+            // mongoDB Chat collection related
             getAllChats: getAllChats,
             getAllMessagesForAChatRoom: getAllMessagesForAChatRoom,
             getAllUsersInAChatRoom: getAllUsersInAChatRoom,
@@ -33,6 +44,7 @@
         };
         return service;
 
+        // Downloads a file from GridFS collection
         function downloadFile(fileId, filename) {
             
             var defer = $q.defer();
@@ -44,8 +56,10 @@
 
             })
 
-            .then(function(response){
+            .then(function(response) {
+                // Grab the file data and create a blob
                 var file = new Blob([response.data]);
+                // Save the file to the client's machine
                 saveAs(file, filename);
                 defer.resolve(response);
     
@@ -60,6 +74,7 @@
             return defer.promise;
         }
 
+        // Get all the chat documents in the chats collection of the mongoDB
        function getAllChats() {
             
             var defer = $q.defer();
@@ -69,7 +84,7 @@
                 url: originLoungeExpressAPIBaseURL + 'chats'
             })
 
-            .then(function(response){
+            .then(function(response) {
                 
                 if (typeof response.data === "object") {
 
@@ -82,7 +97,7 @@
     
             },
 
-            function(error){
+            function(error) {
 
                 defer.reject(error);
 
@@ -91,6 +106,7 @@
             return defer.promise;
         }
 
+        // Get all the files associated with a specific chat room from the chat collection of the mongo DB
         function getAllFilesSharedInAChatRoom(chatId) {
             
             var defer = $q.defer();
@@ -100,7 +116,7 @@
                 url: originLoungeExpressAPIBaseURL + 'files/chat/' + chatId
             })
 
-            .then(function(response){
+            .then(function(response) {
                 
                 if (typeof response.data === "object") {
 
@@ -113,7 +129,7 @@
     
             },
 
-            function(error){
+            function(error) {
 
                 defer.reject(error);
 
@@ -122,6 +138,7 @@
             return defer.promise;
         }
 
+        // Get all the chat messages associated with a specific chat room from the mongoDB
         function getAllMessagesForAChatRoom(roomId) {
             
             var defer = $q.defer();
@@ -131,7 +148,7 @@
                 url: originLoungeExpressAPIBaseURL + 'messages/' + roomId
             })
 
-            .then(function(response){
+            .then(function(response) {
                 
                 if (typeof response.data === "object") {
 
@@ -144,7 +161,7 @@
     
             },
 
-            function(error){
+            function(error) {
 
                 defer.reject(error);
 
@@ -153,6 +170,7 @@
             return defer.promise;
         }
 
+        // Get a specific chat room from the chats collection within the mongoDB
         function getAllUsersInAChatRoom(roomId) {
             
             var defer = $q.defer();
@@ -162,7 +180,7 @@
                 url: originLoungeExpressAPIBaseURL + 'chats/' + roomId
             })
 
-            .then(function(response){
+            .then(function(response) {
                 
                 if (typeof response.data === "object") {
 
@@ -175,7 +193,7 @@
     
             },
 
-            function(error){
+            function(error) {
 
                 defer.reject(error);
 
@@ -184,7 +202,7 @@
             return defer.promise;
         }
 
-        // gets a random giphy based on the string passed in
+        // Gets a random giphy based on the string passed in
         function getGiphy(string) {
             
             var defer = $q.defer();
@@ -198,7 +216,7 @@
                 }
             })
 
-            .then(function(response){
+            .then(function(response) {
                 
                 if (typeof response.data === "object") {
 
@@ -211,7 +229,7 @@
     
             },
 
-            function(error){
+            function(error) {
 
                 defer.reject(error);
 
@@ -220,6 +238,7 @@
             return defer.promise;
         }
 
+        // Get all the chatrooms that a user is subscribed to from the chats collection in mongoDB
         function getChatsForAUser(userId) {
             
             var defer = $q.defer();
@@ -229,7 +248,7 @@
                 url: originLoungeExpressAPIBaseURL + 'chats/userid/' + userId
             })
 
-            .then(function(response){
+            .then(function(response) {
                 
                 if (typeof response.data === "object") {
 
@@ -242,7 +261,7 @@
     
             },
 
-            function(error){
+            function(error) {
 
                 defer.reject(error);
 
@@ -251,6 +270,7 @@
             return defer.promise;
         }
 
+        // Registers socket.io listeners
         function on(eventName, callback) {
 
           $rootScope.socket.on(eventName, function () {  
@@ -265,7 +285,8 @@
           });
         }
 
-        function postMessage(message){
+        // Add a chat message to the mongo DB's messsages collection
+        function postMessage(message) {
 
             var defer = $q.defer();
 
@@ -280,7 +301,7 @@
               }
             })
 
-            .then(function(response){
+            .then(function(response) {
                 
                 if (typeof response.data === "object") {
 
@@ -293,7 +314,7 @@
     
             },
 
-            function(error){
+            function(error) {
 
                 defer.reject(error);
 
@@ -303,7 +324,8 @@
 
         }
 
-        function postChat(chatType, chatName, users){
+        // Add a chatroom to the mongoDB's chats collection
+        function postChat(chatType, chatName, users) {
 
             var defer = $q.defer();
 
@@ -320,7 +342,7 @@
               }
             })
 
-            .then(function(response){
+            .then(function(response) {
                 
                 if (typeof response.data === "object") {
 
@@ -333,7 +355,7 @@
     
             },
 
-            function(error){
+            function(error) {
 
                 defer.reject(error);
 
@@ -343,7 +365,7 @@
 
         }
 
-
+        // Register's socket.io emit functions
         function emit(eventName, data, callback) {
           
           $rootScope.socket.emit(eventName, data, function () {
@@ -357,7 +379,7 @@
         
           });
         
-        })
+        });
       }
     }
 })();

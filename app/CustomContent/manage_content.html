@@ -1,13 +1,13 @@
 <style>
 body { background-color: lightgray; }
 </style>
-<!-- middle panel of dashboard/main page -->
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="manage-content-title"><b><center>Manage Content</center></b></h3></div>
     <div class="panel-body">
         <form name="addContent">
             <div class="row">
+                <!-- Category Select Menu -->
                 <div class="form group col-xs-4 col-xs-offset-4">
                     <label class="control-label" for="categories">Select Categories</label>
                     <select name="categories" multiple required ng-model="vm.selectedCategories" ng-options="item._id as item.name for item in vm.categories">

@@ -2,7 +2,7 @@
 // BASE SETUP
 // =============================================================================
 
-// call the packages we need
+// Include all the packages we need
 
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -10,13 +10,13 @@ var morgan = require('morgan');
 var mongoose = require('mongoose');
 var Grid = require('gridfs-stream');
 var fs = require('fs');
-// this bodyparser to be used when dealing with file uploads to this server
+// Body Parser to be used when dealing with file uploads to this server
 var busboyBodyParser = require('busboy-body-parser');
 
 var conn = mongoose.connection;
 var app = express();
 
-// configure app
+// Configure Body Parser portion of app
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(busboyBodyParser ({limit: '200mb'}));
@@ -33,10 +33,11 @@ app.use(function(req, res, next) {
 var port = process.env.PORT || 3000;
 
 Grid.mongo = mongoose.mongo;
-// connect to our mongoDB database instance hosted on heroku
+
+// Connect to our mongoDB database instance hosted on heroku
 mongoose.connect('mongodb://origin-dev:pass1@ds149297-a1.mlab.com:49297/heroku_nrxdgp9h/'); 
 
-// adds the fs.chunks and fs.files collections to the mongo DB
+// Adds the fs.chunks and fs.files collections to the mongo DB
 conn.once('open', function () {
     console.log('open');
     var gfs = Grid(conn.db);
@@ -63,17 +64,17 @@ var CalendarEventType = require('./server/models/calendar-content/eventtype');
 // Routes
 // =============================================================================
 
-// create our router
+// Create our router
 var router = express.Router();
 
-// middleware to use for all requests
+// Middleware to use for all requests
 router.use(function(req, res, next) {
     // do logging
     console.log('Something is happening.');
     next();
 });
 
-// test route to make sure everything is working (accessed at GET http://localhost:3000/api)
+// Test route to make sure everything is working (accessed at GET http://localhost:3000/api)
 router.get('/', function(req, res) {
 
     res.json({ message: 'hooray! welcome to our api!' });

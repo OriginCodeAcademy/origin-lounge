@@ -3,27 +3,27 @@
 
 angular
         .module('app', [
-            'ui.router', // adds state routing capabilities
-            'LocalStorageModule', // adds localstorage capabilities
-            'toastr', // adds toastr alerts
-            'ngIdle', // adds idle capabilities
+            'ui.router', // Adds state routing capabilities
+            'LocalStorageModule', // Adds localstorage capabilities
+            'toastr', // Adds toastr alerts
+            'ngIdle', // Adds idle capabilities
             'ui.bootstrap', 
-            'hc.marked', // markdown editor related
-            'hljs', // markdown editor related
-            'angular-markdown-editor', // markdown editor related
-            'luegg.directives', // for scroll-glue capability (which is being used to ensure the latest chat message is shown at the bottom of the chat window)
-            'angular-nicescroll', // for custom scroll-bar
-            'ngFileUpload', // for file uploading
-            'dbaq.emoji', // for filtering of emoji text (e.g. turning :smile: into a smiley face)
-            'ngSanitize' // also needed for emoji filtering (and who knows what else...)
+            'hc.marked', //Markdown editor related
+            'hljs', // Markdown editor related
+            'angular-markdown-editor', // Markdown editor related
+            'luegg.directives', // For scroll-glue capability (which is being used to ensure the latest chat message is shown at the bottom of the chat window)
+            'angular-nicescroll', // For custom scroll-bar
+            'ngFileUpload', // For file uploading
+            'dbaq.emoji', // For filtering of emoji text (e.g. turning :smile: into a smiley face)
+            'ngSanitize' // Also needed for emoji filtering (and who knows what else...)
             ])
         .value ('originAPIBaseURL', 'http://origincodeacademyapi.azurewebsites.net/', 'ui.calendar')
         .value ('chatServerURLAndPort', 'http://localhost:3002')
         .value ('originLoungeExpressAPIBaseURL', 'http://localhost:3000/api/')
 
-        // config that is specific for the markdown editor
+        // Markdown editor and highlighter configuration
         .config(['markedProvider', 'hljsServiceProvider', function(markedProvider, hljsServiceProvider) {
-            // markdown config
+            // Markdown config
             markedProvider.setOptions({
                 gfm: true,
                 tables: true,
@@ -38,9 +38,9 @@ angular
             });
 
 
-            // highlight config
+            // Highlight config
             hljsServiceProvider.setOptions({
-                // replace tab with 4 spaces
+                // Replace tab with 4 spaces
                 tabReplace: '    '
             });
         }])
@@ -52,18 +52,18 @@ angular
             $httpProvider,
             IdleProvider,
             KeepaliveProvider) {
-            // local storage config
+            // Local storage config
               localStorageServiceProvider
              .setPrefix('')
              .setNotify(true, true);
 
-             // add authInterceptorService to the list of interceptors available within the httpProvider
+            // Add authInterceptorService to the list of interceptors available within the httpProvider
             $httpProvider.interceptors.push('authInterceptorService');
 
-            // set up the IdleProvider's idle and timeout values, as well as the KeepaliveProvider's interval
+            // Aet up the IdleProvider's idle and timeout values, as well as the KeepaliveProvider's interval
             IdleProvider.idle(60*10); // 10 minute idle
             IdleProvider.timeout(10); // 10 seconds after idle, time the user out
-            //KeepaliveProvider.interval(5*60); // 5 minute keep-alive ping
+            // KeepaliveProvider.interval(5*60); // 5 minute keep-alive ping
 
             // For any unmatched url, redirect to /state1
             $urlRouterProvider.otherwise("/login");
@@ -172,18 +172,18 @@ angular
             // rootScope handler for when user changes states
             $rootScope.$on('$stateChangeStart', function() {
 
-                // if a token doesn't exist in local storage, close the socket.io connection and log the user out
+                // If a token doesn't exist in local storage, close the socket.io connection and log the user out
                 var isLogin = storageFactory.getLocalStorage("userSession");
                 if(isLogin === null){
-                    // close socket connection to socket.io server
+                    // Close socket connection to socket.io server
                     $rootScope.socket.disconnect();
-                    // jump to login page
+                    // Jump to login page
                    $location.path('/login');
                 }
 
             });
 
-            // close any idle related modal that is currently open
+            // Close any idle related modal that is currently open
              function closeModals() {
                     if ($rootScope.warning) {
                       $rootScope.warning.close();
@@ -199,10 +199,10 @@ angular
             // rootscope event handler for when the user appears to have first gone Idle 
             $rootScope.$on('IdleStart', function () {
 
-                // close any idle related modal that is currently open
+                // Close any idle related modal that is currently open
                 closeModals();
 
-                // open up a idle warning modal 
+                // Open up a idle warning modal 
                 $rootScope.warning = $uibModal.open({
                   templateUrl: 'warning-dialog.html',
                   windowClass: 'modal-danger'
@@ -218,25 +218,25 @@ angular
             // rootScope event handler for when the user has been idle for long enough (idleDuration + timeout has passed)
             $rootScope.$on('IdleTimeout', function () {
 
-                // close any idle related modal that is currently open
+                // Close any idle related modal that is currently open
                 closeModals();
 
-                // open up a timeout modal
+                // Open up a timeout modal
                 $rootScope.timedout = $uibModal.open({
                   templateUrl: 'timedout-dialog.html',
                   windowClass: 'modal-danger'
                 });
 
-                // clear out local storage
+                // Clear out local storage
                 storageFactory.clearAllLocalStorage();
                 
-                // stop the idle watch
+                // Stop the idle watch
                 Idle.unwatch();
                 
-                //close any chat socket that is currently open
+                // Close any chat socket that is currently open
                 $rootScope.socket.disconnect();
                 
-                // jump to the login page
+                // Jump to the login page
                 $state.go('login');
 
 
@@ -245,13 +245,13 @@ angular
             // rootscope event handler for when Idle ends (user does something)
             $rootScope.$on('IdleEnd', function () {
 
-                // close all modals that are currently open
+                // Close all modals that are currently open
                 closeModals();
 
             });
 
 
-            //On Before Unload event that clears local storage and redirects to the login page
+            // On Before Unload event that clears local storage and redirects to the login page
             window.onbeforeunload = function() {
                 storageFactory.clearAllLocalStorage();
                 $rootScope.socket.disconnect();
@@ -260,7 +260,7 @@ angular
             };
         })
 
-        // controller for markdown editor
+        // Markdown editor Controller
         .controller("MainController", ["$scope", "marked", function MarkdownController($scope, marked) {
             $scope.markdown = "Origin Code Academy:";
             $scope.markdownService = marked('#TEST');
