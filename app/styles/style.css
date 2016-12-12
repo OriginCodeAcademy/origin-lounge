@@ -147,11 +147,28 @@
   word-wrap: break-word;
 }
 
-     .emoji-picker-icon{
+.emoji-picker-icon{
     font-size:20px;
     right: 86px;
     top: 17px;
-  }
+}
+
+/* This is so image thumbnails fill full width of parent and re-size their heights so that the image scales correctly */
+.image-thumbnail {
+
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.document-thumbnail {
+
+  display: block;
+  width: 40px;
+  height: 40px;
+
+}
+
 /* ---------------------------------- CREATE CHAT RELATED --------------------------------- */
 #users-to-add {
   height: 250px;

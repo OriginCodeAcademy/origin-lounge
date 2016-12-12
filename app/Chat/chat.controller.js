@@ -275,34 +275,32 @@
           );
         }
 
-        function getFileTypeIcon (fileType, fileId) {
+        function getclickablefileThumbnail (fileType, fileId) {
 
           switch(fileType) {
 
             case 'image/jpeg':
               console.log('Got a jpeg');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img src="/app/img/jpg.svg"></a>';
-              //return '<img onclick="getFile(' + fileId + ')" src="/app/img/jpg.svg">';
-              //return '<a onclick="getFile()"><img src="/app/img/jpg.svg"></a>';
+              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="image-thumbnail" src="http://localhost:3000/api/files/'+ fileId + '"></a>';
               break;
 
             case 'image/png':
               console.log('Got a png');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img src="/app/img/png.svg"></a>';
+              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="image-thumbnail" src="http://localhost:3000/api/files/'+ fileId + '"></a>';
               break;
 
             case 'image/gif':
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img src="/app/img/file.svg"></a>';
+              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="image-thumbnail" src="http://localhost:3000/api/files/'+ fileId + '"></a>';
               break;
 
             case 'image/svg+xml':
               console.log('Got an svg');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img src="/app/img/svg.svg"></a>';
+              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="image-thumbnail" src="http://localhost:3000/api/files/'+ fileId + '"></a>';
               break;
 
             case 'text/plain':
               console.log('Got a txt file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img src="/app/img/txt.svg"></a>';
+              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/txt.svg"></a>';
               break;
 
             case 'application/pdf':
@@ -406,8 +404,8 @@
               // Response to upload request (This represents when file has finished being written to backend)
               function (resp) {
                   
-                  // Store the HTML representing an file type icon
-                  var fileTypeIcon;
+                  // Store the HTML representing a clickable file thumbnail/icon
+                  var clickablefileThumbnail;
 
                   console.log(resp);
                   console.log(resp.config.data.file.type);
@@ -416,10 +414,10 @@
                   // Hide file upload progress bar since we are done uploading
                   vm.fileUploadInProgress = false;
                   
-                  // Get the appropriate HTML for file type icon, based on file type of the file we are sending
-                  fileTypeIcon = getFileTypeIcon(resp.config.data.file.type, resp.data.id);
+                  // Get the HTML string that will create a clickable file icon/thumbnail within the chat message for the file we are uploading
+                  clickablefileThumbnail = getclickablefileThumbnail(resp.config.data.file.type, resp.data.id);
                   // Construct "uploaded file" chat message 
-                  var message = 'uploaded a file: ' + resp.config.data.file.name + '<br>' + fileTypeIcon;
+                  var message = 'uploaded a file: ' + resp.config.data.file.name + '<br>' + clickablefileThumbnail;
 
                   // Create the chat message to send to other clients in the room and to the express API DB
                   var chatMessage = {
