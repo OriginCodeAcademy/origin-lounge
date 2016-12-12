@@ -97,9 +97,12 @@ router.route('/files')
     // add the user who uploaded the file to the metadata field of the GridFS file document
     var metadata = {
         username: req.body.username,
-        chatid: req.body.chatid
+        chatid: req.body.chatid,
+        documentThumbnailIcon: req.body.documentThumbnailIcon
     };
 
+    console.log(metadata);
+    
     var gfs = Grid(conn.db);
     // writes the file provided to the GridFS collections and gives it a name
     // the name is specified by the filename field
@@ -156,7 +159,7 @@ router.route('/files/:file_id')
 
     // see what the request looks like
     //console.log(req);
-
+    console.log(req.params.file_id);
     var gfs = Grid(conn.db);
 
     // finds the specific file by id

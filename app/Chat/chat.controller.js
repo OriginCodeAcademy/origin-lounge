@@ -44,7 +44,7 @@
         $rootScope.numberOfFilesSharedInChatRoom = '';
 
         // On click function for downloading a file from the server
-        vm.downloadFile = downloadFile;        
+        vm.downloadFile = downloadFile;       
         // On click function for when user clicks "Send" in chat room
         vm.sendChatMessage = sendChatMessage;
         // On click function for uploading files to server (and possibly attaching them to the room in which they were sent?)
@@ -305,63 +305,127 @@
 
             case 'application/pdf':
               console.log('Got a pdf');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img src="/app/img/pdf.svg"></a>';
+              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/pdf.svg"></a>';
               break;
 
             case 'text/css':
               console.log('Got a css file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img src="/app/img/css.svg"></a>';
+              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/css.svg"></a>';
               break;
 
             case 'application/javascript':
               console.log('Got a js file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img src="/app/img/javascript.svg"></a>';
+              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/javascript.svg"></a>';
               break;
 
             case 'application/msword':
               console.log('Got a word file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img src="/app/img/doc.svg"></a>';
+              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/doc.svg"></a>';
               break;
 
             case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
               console.log('Got a word file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img src="/app/img/doc.svg"></a>';
+              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/doc.svg"></a>';
               break;
 
             case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
               console.log('Got a ppt file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img src="/app/img/ppt.svg"></a>';
+              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/ppt.svg"></a>';
               break;
 
             case 'application/vnd.ms-powerpoint':
               console.log('Got a ppt file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img src="/app/img/ppt.svg"></a>';
+              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/ppt.svg"></a>';
               break;
 
             case 'application/vnd.ms-excel':
               console.log('Got an excel file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img src="/app/img/xls.svg"></a>';
-              break;
+              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/xls.svg"></a>';
+              break; 
 
             case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
               console.log('Got an excel file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img src="/app/img/xls.svg"></a>';
+              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/xls.svg"></a>';
               break;
 
             case 'application/x-msdownload':
               console.log('Got an exe file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img src="/app/img/exe.svg"></a>';
+              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/exe.svg"></a>';
               break;
 
             default:
               console.log('Got type that there is no case statement for...');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img src="/app/img/file.svg"></a>';
+              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/file.svg"></a>';
               break;
           }
-
-
-
         }
+
+          function getDocumentThumbnailIcon (fileType) {
+
+            switch(fileType) {
+
+              case 'text/plain':
+                console.log('Got a txt file');
+                return 'txt.svg';
+                break;
+
+              case 'application/pdf':
+                console.log('Got a pdf');
+                return 'pdf.svg';
+                break;
+
+              case 'text/css':
+                console.log('Got a css file');
+                return 'css.svg';
+                break;
+
+              case 'application/javascript':
+                console.log('Got a js file');
+                return 'javascript.svg';
+                break;
+
+              case 'application/msword':
+                console.log('Got a word file');
+                return 'doc.svg';
+                break;
+
+              case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                console.log('Got a word file');
+                return 'doc.svg';
+                break;
+
+              case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+                console.log('Got a ppt file');
+                return 'ppt.svg';
+                break;
+
+              case 'application/vnd.ms-powerpoint':
+                console.log('Got a ppt file');
+                return 'ppt.svg';
+                break;
+
+              case 'application/vnd.ms-excel':
+                console.log('Got an excel file');
+                return 'xls.svg';
+                break; 
+
+              case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                console.log('Got an excel file');
+                return 'xls.svg';
+                break;
+
+              case 'application/x-msdownload':
+                console.log('Got an exe file');
+                return 'exe.svg';
+                break;
+
+              default:
+                console.log('Got type that there is no case statement for...');
+                return null;
+                break;
+
+            }
+          }
 
         // Post a chat message to mongoDB
         function postChatMessage(chatMessage) {
@@ -395,10 +459,19 @@
 
               console.log(file);
 
+              // Gets the name of the icon file we will use for displaying the document type (only applicable to non-image type docs. If an image, this will be null)
+              var documentThumbnailIcon = getDocumentThumbnailIcon(file.type);
+
               // Send upload request to Express API
               Upload.upload({
                   url: originLoungeExpressAPIBaseURL + 'files',
-                  data: {file: file, 'username': username, 'chatid': $rootScope.chatid}
+                  data: {
+                    file: file, 
+                    'username': username, 
+                    'chatid': $rootScope.chatid,
+                    'documentThumbnailIcon': documentThumbnailIcon
+                  }
+              
               }).then(
 
               // Response to upload request (This represents when file has finished being written to backend)
