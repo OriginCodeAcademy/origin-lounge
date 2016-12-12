@@ -5,11 +5,13 @@
         .module('app')
         .controller('GithubController', GithubController);
 
-    GithubController.$inject = ['$http'];
+    GithubController.$inject = ['$http', '$rootScope'];
 
     /* @ngInject */
-    function GithubController($http) {
+    function GithubController($http, $rootScope) {
         var vm = this;
+
+        $rootScope.inChatState = false;
         vm.title = 'GithubController';
       	vm.url = '';
         vm.theCode = '';

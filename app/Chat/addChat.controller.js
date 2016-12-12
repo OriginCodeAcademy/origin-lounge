@@ -25,6 +25,8 @@
 
         var vm = this;
 
+        $rootScope.inChatState = false;
+        
         var userCurrentlyLoggedIn;
 
         // For holding the selected users to be added to a direct message/channel

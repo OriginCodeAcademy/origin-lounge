@@ -253,10 +253,20 @@ angular
 
             // On Before Unload event that clears local storage and redirects to the login page
             window.onbeforeunload = function() {
-                storageFactory.clearAllLocalStorage();
-                $rootScope.socket.disconnect();
-                $state.go('login');
-                return '';
+                // This check of $rootScope.inChatState is a hack to prevent the website from kicking the user
+                // out when they click on a file to download from within a chat message in the chat window. 
+                
+                // I would like a better way to handle this without the need for this inChatState flag.
+                // In the meantime, I've set this flag to be true when the user gets into the chat state.
+                // This means that when in the chat state and you either navigate to another page, or close this page,
+                // local storage will not be cleared. The socket will still disconnect because the browser sends the disconnect
+                // regardless of if you manually perform it as below.
+                if ($rootScope.inChatState !== true) {
+                    storageFactory.clearAllLocalStorage();
+                    $rootScope.socket.disconnect();
+                    $state.go('login');
+                    return '';
+                }
             };
         })
 

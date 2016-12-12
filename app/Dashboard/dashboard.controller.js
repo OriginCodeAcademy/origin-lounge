@@ -26,6 +26,8 @@
         
         var vm = this;
 
+        $rootScope.inChatState = false;
+        
         vm.logOut = logOut;
 
         vm.deleteContentFromACategory = deleteContentFromACategory;

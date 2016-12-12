@@ -5,10 +5,23 @@
         .module('app')
         .controller('CalendarController', CalendarController);
 
-    CalendarController.$inject = ['$http', '$window', '$filter', 'calendarFactory', 'localStorageService'];
+    CalendarController.$inject = [
+        '$http',
+        '$window',
+        '$filter',
+        '$rootScope', 
+        'calendarFactory',
+        'localStorageService'];
 
     /* @ngInject */
-    function CalendarController($http, $window, $filter, calendarFactory, localStorageService) {
+    function CalendarController(
+        $http,
+        $window,
+        $filter, 
+        $rootScope,
+        calendarFactory,
+        localStorageService) {
+        
         var vm = this;
         vm.title = 'CalendarController';
         vm.eventDate = '';
@@ -22,7 +35,9 @@
         vm.eventTypeArray = ['green', 'blue', 'red', 'purple', 'grey'];
 
         vm.calendarArray = [];
-         
+        
+        $rootScope.inChatState = false;
+
         activate();
 
         ////////////////

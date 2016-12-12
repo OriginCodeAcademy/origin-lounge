@@ -5,10 +5,10 @@
         .module('app')
         .controller('LinkedinController', LinkedinController);
 
-    LinkedinController.$inject = ['$http', 'originLoungeExpressAPIBaseURL'];
+    LinkedinController.$inject = ['$http', '$rootScope', 'originLoungeExpressAPIBaseURL'];
 
     /* @ngInject */
-    function LinkedinController($http, originLoungeExpressAPIBaseURL) {
+    function LinkedinController($http, $rootScope, originLoungeExpressAPIBaseURL) {
         var vm = this;
         vm.title = 'LinkedinController';
         vm.url = '';

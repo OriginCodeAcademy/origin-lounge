@@ -9,16 +9,20 @@
         'DashboardFactory',
         'storageFactory',
         '$stateParams',
+        '$rootScope',
         'toastr'];
 
     function CustomContentController(
         DashboardFactory,
         storageFactory,
         $stateParams,
+        $rootScope,
         toastr) {
         
         var vm = this;
 
+        $rootScope.inChatState = false;
+        
         // Grab these state Params that are passed into this state through the ui router from another state
         vm.categoryId = $stateParams.categoryId;        
         vm.contentBody = $stateParams.contentBody;

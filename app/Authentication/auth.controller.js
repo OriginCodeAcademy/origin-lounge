@@ -10,7 +10,8 @@
         'localStorageService',
         'storageFactory',
         'toastr',
-        '$state'
+        '$state',
+        '$rootScope'
         ];
 
     function AuthController(
@@ -18,11 +19,14 @@
         localStorageService,
         storageFactory,
         toastr,
-        $state) {
+        $state,
+        $rootScope) {
 
         var vm = this;
 
         vm.login = login;
+
+        $rootScope.inChatState = false;
 
         activate();
 

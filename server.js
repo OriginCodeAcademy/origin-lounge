@@ -155,7 +155,7 @@ router.route('/files/:file_id')
     console.log("hit the /files get route");
 
     // see what the request looks like
-    console.log(req);
+    //console.log(req);
 
     var gfs = Grid(conn.db);
 
@@ -169,8 +169,8 @@ router.route('/files/:file_id')
             });
         }
 
-        console.log(files);
-        console.log(files.length);
+       // console.log(files);
+        //console.log(files.length);
 
         // unsure why there is a need to specify the filename or contentType
         var readstream = gfs.createReadStream({
@@ -180,6 +180,10 @@ router.route('/files/:file_id')
 
         // not sure if this is needed or not, but keeping it in here for now...
         res.set('Content-Type', files[0].contentType);
+        // This allows the client to directly download the file requested, if requesting the file via an href
+        // path within an html element
+        res.set('Content-Disposition', 'attachment; filename=' + files[0].filename);
+        console.log(res);
         // set up the readstream pipe to send the result out as a html response
         readstream.pipe(res);
     });
