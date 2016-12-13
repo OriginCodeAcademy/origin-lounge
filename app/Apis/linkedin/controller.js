@@ -14,7 +14,8 @@
         vm.url = '';
         vm.theCode = '';
         vm.accessToken = '';
-
+        $rootScope.inChatState = false;
+        
         activate();
 
         ////////////////

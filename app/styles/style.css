@@ -57,6 +57,11 @@ i.fa-times-circle {
   float:right;
   color: white;
 }
+
+.message-received {
+  font-weight: 700;
+  color:white !important;
+}
 /*.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     background-color: #FFFF00;
     color: #FFC0CB;
@@ -264,6 +269,7 @@ i.fa-times-circle {
   height: 40px;
 
 }
+
 
 /* ---------------------------------- CREATE CHAT RELATED --------------------------------- */
 #users-to-add {

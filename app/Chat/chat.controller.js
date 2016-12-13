@@ -74,6 +74,14 @@
           // user clicks on a linked file in a chat message, they would be kicked out of the page without getting the file 
           $rootScope.inChatState = true;
 
+          // Clear the "pendingMessage" flag for this chatroom
+          for (var i = 0; i < $rootScope.chatGroups.length; i++) {
+            if ($rootScope.chatGroups[i]._id === $rootScope.chatid) {
+              $rootScope.chatGroups[i].pendingMessage = false;
+            }
+
+          }
+          
           // Get message history and display it to chat room
           chatFactory.getAllMessagesForAChatRoom($rootScope.chatid).then(
 

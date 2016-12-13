@@ -16,7 +16,7 @@ body {
             <!-- List of Channels User Is Subscribed To -->
             <ul class="nav navbar-nav list-of-chats" ng-repeat="groups in chatGroups">
                 <li class="" ng-hide="groups.groupType === 'direct'">
-                    <a class="channel-name white-text" ui-sref="main.chat({chatid: '{{groups._id}}', chatRoomName: '{{groups.channelname}}'})" ng-val="groups._id">{{groups.channelname | limitTo: 15}}{{groups.channelname.length > 15 ? ' ... ' : ''}}<i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                    <a class="channel-name white-text" ng-class="{'message-received': groups.pendingMessage === true}" ui-sref="main.chat({chatid: '{{groups._id}}', chatRoomName: '{{groups.channelname}}'})" ng-val="groups._id">{{groups.channelname | limitTo: 15}}{{groups.channelname.length > 15 ? ' ... ' : ''}}<i class="fa fa-times-circle" aria-hidden="true"></i></a>
               <!--       <a></a> -->
                 </li>
             </ul>

@@ -20,8 +20,6 @@
         toastr) {
         
         var vm = this;
-
-        $rootScope.inChatState = false;
         
         // Grab these state Params that are passed into this state through the ui router from another state
         vm.categoryId = $stateParams.categoryId;        
@@ -46,6 +44,7 @@
 
         function activate() {
 
+            $rootScope.inChatState = false;
             // Get all Roles from local storage (This is so the Manage Categories state can display all the roles available)
             vm.roles = storageFactory.getLocalStorage('roles');
 

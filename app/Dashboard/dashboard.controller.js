@@ -291,6 +291,17 @@
 
         // socket.io listener to capture a chat message coming from the server
         chatFactory.on('chat message', function(msg) {
+
+           // If you are not in a chatroom or you are in a chatroom that is different from the room that this message is 
+           // sent to, then flag the room the message is intended for as having a pending message
+           if ( ($rootScope.inChatState !== true) || ($rootScope.chatid !== msg.chatid) ) {
+                for (var i = 0; i < $rootScope.chatGroups.length; i ++) {
+                    if (msg.chatid === $rootScope.chatGroups[i]._id) {
+                        $rootScope.chatGroups[i].pendingMessage = true;
+                    }
+                }
+            }
+
           // Only add the incoming chat message to the chat if the incoming roomid from the server matches the roomid of the chat you are in
           if ($rootScope.chatid === msg.chatid) {
             $rootScope.messages.push(msg);
@@ -299,6 +310,19 @@
 
         // socket.io listener to capture file info coming from the server
         chatFactory.on('receive file info', function(msg) {
+
+           // If you are not in a chatroom or you are in a chatroom that is different from the room that this message is 
+           // sent to, then flag the room the message is intended for as having a pending message
+           if ( ($rootScope.inChatState !== true) || ($rootScope.chatid !== msg.chatid) ) {
+                for (var i = 0; i < $rootScope.chatGroups.length; i ++) {
+                    if (msg.chatid === $rootScope.chatGroups[i]._id) {
+                        $rootScope.chatGroups[i].pendingMessage = true;
+                    }
+                }
+            }
+            
+            console.log(msg.chatid);
+            
             // Only do the follownig if the incoming received file notification matches has a chatId that matches the chatId the client is currently in
             if ($rootScope.chatid === msg.chatid) {
                 $rootScope.messages.push(msg);
