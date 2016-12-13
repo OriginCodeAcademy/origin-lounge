@@ -98,19 +98,31 @@
                 $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
 
                 console.log($('#eventUpdateButton'));
-        if (event.url) {
-            window.open(event.url);
-            return false;
-        }
-        },
-        header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month, agendaWeek'
-    },
-    defaultView: 'agendaWeek',
-         events: vm.eventsArray
-    });
+                
+                if (event.url) {
+                    window.open(event.url);
+                    return false;
+                }
+            },
+        
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month, basicWeek, agendaDay'
+            },
+
+            height: 500,
+            defaultView: 'basicWeek',
+            events: vm.eventsArray,
+
+            views: {
+
+                'basicWeek': {
+
+                    height: 100
+                }
+            }
+        });
 
     //Add event button
     vm.addEvent = function(eventDate, eventTitle, eventUrl, eventDetails, eventType){

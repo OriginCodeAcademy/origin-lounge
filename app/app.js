@@ -18,7 +18,8 @@ angular
             'ngSanitize' // Also needed for emoji filtering (and who knows what else...)
             ])
         .value ('originAPIBaseURL', 'http://origincodeacademyapi.azurewebsites.net/', 'ui.calendar')
-        .value ('chatServerURLAndPort', 'http://localhost:3002')
+        .value ('chatServerURLAndPort', 'https://origin-lounge-chat-server.herokuapp.com/')
+        // .value ('chatServerURLAndPort', 'http://localhost:3002/')
         .value ('originLoungeExpressAPIBaseURL', 'http://localhost:3000/api/')
 
         // Markdown editor and highlighter configuration
