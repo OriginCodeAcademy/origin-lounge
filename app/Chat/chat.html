@@ -46,7 +46,7 @@
           <tr ng-repeat="files in filesSharedInChatRoom">
             <td>
               <!-- This has a jquery hack to load an alternate image if the primary one specified in ng-src is not available. This is to handle the cases where the file in question is not an image. We still want to display an icon showing the type of doc it is -->
-              <img class="document-thumbnail" ng-src="http://localhost:3000/api/files/{{files._id}}" altSrc="/app/img/{{files.metadata.documentThumbnailIcon}}" onerror="this.src = $(this).attr('altSrc')">
+              <img class="document-thumbnail" ng-src="{{vm.originLoungeExpressAPIBaseURL}}/{{files._id}}" altSrc="/app/img/{{files.metadata.documentThumbnailIcon}}" onerror="this.src = $(this).attr('altSrc')">
             <!-- file name -->
             <td>{{files.filename}}</td>
             <!-- file download icon-->

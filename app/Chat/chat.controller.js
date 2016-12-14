@@ -32,6 +32,8 @@
         // One user in the chat
         var participant = {};
 
+        vm.originLoungeExpressAPIBaseURL = originLoungeExpressAPIBaseURL + 'files';
+
         vm.chatMessage = '';
         // Grab name of chat from the calendar state and bind to view (once the user clicks on the name of a chat room)
         vm.chatRoomName = $stateParams.chatRoomName;
@@ -289,81 +291,81 @@
 
             case 'image/jpeg':
               console.log('Got a jpeg');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="image-thumbnail" src="http://localhost:3000/api/files/'+ fileId + '"></a>';
+              return '<a href="' + originLoungeExpressAPIBaseURL + '/files/' + fileId + '/" download><img class="image-thumbnail" src="' + originLoungeExpressAPIBaseURL + '/files/'+ fileId + '/"></a>';
               break;
 
             case 'image/png':
               console.log('Got a png');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="image-thumbnail" src="http://localhost:3000/api/files/'+ fileId + '"></a>';
+              return '<a href="' + originLoungeExpressAPIBaseURL + '/files/' + fileId + '/" download><img class="image-thumbnail" src="' + originLoungeExpressAPIBaseURL + '/files/'+ fileId + '/"></a>';
               break;
 
             case 'image/gif':
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="image-thumbnail" src="http://localhost:3000/api/files/'+ fileId + '"></a>';
+              return '<a href="' + originLoungeExpressAPIBaseURL + '/files/' + fileId + '/" download><img class="image-thumbnail" src="' + originLoungeExpressAPIBaseURL + '/files/'+ fileId + '/"></a>';
               break;
 
             case 'image/svg+xml':
               console.log('Got an svg');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="image-thumbnail" src="http://localhost:3000/api/files/'+ fileId + '"></a>';
+              return '<a href="' + originLoungeExpressAPIBaseURL + '/files/' + fileId + '/" download><img class="image-thumbnail" src="' + originLoungeExpressAPIBaseURL + '/files/'+ fileId + '/"></a>';
               break;
 
             case 'text/plain':
               console.log('Got a txt file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/txt.svg"></a>';
+              return '<a href="' + originLoungeExpressAPIBaseURL + '/files/' + fileId + '/" download><img class="document-thumbnail" src="/app/img/txt.svg"></a>';
               break;
 
             case 'application/pdf':
               console.log('Got a pdf');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/pdf.svg"></a>';
+              return '<a href="' + originLoungeExpressAPIBaseURL + '/files/' + fileId + '/" download><img class="document-thumbnail" src="/app/img/pdf.svg"></a>';
               break;
 
             case 'text/css':
               console.log('Got a css file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/css.svg"></a>';
+              return '<a href="' + originLoungeExpressAPIBaseURL + '/files/' + fileId + '/" download><img class="document-thumbnail" src="/app/img/css.svg"></a>';
               break;
 
             case 'application/javascript':
               console.log('Got a js file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/javascript.svg"></a>';
+              return '<a href="' + originLoungeExpressAPIBaseURL + '/files/' + fileId + '/" download><img class="document-thumbnail" src="/app/img/javascript.svg"></a>';
               break;
 
             case 'application/msword':
               console.log('Got a word file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/doc.svg"></a>';
+              return '<a href="' + originLoungeExpressAPIBaseURL + '/files/' + fileId + '/" download><img class="document-thumbnail" src="/app/img/doc.svg"></a>';
               break;
 
             case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
               console.log('Got a word file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/doc.svg"></a>';
+              return '<a href="' + originLoungeExpressAPIBaseURL + '/files/' + fileId + '/" download><img class="document-thumbnail" src="/app/img/doc.svg"></a>';
               break;
 
             case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
               console.log('Got a ppt file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/ppt.svg"></a>';
+              return '<a href="' + originLoungeExpressAPIBaseURL + '/files/' + fileId + '/" download><img class="document-thumbnail" src="/app/img/ppt.svg"></a>';
               break;
 
             case 'application/vnd.ms-powerpoint':
               console.log('Got a ppt file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/ppt.svg"></a>';
+              return '<a href="' + originLoungeExpressAPIBaseURL + '/files/' + fileId + '/" download><img class="document-thumbnail" src="/app/img/ppt.svg"></a>';
               break;
 
             case 'application/vnd.ms-excel':
               console.log('Got an excel file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/xls.svg"></a>';
+              return '<a href="' + originLoungeExpressAPIBaseURL + '/files/' + fileId + '/" download><img class="document-thumbnail" src="/app/img/xls.svg"></a>';
               break; 
 
             case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
               console.log('Got an excel file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/xls.svg"></a>';
+              return '<a href="' + originLoungeExpressAPIBaseURL + '/files/' + fileId + '/" download><img class="document-thumbnail" src="/app/img/xls.svg"></a>';
               break;
 
             case 'application/x-msdownload':
               console.log('Got an exe file');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/exe.svg"></a>';
+              return '<a href="' + originLoungeExpressAPIBaseURL + '/files/' + fileId + '/" download><img class="document-thumbnail" src="/app/img/exe.svg"></a>';
               break;
 
             default:
               console.log('Got type that there is no case statement for...');
-              return '<a href="http://localhost:3000/api/files/'+ fileId + '" download><img class="document-thumbnail" src="/app/img/file.svg"></a>';
+              return '<a href="' + originLoungeExpressAPIBaseURL + '/files/' + fileId + '/" download><img class="document-thumbnail" src="/app/img/file.svg"></a>';
               break;
           }
         }

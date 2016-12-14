@@ -17,11 +17,11 @@ angular
             'dbaq.emoji', // For filtering of emoji text (e.g. turning :smile: into a smiley face)
             'ngSanitize' // Also needed for emoji filtering (and who knows what else...)
             ])
-        .value ('originAPIBaseURL', 'http://origincodeacademyapi.azurewebsites.net/', 'ui.calendar')
+        .value ('originAPIBaseURL', 'https://origincodeacademyapi.azurewebsites.net/', 'ui.calendar')
         .value ('chatServerURLAndPort', 'https://origin-lounge-chat-server.herokuapp.com/') // for if you run the chat server from its heroku hosted version
         // .value ('chatServerURLAndPort', 'http://localhost:3002/') // for if you run the chat server locally
-        //.value ('originLoungeExpressAPIBaseURL', 'https://origin-lounge-expressapi.herokuapp.com/api/') // for if you run the expressAPI from heroku hosted instance
-        .value ('originLoungeExpressAPIBaseURL', 'http://localhost:3000/api/') // for if you run the expressAPI locally
+        .value ('originLoungeExpressAPIBaseURL', 'https://origin-lounge-expressapi.herokuapp.com/api/') // for if you run the expressAPI from heroku hosted instance
+        //.value ('originLoungeExpressAPIBaseURL', 'http://localhost:3000/api/') // for if you run the expressAPI locally
 
         // Markdown editor and highlighter configuration
         .config(['markedProvider', 'hljsServiceProvider', function(markedProvider, hljsServiceProvider) {
