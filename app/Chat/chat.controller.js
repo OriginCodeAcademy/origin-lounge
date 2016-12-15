@@ -45,12 +45,35 @@
         // Global counter for how many files are shared in a chat room
         $rootScope.numberOfFilesSharedInChatRoom = '';
 
+        // Flag that determines whether or not the chat room info is shown
+        vm.showChatRoomInfo = false;
+
         // On click function for downloading a file from the server
         vm.downloadFile = downloadFile;       
         // On click function for when user clicks "Send" in chat room
         vm.sendChatMessage = sendChatMessage;
         // On click function for uploading files to server (and possibly attaching them to the room in which they were sent?)
         vm.upload = upload;
+
+        // On click function that toggles whether or not the chatroom info is shown
+        vm.showChatInfo = showChatInfo;
+
+        // Flag that determines whether or not the list of users is shown
+        vm.showListOfUsers= false;
+        // Flag that determines whether or not the list of files is shown
+        vm.showListOfFiles = false;
+
+        // Configuration for the scroll bar in the chat window
+        vm.scrollbarConfig = {
+
+          autoHideScrollbar: false,
+          alwaysShowScrollbar: 1,
+          theme: 'dark-3',
+          advanced: {
+            updateOnContentResize: true
+          },
+            scrollIntertia: 0
+        };
 
         /**************************** FOR EMOJI PICKER ***************************************/
         $(document).ready(function() {
@@ -457,6 +480,10 @@
 
         }
 
+        function showChatInfo() {
+
+          vm.showChatRoomInfo = !vm.showChatRoomInfo;
+        }
         // Upload a file to GridFS collections in mongoDB
         function upload (file) {
 

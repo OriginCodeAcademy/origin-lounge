@@ -62,18 +62,6 @@ i.fa-times-circle {
   font-weight: 700;
   color:white !important;
 }
-/*.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-    background-color: #FFFF00;
-    color: #FFC0CB;
-}
-*/
-
-/* On using dropdown menu (To right shift popuped) 
-/*.navbar-fixed-left .navbar-nav > li > .dropdown-menu 
-{
-  margin-top: -50px;
-  margin-left: 140px;
-}*
 
 /* ---------------------------------- RIGHT SIDE NAV FIX CSS STYLYING --------------------------------- */
 
@@ -131,25 +119,13 @@ i.fa-times-circle {
   background-color: #0099cc; 
 }
 
-/*.navbar-fixed-right + .container 
-{
-  padding-left: 14%;
-  padding-right: -14%;
-}
-*/
-/* On using dropdown menu (To right shift popuped) */
-/*.navbar-fixed-right .navbar-nav > li > .dropdown-menu 
-{
-  margin-top: -50px;
-  margin-left: 140px;
-}*/
-
 /* ----------------------------------- MIDDLE PANE ------------------------------------- */
 .middle-content {
   margin: 0 180px 0 180px;
   padding-right: 50px;
   padding-left: 40px;
   padding-top: 30px;
+  height: 100vh;
 }
 
 /* ----------------------------------- UNSORTED ---------------------------------------- */
@@ -194,9 +170,14 @@ i.fa-times-circle {
 
 #chatwindow {
 
-  overflow-y: scroll;
   overflow-x: hidden;
-  height: 470px;
+  height: 90%;
+}
+
+.chatroom-info {
+
+  overflow-x: hidden;
+  height: 90%; 
 }
 
 .chat-info {
@@ -270,7 +251,47 @@ i.fa-times-circle {
 
 }
 
+.chatroom { 
+  margin-top: -25px; 
+  margin-left: -40px; 
+  margin-right: -45px;
+  height: 93vh;
+  position: relative;
+}
 
+.foot {
+  position: absolute; 
+  bottom: -20px;
+}
+
+.progressbar {
+  position: absolute;
+  bottom: -5px;
+}
+
+.chat-message-send-button {
+
+  padding-top:5px;
+  padding-bottom:8px;
+
+}
+
+.user-list {
+
+  border-bottom: lightgray 1px solid;
+  padding-bottom: 20px;
+}
+
+.chatroom-title-users-subscribed {
+  font-size: 12px;
+  margin-top: -8px;
+}
+
+.user-list-caption, 
+.files-list-caption {
+
+  cursor: pointer;
+}
 /* ---------------------------------- CREATE CHAT RELATED --------------------------------- */
 #users-to-add {
   height: 250px;

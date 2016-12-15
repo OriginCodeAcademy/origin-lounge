@@ -15,7 +15,8 @@ angular
             'angular-nicescroll', // For custom scroll-bar
             'ngFileUpload', // For file uploading
             'dbaq.emoji', // For filtering of emoji text (e.g. turning :smile: into a smiley face)
-            'ngSanitize' // Also needed for emoji filtering (and who knows what else...)
+            'ngSanitize', // Also needed for emoji filtering (and who knows what else...)
+            'ngScrollbars' // For custom looking scrollbars
             ])
         .value ('originAPIBaseURL', 'https://origincodeacademyapi.azurewebsites.net/', 'ui.calendar')
         .value ('chatServerURLAndPort', 'https://origin-lounge-chat-server.herokuapp.com/') // for if you run the chat server from its heroku hosted version
