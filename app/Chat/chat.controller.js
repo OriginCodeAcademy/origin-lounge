@@ -69,6 +69,7 @@
           autoHideScrollbar: false,
           alwaysShowScrollbar: 1,
           theme: 'dark-3',
+          axis: 'y',
           advanced: {
             updateOnContentResize: true
           },
