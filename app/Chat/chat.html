@@ -1,19 +1,12 @@
-  <style>
-    /** { margin: 0; padding: 0;}*/
-    #messages { list-style-type: none; margin: 0; padding: 0; width:50%; }
-    #messages li { padding: 5px 0px 5px 0px; }
-    #messages li:nth-child(odd) { background: #eee; }
-  </style>    
-
   <div class="row chatroom">
     <!-- Chatroom name -->
-    <div class="col-xs-9" style="border-bottom: 1px lightgray solid">
+    <div class="col-xs-9 chatroom-title-block">
       <h4><b>{{vm.chatRoomName}}</b></h4>
       <div class="chatroom-title-users-subscribed">
         <i class="fa fa-user-o" aria-hidden="true"></i> {{vm.usersSubscribedToChatRoom}}
       </div>
     </div>
-    <div class="col-xs-3" style="border-bottom: 1px lightgray solid; padding-top: 28px;">
+    <div class="col-xs-3 channel-info-show_hide-button">
         <div ng-show="!vm.showChatRoomInfo">
           <i class="fa fa-plus-square-o" ng-click="vm.showChatInfo()"></i> Channel Info
         </div>
@@ -25,15 +18,21 @@
     <!-- Chat Window -->
     <div ng-scrollbars ng-scrollbars-config="vm.scrollbarConfig" scroll-glue id="chatwindow" ng-class="vm.showChatRoomInfo ? 'col-xs-9' : 'col-xs-12'">
       <!-- Chat messages -->
-      <ul id="messages" ng-repeat="messages in messages">
+      <ul class="messages" ng-repeat="messages in messages">
+          <div class="row">
             <li class='chat-message'>
-              <div class='chat-info'>
-                <img src='/app/img/OCAhat.jpg'>
-                <b>{{messages.sender}}</b>
-                <i>{{messages.created | date:'MM/dd/yyyy @ h:mma'}}</i>
+              <div class="col-xs-1 chatroom-user-icon-container">
+                <img src='/app/img/OCAhat.jpg' class="chatroom-user-icon">
               </div>
-              <p ng-bind-html="messages.message | emoji"></p>
+              <div class='chat-info'>
+                <b>{{messages.sender}}</b>
+                <i class="chatmessage-datetime-stamp">{{messages.created | date:'MM/dd/yyyy @ h:mma'}}</i>
+              </div>
+              <div class="chat-message-text-container">
+                <p class="chat-message-text" ng-bind-html="messages.message | emoji"></p>
+              </div>
             </li>
+          </div>
       </ul>
     </div>
 
@@ -43,10 +42,10 @@
         <!-- List of users -->
         <div class="user-list">
           <div class="user-list-caption" ng-click="vm.showListOfUsers = !vm.showListOfUsers">
-            <h4><i class="fa fa-users" aria-hidden="true"></i> Users ({{usersOnlineAndSubscribedToChatRoom}}/{{vm.usersSubscribedToChatRoom}})</h4>
+            <h5><i class="fa fa-users" aria-hidden="true"></i> Users ({{usersOnlineAndSubscribedToChatRoom}}/{{vm.usersSubscribedToChatRoom}})</h5>
           </div>
           <table>
-              <tr ng-show="vm.showListOfUsers" ng-repeat="participants in participants">
+              <tr class="list-of-users" ng-show="vm.showListOfUsers" ng-repeat="participants in participants">
                 <!-- users name -->
                 <td>{{participants.username}}</td>
                 <!-- Users login status-->
@@ -57,9 +56,9 @@
         <!-- List of files -->
         <table>
           <div class="files-list-caption" ng-click="vm.showListOfFiles = !vm.showListOfFiles">
-            <h4><i class="fa fa-files-o" aria-hidden="true"></i> Files ({{numberOfFilesSharedInChatRoom}})</h4>
+            <h5><i class="fa fa-files-o" aria-hidden="true"></i> Files ({{numberOfFilesSharedInChatRoom}})</h5>
           </div>
-          <tr ng-show="vm.showListOfFiles" ng-repeat="files in filesSharedInChatRoom">
+          <tr class="list-of-files" ng-show="vm.showListOfFiles" ng-repeat="files in filesSharedInChatRoom">
             <td>
               <!-- This has a jquery hack to load an alternate image if the primary one specified in ng-src is not available. This is to handle the cases where the file in question is not an image. We still want to display an icon showing the type of doc it is -->
               <img class="document-thumbnail" ng-src="{{vm.originLoungeExpressAPIBaseURL}}/{{files._id}}" altSrc="/app/img/{{files.metadata.documentThumbnailIcon}}" onerror="this.src = $(this).attr('altSrc')">

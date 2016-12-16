@@ -142,9 +142,7 @@ i.fa-times-circle {
 }
 .blue-background {
 
-  /*background-color: #33334d;*/
   background-color: #006699;
-  /*background-color: #52527a;*/
 }
 
 #OCAlogo
@@ -162,11 +160,6 @@ i.fa-times-circle {
 }
 
 /* -----------------------------------CHAT SCREEN ---------------------------------------- */
-#user-icon {
-
-    width: 30px;
-    height: 30px;
-}
 
 #chatwindow {
 
@@ -180,55 +173,6 @@ i.fa-times-circle {
   height: 90%; 
 }
 
-.chat-info {
-  clear:both;
-  float:left;
-  height: 160px;
-  width: 80px;
-  text-align:center;
-  overflow: hidden;
-}
-
-.chat-info img {
-  float: left;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-}
-
-.chat-info b {
-  overflow: hidden;
-  display: block;
-  clear: both;
-  padding-top: 7px;
-}
-
-.chat-info i{
-  font-size: 12px;
-  line-height: 1.2;
-  display: block;
-  opacity: 0.8;
-  padding-top: 4px;
-}
-
-#messages .chat-message p {
-  text-align:left;
-  float: left;
-  display: inline-block;
-  margin-left: 20px;
-  margin-bottom:30px;
-  padding: 25px 34px;
-  min-width: 160px;
-  min-height: 10px;
-  max-width: 510px;
-  background-color: #FFF;
-  border-radius: 3px;
-  box-shadow: 0px 3px 3px #E3E4E6;
-  color: #637277;
-  line-height: 1.4;
-  word-wrap: break-word;
-}
-
 .emoji-picker-icon{
     font-size:20px;
     right: 86px;
@@ -239,15 +183,15 @@ i.fa-times-circle {
 .image-thumbnail {
 
   display: block;
-  width: 100%;
+  width: 20%;
   height: auto;
 }
 
 .document-thumbnail {
 
   display: block;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
 
 }
 
@@ -291,6 +235,57 @@ i.fa-times-circle {
 .files-list-caption {
 
   cursor: pointer;
+}
+
+.chatroom-title-block {
+
+  border-bottom: 1px lightgray solid;
+}
+
+.messages {
+list-style-type: none
+}
+
+.chatroom-user-icon-container {
+  margin-left: -40px; margin-right: -30px
+}
+
+.channel-info-show_hide-button {
+
+  border-bottom: 1px lightgray solid; 
+  padding-top: 28px;
+}
+
+.chatroom-user-icon {
+  width:40px; 
+  height:40px;
+}
+
+.chatmessage-datetime-stamp {
+
+  color:lightgray;
+
+}
+
+.chat-message-text {
+
+  word-wrap:break-word; 
+  padding-left: 15px;
+}
+
+.chat-message-text-container {
+
+  font-size: 12px;
+}
+
+.chat-info {
+
+  font-size: 13px;
+}
+
+.list-of-files,
+.list-of-users {
+  font-size: 13px;
 }
 /* ---------------------------------- CREATE CHAT RELATED --------------------------------- */
 #users-to-add {
