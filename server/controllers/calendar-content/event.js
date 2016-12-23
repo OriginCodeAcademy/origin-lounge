@@ -45,7 +45,7 @@ module.exports.getSpecificCalendarEvent = function(req, res) {
 
     CalendarEvent.findById(req.params.eventId, function(err, usergroupevent) {
         if (err)
-            res.send(err);
+            return res.send(err);
         res.json(usergroupevent);
     });
 };
