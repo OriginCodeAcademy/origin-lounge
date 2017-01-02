@@ -47,24 +47,23 @@
             vm.userId = localStorageService.get('userSession').user.userId;
 
             calendarFactory.getEvent().then(function(result){
-                // console.log(result);
+        
             });
 
             calendarFactory.getUserEvent(vm.userId).then(function(result){
-                // console.log(result);
+          
                 for(var i = 0; i < result.data.length; i++){
-                    // console.log(result.data[i].eventId);
+
                     vm.eventIdsArray.push(result.data[i].eventId);
-                    console.log(vm.eventTypeArray);
+          
                 }
 
                 console.log(vm.eventTypeArray);
                 for(var j = 0; j < vm.eventIdsArray.length; j++){
-                // console.log(vm.eventIdsArray[i]);
+     
                 calendarFactory.getEventTitles(vm.eventIdsArray[j]).then(function(result){
-                    // console.log(result.data[0].eventTypeId);
+              
                     vm.events.push({'title' : result.data.title, 'start' : result.data.date, 'eventTypeId' : result.data.eventTypeId, 'detail' : result.data.detail});
-                    console.log(vm.events);
 
                 $('#calendar').fullCalendar( 'removeEventSource', vm.events );
                 $('#calendar').fullCalendar( 'addEventSource', vm.events );
