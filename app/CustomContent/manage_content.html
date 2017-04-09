@@ -1,0 +1,44 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="manage-content-title"><b><center>Manage Content</center></b></h3></div>
+    <div class="panel-body">
+        <form name="addContent">
+            <div class="row">
+                <!-- Category Select Menu -->
+                <div class="form group col-xs-4 col-xs-offset-4">
+                    <label class="control-label" for="categories">Select Categories</label>
+                    <select name="categories" multiple required ng-model="vm.selectedCategories" ng-options="item._id as item.name for item in vm.categories">
+                        <option value="">Select Categories</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Content Title Input -->
+            <div class="row">
+                <div class="form group col-xs-12">
+                    <label class="control-label" for="title">Content Title</label>
+                    <input id="title" name="title" type="text" ng-model="vm.contentTitle" class="form-control" required>
+                </div>
+            </div>
+            <br>
+            <!-- Markdown text editor window -->
+            <label class="control-label">Content Body</label>
+            <textarea required name="content" markdown-editor="{'iconlibrary': 'fa', addExtraButtons: true, resize: 'vertical'}" rows="10" ng-model="vm.contentBody"></textarea>
+            <!-- Markdown preview window -->
+            <div class="row">
+                <div class="form-group col-xs-12">
+                    <br>
+                    <label for="comment">Markdown Preview</label>
+                    <!-- Title of Content -->
+                    <h1 class="text-left">{{vm.contentTitle}}</h1>
+                    <!-- Markdown preview -->
+                    <div marked="vm.contentBody" class="outline" style="padding: 20px">
+                    </div>
+                </div>
+            </div>
+            <!-- Submit button -->
+            <div>
+                <button id="submit" type="button" class="btn btn-primary" ng-click="vm.addContent()" ng-disabled="addContent.$invalid">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

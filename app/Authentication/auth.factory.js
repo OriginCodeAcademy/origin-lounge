@@ -7,23 +7,21 @@
 
     AuthFactory.$inject = ['$http', '$q', 'originAPIBaseURL' ];
 
-    /* @ngInject */
+    
     function AuthFactory($http, $q, originAPIBaseURL) {
         var service = {
             verifyCredentials: verifyCredentials
         };
         return service;
 
-        ////////////////
-
+        // Get token and other user data from Origin.API database
         function verifyCredentials(username, userPassword) {
 
         	var defer = $q.defer();
 
-
+            // Creates the params portion of the POST URL
         	var info = 'grant_type=password&username=' + username + '&password=' + userPassword;
 
-        	
         	$http({
         		method: 'POST',
         		url: originAPIBaseURL + 'token',
@@ -48,7 +46,7 @@
             },
 
             // HTTP error handler
-            function(error){
+            function(error) {
 
             	defer.reject(error);
 

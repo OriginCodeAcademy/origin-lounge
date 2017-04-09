@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+    	<h3 class="category-title"><b><center>Create a Channel</center></b></h3>
+    </div>
+    <div class="panel-body">
+		<form name="createAChannel">
+			<div class="row">
+				<!-- Channel name input -->
+				<div class="form-group col-xs-8">
+					<label for="channel-name">Channel Name</label>
+					<input class="form-control" name="channel-name" type="text" ng-model="vm.newChannelName" required placeholder="Enter a name for the channel">
+				</div>
+			</div>
+			<div class="row">
+				<!-- User select menu -->
+				<div class="form-group col-xs-8">
+					<label for="users">Select Users</label>
+					<select class="form-control" name="users" id="users-to-add" ng-model="vm.selectedUsers" multiple required ng-options="users.Id as users.FullName  disable when users.isLoggedIn for users in vm.users">
+						<option value=""></option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<!-- Cancel and Go buttons -->
+				<div class="col-xs-4">
+					<button class="btn btn-danger">Cancel</button>
+					<button class="btn btn-primary" ng-click="vm.createChat('channel', vm.newChannelName)" ng-disabled="createAChannel.$invalid">Go</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

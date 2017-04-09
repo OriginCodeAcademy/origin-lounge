@@ -7,7 +7,7 @@
 
     authInterceptorService.$inject = ['$q', '$location', 'localStorageService'];
 
-    /* @ngInject */
+    
     function authInterceptorService($q, $location, localStorageService) {
         var service = {
             request: request,
@@ -15,8 +15,7 @@
         };
         return service;
 
-        ////////////////
-
+        // httpRequest handler
         function request(httpRequest) {
             // httpRequest.headers = httpRequest.headers || {};
 
@@ -29,6 +28,7 @@
             return httpRequest;
         }
 
+        // httpResponse Error handler
         function responseError(httpResponse) {
             if(httpResponse.status === 401) {
                 $location.path('/login');

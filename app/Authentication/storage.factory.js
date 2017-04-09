@@ -7,23 +7,31 @@
 
     storageFactory.$inject = ['localStorageService'];
 
-    /* @ngInject */
     function storageFactory(localStorageService) {
         var service = {
-            setLocalStorage: setLocalStorage,
-            getLocalStorage: getLocalStorage
+            clearAllLocalStorage: clearAllLocalStorage,
+            getLocalStorage: getLocalStorage,
+            setLocalStorage: setLocalStorage
+
         };
         return service;
 
-        ////////////////
+        // Clears all local storage
+        function clearAllLocalStorage() {
+            return localStorageService.clearAll();
 
+        }
+
+        // Gets a value from local storage
+        function getLocalStorage(key) {
+            return localStorageService.get(key);
+
+        }
+        
+        // Sets a value to local storage
         function setLocalStorage(key, value) {
         	 return  localStorageService.set(key, value);
         }
 
-        function getLocalStorage(key){
-        	return localStorageService.get(key);
-
-        }
     }
 })();

@@ -1,18 +1,87 @@
- <div class="col-md-12" id="topnav">
-    <div>
-        <div class="col-md-3" ><a href=""><img src="app/img/OCAhat.jpg" id="navimg"></a> </div>
-        <div class="col-md-6 text-center " id="topcenternav"><h1><strong> ORIGIN LOUNGE</strong></h1></div>
-        <div class="col-md-3 text-right"><strong>{{vm.username}}</strong></div>
-    </div>
-    
- </div>
+<style>
 
- <div class="col-md-12">
-    <div>
-        <div class="col-md-3" id="bottomleftpnav" ><pre>left side</pre></div>
-        <div class="col-md-6 text-center" id="bottomcenternav"><pre>midle</pre></div>
-        <div class="col-md-3" id="bottomrightnav"><pre>right side</pre></div>
+body {
+    font-family: 'Raleway', sans-serif;
+
+}
+</style>
+<!-- Left pane -->
+<div class="navbar navbar-fixed-left blue-background">
+    <!-- Origin Code Academy Logo -->
+    <a class="navbar-brand" ui-sref="main.calendar"><img id="OCAlogo" src="app/img/logo-black.png"></a>
+    <!-- Username that is logged in + logout button -->
+    <ul class="nav navbar-nav">
+        <br>
+        <li class="chat-group-headings">CHANNELS ({{numberOfChannels}}) <i class="fa fa-plus-circle" ui-sref="main.addOrJoinChannel" aria-hidden="true"></i></li>
+            <!-- List of Channels User Is Subscribed To -->
+            <ul class="nav navbar-nav list-of-chats" ng-repeat="groups in chatGroups">
+                <li class="" ng-hide="groups.groupType === 'direct'">
+                    <a class="channel-name white-text" ng-class="{'message-received': groups.pendingMessage === true}" ui-sref="main.chat({chatid: '{{groups._id}}', chatRoomName: '{{groups.channelname}}'})" ng-val="groups._id">{{groups.channelname | limitTo: 15}}{{groups.channelname.length > 15 ? ' ... ' : ''}}<i class="fa fa-times-circle" aria-hidden="true"></i></a>
+              <!--       <a></a> -->
+                </li>
+            </ul>
+        <!-- </li> -->
+        <li>
+            <li class="chat-group-headings">MESSAGES ({{numberOfDirectMessages}}) <i class="fa fa-plus-circle" ui-sref="main.addDirectMessage" aria-hidden="true"></i></li>
+            <!-- List of Direct Messages User is involved in -->    
+            <ul class="nav navbar-nav list-of-chats" ng-repeat="groups in chatGroups">    
+                <li ng-show="groups.groupType === 'direct'">
+                    <a class="channel-name white-text" ng-class="{'message-received': groups.pendingMessage === true}" ui-sref="main.chat({chatid: '{{groups._id}}', chatRoomName: '{{groups.channelname}}'})" ng-val="groups._id">{{groups.channelname | limitTo: 15}}{{groups.channelname.length > 15 ? ' ... ' : ''}}<i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                    <!-- <a></a> -->
+                </li>
+            </ul>
+<!--         </li> -->
+    </ul>
+</div>
+
+<!-- Right Side Fixed Nav -->
+<div class="navbar navbar-fixed-right blue-background">
+    <div class="user-info">
+        <a class="username navbar-brand ">{{vm.username}} <i class="fa fa-power-off" aria-hidden="true" ng-click="vm.logOut()"></i></a>
     </div>
 
- </div>
-<p ui-view></p>
+    <!-- User Feed -->
+    <ul class="nav navbar-nav">
+        <!-- Demo Day Countdown -->
+        <li ng-hide="vm.isAdmin">
+<!--             <a class=" white-text" ui-sref="main.countdown">
+             <iframe src="http://free.timeanddate.com/countdown/i5i0zfac/n770/cf12/cm0/cu4/ct0/cs0/ca0/co1/cr0/ss0/cacfff/cpc000/pc069/tcfff/fs100/szw320/szh135/tatDemo%20Day%206.0!/tacfff/tpc000/iso2016-12-16T13:00:00" allowTransparency="true" frameborder="0" width="130" height="50"></iframe>
+
+
+            </a> -->
+        </li>
+        <!-- Custom Categories (based on user's role) -->
+        <li>
+            <a class="white-text" ng-repeat="category in vm.categories" ng-click="vm.getContentByCategoryId(category.categoryId, category.categoryName)" type="submit" role="button">{{category.categoryName}}
+            </a>
+        </li>
+
+        <!-- Calendar -->
+        <li> 
+             <a class="white-text" ui-sref="main.calendar" role="button">Calendar</a>
+        </li>
+        <!-- Github -->            
+        <li>     
+             <a class="white-text" ui-sref="main.github" role="button">GitHub</a>
+        </li>
+                <!-- LinkedIn -->
+        <li>     
+             <a class="white-text" ui-sref="main.linkedin" role="button">Linkedin</a>
+        </li>
+        <!-- Manage Content -->
+        <li ng-show="vm.isAdmin">
+            <a class="white-text" ui-sref="main.managecontent" role="button">Manage Content</a>
+        </li>
+        <!-- Manage Categories -->
+        <li ng-show="vm.isAdmin">
+            <a class="white-text" ui-sref="main.managecategories" role="button">Manage Categories</a>
+        </li>
+    </ul>
+</div>
+
+<!-- Middle pane -->
+
+<div class="middle-content">
+    <div ui-view></div>       
+</div>
+

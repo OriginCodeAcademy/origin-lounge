@@ -5,11 +5,11 @@ An interactive intranet for origin students, alumni and employees
 ## Core Functionality
 * secured login
 * role-based views
-* chat client
-* GitHub integration
-* Google Calendar integration
-* LinkedIn sign-in, integration
-* Custom content management (markdown)
+* Socket.io based chat client and server
+* GitHub integration (in progress)
+* Angular UI Calendar integration (in progress. See this link: http://angular-ui.github.io/ui-calendar/)
+* LinkedIn sign-in, integration (in progress)
+* Custom content management (via a mark down editor)
 
 ## Tech Stack
 * ASP.NET WebApi2
@@ -31,14 +31,38 @@ An interactive intranet for origin students, alumni and employees
 * Instructor
 * Placement
 * Campus Manager
+* Admissions
 
-## Development Teams
+## Getting Started
+1. Clone repo, then switch to dev-branch
+2. Run npm install, followed by bower install
+3. Make sure the app task within gulpfile.js is configured as follows:
+  * for PC:
+    
+    ~~~
+    gulp.task('app', function(){
+    var options = {
+        uri: 'http://localhost:8080',
+        app: 'chrome'
+    };
+    gulp.src('./index.html')
+        .pipe(open(options));
+    });
+    ~~~
 
-1. Define layout, implement Google calender integration / view
-2. Chat - implement chat client
-3. LinkedIn profile integration
-4. Custom Content management
-
-## Preliminary Tasks
-
-* Clone the Origin Rest API [origin-rest-api](https://github.com/OriginCodeAcademy/origin-rest-api) and, following the instructions, setup a local instance of the Origin database. Confirm your local build is working through Postman.
+  * for Mac:
+    
+    ~~~
+    gulp.task('app', function(){
+    var options = {
+        uri: 'http://localhost:8080',
+        app: 'Google Chrome'
+    };
+    gulp.src('./index.html')
+        .pipe(open(options));
+    });
+    ~~~
+4. Spin up the express API server by typing "nodemon server.js" in the webroot of origin-lounge
+5. Spin up the chat server by typing "nodemon index.js" in the webroot of origin-lounge
+6. Spin up the angular app by typing "gulp serve"
+7. At the moment there are some dummy accounts you can use to login with. Please check with Sean Cahill to get this information.

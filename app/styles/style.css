@@ -1,31 +1,373 @@
-#topnav{
-	border-color: gray;
-	border-style: solid;
-	border-top-width: 1px;
-	font-size: 1.2em;
 
-}
-#topcenternav{
-	font-weight: 45px;
-	
-}
-#bottomcenternav{
-	margin-top: 2%;
+/* ---------------------------------- LEFT SIDE NAV FIX CSS STYLYING --------------------------------- */
 
-}
-#bottomleftpnav{
-
-}
-#navimg{
-	max-width: 30%;
-	max-height: 25%;
+.navbar-fixed-left {
+  width: 180px;
+  position: fixed;
+  border-radius: 0;
+  height: 100%;
+  float: left;
 }
 
-#hat {
-   max-width: 50%;
-   max-height: 50%;
+.navbar-fixed-left .navbar-nav > li 
+{
+  /*float: none;*/  /* Cancel default li float: left */
+  width: 178px;
 }
 
-#loginBtn {
+.nav > li > a:hover{
+    background-color:#003366;
+    color: white;
+}
+
+.list-of-chats > li > a {
+
+  font-size: 13px;
+  color: lightgray;
+
+}
+
+.navbar-fixed-right .nav > li > a,
+.navbar-fixed-left .nav > li > a {
+
+line-height: 100%;
+
+}
+
+.navbar-fixed-left .navbar-nav > li > a:focus,
+.navbar-fixed-left .navbar-nav > li > a:active {
+
+  color: white;
+  background-color: #003366;
+}
+
+.navbar-fixed-left .navbar-nav > li > a:hover {
+  color: white;
+  background-color: #0099cc; 
+}
+
+
+i.fa-times-circle {
+  display: none;
+
+}
+
+.channel-name:hover i {
+  display:inline;
+  float:right;
+  color: white;
+}
+
+.message-received {
+  font-weight: 700;
+  color:white !important;
+}
+
+/* ---------------------------------- RIGHT SIDE NAV FIX CSS STYLYING --------------------------------- */
+
+.navbar-fixed-right 
+{
+  width: 180px;
+  position: fixed;
+  border-radius: 0;
+  height: 100%;
+  float: right;
+  right: 0;
+
+}
+
+.username {
+  color: white;
+  font-size: 17px;
+  font-weight: 500;
+  float: right;
+
+}
+
+.username:hover {
+  color:white;
+}
+
+.user-info {
+ margin-bottom: 70px;
+}
+
+.countdown {
+
+  background-color: blue;
+}
+
+.navbar-fixed-left > ul.navbar-nav {
+  margin-top: 10px;
+}
+
+.navbar-fixed-right .navbar-nav > li 
+{
+  /*float: none;*/  /* Cancel default li float: left */
+  width: 198px;
+}
+
+.navbar-fixed-right .navbar-nav > li > a:focus,
+.navbar-fixed-right .navbar-nav > li > a:active {
+
+  color: white;
+  background-color: #003366;
+}
+
+.navbar-fixed-right .navbar-nav > li > a:hover {
+  color: white;
+  background-color: #0099cc; 
+}
+
+/* ----------------------------------- MIDDLE PANE ------------------------------------- */
+.middle-content {
+  margin: 0 180px 0 180px;
+  padding-right: 50px;
+  padding-left: 40px;
+  padding-top: 30px;
+  height: 100vh;
+}
+
+/* ----------------------------------- UNSORTED ---------------------------------------- */
+.white-text {
+
+  color: white;
+}
+
+.chat-group-headings {
+
+  color: white;
+  font-weight: bold;
+
+}
+.blue-background {
+
+  background-color: #006699;
+}
+
+#OCAlogo
+{
+    width: 150px;
+    height: 35px;
+    margin-left: -8px;
+
+}
+
+
+#loginBtn 
+{
    background-color: #64ABDD ;
+}
+
+/* -----------------------------------CHAT SCREEN ---------------------------------------- */
+
+#chatwindow {
+
+  overflow-x: hidden;
+  height: 90%;
+}
+
+.chatroom-info {
+
+  overflow-x: hidden;
+  height: 90%; 
+}
+
+.emoji-picker-icon{
+    font-size:20px;
+    right: 86px;
+    top: 17px;
+}
+
+/* This is so image thumbnails fill full width of parent and re-size their heights so that the image scales correctly */
+.image-thumbnail {
+
+  display: block;
+  width: 20%;
+  height: auto;
+}
+
+.document-thumbnail {
+
+  display: block;
+  width: 30px;
+  height: 30px;
+
+}
+
+.chatroom { 
+  margin-top: -25px; 
+  margin-left: -40px; 
+  margin-right: -45px;
+  height: 93vh;
+  position: relative;
+}
+
+.foot {
+  position: absolute; 
+  bottom: -20px;
+}
+
+.progressbar {
+  position: absolute;
+  bottom: -5px;
+}
+
+.chat-message-send-button {
+
+  padding-top:5px;
+  padding-bottom:8px;
+
+}
+
+.user-list {
+
+  border-bottom: lightgray 1px solid;
+  padding-bottom: 20px;
+}
+
+.chatroom-title-users-subscribed {
+  font-size: 12px;
+  margin-top: -8px;
+}
+
+.user-list-caption, 
+.files-list-caption {
+
+  cursor: pointer;
+}
+
+.chatroom-title-block {
+
+  border-bottom: 1px lightgray solid;
+}
+
+.messages {
+list-style-type: none
+}
+
+.chatroom-user-icon-container {
+  margin-left: -40px; margin-right: -30px
+}
+
+.channel-info-show_hide-button {
+
+  border-bottom: 1px lightgray solid; 
+  padding-top: 28px;
+}
+
+.chatroom-user-icon {
+  width:40px; 
+  height:40px;
+}
+
+.chatmessage-datetime-stamp {
+
+  color:lightgray;
+
+}
+
+.chat-message-text {
+
+  word-wrap:break-word; 
+  padding-left: 15px;
+}
+
+.chat-message-text-container {
+
+  font-size: 12px;
+}
+
+.chat-info {
+
+  font-size: 13px;
+}
+
+.list-of-files,
+.list-of-users {
+  font-size: 13px;
+}
+/* ---------------------------------- CREATE CHAT RELATED --------------------------------- */
+#users-to-add {
+  height: 250px;
+}
+
+
+/* ---------------------------------- MANAGE CATEGORIES RELATED ----------------------------- */
+
+#select-categories-menu {
+  height: 150px;
+}
+
+/* ---------------------------------- CALENDAR RELATED --------------------------------- */
+#eventBox 
+{
+    margin-top: 2em;
+    margin-bottom: 3em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+    padding: 1em;
+}
+
+#eventDate 
+ {
+    font-size: 1.5em;
+ }
+
+ #required 
+ {
+    color: red;
+ }
+
+#addButton 
+{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+ .vresize 
+ {
+    resize: vertical;
+ }
+
+/* ---------------------------------- GITHUB RELATED --------------------------------- */
+#john
+{
+  width: 51.0em;
+  height: 25.0em;
+}
+
+/* ---------------------------------- LOGIN PAGE RELATED --------------------------------- */
+#loginBtnMain {
+   background-color: #006dfd ;
+}
+
+.panel > .panel-heading 
+{
+    background-image: none;
+    color: black;
+}
+
+#panel 
+{
+    background: #525E6C;
+    color: white;
+}
+
+/* ---------------------------------- OTHER CSS STYLYING --------------------------------- */
+
+.ng-cloak 
+{
+    display: none;
+}
+
+.fa {
+  color: black;
+  cursor: pointer;
+}
+
+.fa-circle,
+.fa-power-off {
+
+  color: #64ABDD;
 }

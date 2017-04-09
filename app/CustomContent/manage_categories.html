@@ -1,0 +1,28 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="manage-content-title"><b><center>Manage Categories</center></b></h3></div>
+    <div class="panel-body">
+        <form name="addCategoriesToRole">
+            <div class="row">
+                <!-- Role Selection Menu -->
+                <div class="form-group col-xs-3">
+                    <label for="role">Select Role</label>
+                    <select class="form-control" name="role" required ng-model="vm.selectedRole" ng-options="role.Id as role.Name for role in vm.roles" ng-change="vm.selectedRoleChanged()">
+                        <option value="">Select Role</option>
+                    </select>
+                </div>
+                <!-- Category Selection Menu -->
+                <div class="form-group col-xs-6">
+                    <label for="categories">Select Categories</label>
+                    <select id="select-categories-menu" class="form-control" name="categories" required multiple required ng-model="vm.selectedCategories" ng-options="item._id as item.name for item in vm.categories">
+                        <option value="">Select Categories</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Submit button -->
+            <div>
+                <button id="submit" type="button" class="btn btn-primary" ng-click="vm.addCategoriesToRole()" ng-disabled="addCategoriesToRole.$invalid">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

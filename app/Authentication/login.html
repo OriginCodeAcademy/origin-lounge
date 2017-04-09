@@ -1,20 +1,39 @@
-<div class="text-center resize"><img id="hat" src="app/img/OCA-Origin.jpg"></div>
-<div class="container-fluid">
-   <div class="row">
-       <div class="col-sm-4">
-       </div>
-       <div class="col-sm-4">
-           <div class="form-group">
-               <input type="text" class="form-control text-center" ng-model="vm.username" placeholder="Username">
-           </div>
-           <div class="form-group">
-               <input type="password" class="form-control text-center" ng-model="vm.password" placeholder="Password">
-           </div>
-           <div class="form-group text-center">
-               <button id="loginBtn" type="submit" ng-click="vm.login()" class="btn btn-block">Log In</button>
-           </div>
-       </div>
-       <div class="col-sm-4">
-       </div>
-   </div>
-</div>
+<style>
+    body { background: #fff url("app/img/origin1.jpeg") no-repeat fixed center; background-size: 1440px 100%; } h1 { font-family: Oswald; color: black; padding-top: 0.5em; } #form .container { margin-top: 105px; margin-bottom: 0px; } .panel-heading { border-bottom: 1px solid #aaa; } .form { background: #f8f8f8; border-radius: 10px; } .btn-primary { background-color: #64ABDD; } .jumbotron { color: white; } .jumbotron p, .jumbotron p { font-family: 'Open Sans Condensed', sans-serif; } #btn-login { border-left: 1px solid #aaa; } #btn-login .btn { margin-left: 10px; } #loginform .input-group { margin-bottom: 25px; } #loginform .input-group[class*="col-"] { float: left; } .login-action { border-top: 1px solid #aaa; margin-bottom: 0px; } .panel { margin-bottom: 0; box-shadow: 0px 0px 40px 1px black; border-radius: 5px; } .panel-body { padding-top: 30px; } .panel-title { font-family: 'Arial', sans-serif; } .panel-title span { font-family: 'Tahoma', serif; } #loginbox { padding: 20px; } #registertext { padding: 20px; } .white-alpha-90 { /* Fallback for web browsers that don't support RGBa */ background-color: white; /* RGBa with 0.6 opacity */ background-color: rgba(256, 256, 256, 0.6); /* For IE 5.5 - 7*/ filter: progid: DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000); /* For IE 8*/ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)"; } .black-alpha-90 { /* Fallback for web browsers that don't support RGBa */ background-color: black; /* RGBa with 0.6 opacity */ background-color: rgba(0, 0, 0, 0.3); /* For IE 5.5 - 7*/ filter: progid: DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000); /* For IE 8*/ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)"; } .bigger-130 { font-size: 130%; } input:-webkit-autofill { -webkit-box-shadow: 0 0 0px 1000px white inset; } input:-webkit-autofill:focus { -webkit-box-shadow: 0 0 0px 1000px white inset; }
+</style>
+
+<!-- Login Form -->
+    <section id="form" class="animated fadeInDown">
+    <div class="container">
+        <div id="loginbox" class="col-xs-10 col-xs-offset-1">
+            <div class="panel white-alpha-90">
+                <div class="text-center panel-heading-clear">
+                    <h1>Origin Lounge</h1>
+                </div>
+                <div class="panel-body">
+                    <div style="display:none" id="login-alert" class="alert alert-warning col-sm-12"></div>
+                    <form id="loginform" class="form-horizontal" role="form">
+                        <!-- Username field -->
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control input-lg text-center" ng-model="vm.username" placeholder="Username">
+                        </div>
+                        <!-- password field -->
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                            <input type="password" class="form-control input-lg text-center" ng-model="vm.password" placeholder="Password">
+                        </div>
+                        <!-- Login button -->
+                        <div class="input-group col-xs-12 text-center login-action">
+                            <br/>
+                            <label class="col-xs-6 col-xs-offset-3">
+                                <button id="loginBtnMain" type="submit" ng-click="vm.login()" class="btn btn-block"><a style="color: white">Log In</a></button>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

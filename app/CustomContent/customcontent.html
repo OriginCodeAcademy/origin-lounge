@@ -1,0 +1,26 @@
+<!-- Content to be displayed -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+    	<h3 class="category-title"><b><center>{{vm.categoryName}}</center></b></h3>
+    </div>
+    <div class="panel-body">
+	    <div ui-view>
+			<table class="col-xs-12 table-striped">
+			    <tr ng-repeat="content in vm.content">
+			        <td>
+			        	<!-- Content Title -->
+			            <a class="content-title" ng-click="vm.getContentByContentId(content.contentId)">{{content.title}}</a>
+			        </td>
+			        <td ng-show="vm.isAdmin">
+			        	<!-- Edit Content button -->
+			        	<a ui-sref="main.managecontent({contentTitle:content.title, contentBody:content.bodyDescr, contentId:content.contentId, categoryId: vm.categoryId})"><i class="fa fa-pencil"></i></a>
+			        </td>
+			        <td ng-show="vm.isAdmin">
+			        	<!-- Delete Content button -->
+			        	<a ng-click="vm.deleteContentFromACategory(content.contentCategoryId)"><i class="content-title fa fa-trash"></i></a>	
+			        </td>
+			    </tr>
+			</table>
+		</div>
+	</div>
+</div>

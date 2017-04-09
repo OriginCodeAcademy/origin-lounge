@@ -1,28 +1,46 @@
 {
-  "name": "useradmin",
-  "version": "1.0.0",
-  "description": "UserAdmin",
-  "main": "gulpfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Exponent500/UserAdmin.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Exponent500/UserAdmin/issues"
-  },
-  "homepage": "https://github.com/Exponent500/UserAdmin#readme",
-  "dependencies": {
-    "gulp": "^3.9.1",
-    "gulp-connect": "^5.0.0",
-    "gulp-inject": "^4.1.0",
-    "gulp-livereload": "^3.8.1",
-    "gulp-open": "^2.0.0",
-    "gulp-util": "^3.0.7",
-    "wiredep": "^4.0.0"
-  }
+    "name": "useradmin",
+    "version": "1.0.0",
+    "description": "UserAdmin",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js",
+        "postinstall": "bower cache clean && bower install"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Exponent500/UserAdmin.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Exponent500/UserAdmin/issues"
+    },
+    "homepage": "https://github.com/Exponent500/UserAdmin#readme",
+    "dependencies": {
+        "body-parser": "^1.15.2",
+        "busboy": "^0.2.13",
+        "busboy-body-parser": "^0.2.0",
+        "connect-busboy": "0.0.2",
+        "express": "^4.14.0",
+        "file-saver": "^1.3.3",
+        "gridfs-stream": "^1.1.1",
+        "gulp": "^3.9.1",
+        "gulp-connect": "^5.0.0",
+        "gulp-inject": "^4.1.0",
+        "gulp-livereload": "^3.8.1",
+        "gulp-open": "^2.0.0",
+        "gulp-util": "^3.0.7",
+        "mongoose": "^4.7.2",
+        "morgan": "^1.7.0",
+        "socket.io": "^1.7.2",
+        "tether": "^1.3.7",
+        "wiredep": "^4.0.0"
+    },
+    "devDependencies": {
+        "gulp-jshint": "^2.0.4",
+        "gulp-nodemon": "^2.2.1",
+        "jshint": "^2.9.4"
+    }
 }
