@@ -28,11 +28,13 @@
 
         $rootScope.inChatState = false;
 
+
         activate();
 
         ////////////////
 
         function activate() {
+
 				
         }
 
@@ -43,9 +45,11 @@
         	AuthFactory.verifyCredentials(vm.username, vm.password).then (
 
                 // If username and password exist, do the following
+
         		function(response) {
 
         			console.log(response + "username and password successfully passed from controller");
+
 
                     var roles = JSON.parse(response.roles);
         			
@@ -85,10 +89,11 @@
         		},
 
                 // If username and password do not exist, do the following
+
         		function (error) {
 
         			toastr.error('Sorry, please enter correct login information.');
-        			console.log(error+"Unable to pass the login credintials in the login Controller");
+
         		});
 
         }
@@ -103,9 +108,10 @@
         // Set a value into local storage
         function setStorage(key, value) {
         	storageFactory.setLocalStorage(key, value);
-        	
+
         		console.log("successfully setstorage in the aut controller!");
         		return ;
         }
+       
     }
 })();
